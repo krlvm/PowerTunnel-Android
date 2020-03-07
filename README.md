@@ -10,7 +10,7 @@ Simple, scalable, cross-platform and effective solution against government censo
 <a href="https://github.com/krlvm/PowerTunnel-Android/releases"><img src="https://img.shields.io/github/downloads/krlvm/PowerTunnel-Android/total?style=flat-square" alt="Downloads"/></a>
 <a href="https://github.com/krlvm/PowerTunnel-Android/wiki"><img src="https://img.shields.io/badge/help-wiki-yellow?style=flat-square" alt="Help on the Wiki"/></a>
 <br>
-<img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/images/ui.png" alt="PowerTunnel User Interface" />
+<img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/images/ui.png" alt="PowerTunnel User Interface" height="750px" />
 </div>
 
 The Android version of PowerTunnel is built on [VPN Server](https://github.com/raise-isayan/TunProxy) that intercepts traffic and directs it through the [LibertyTunnel](https://github.com/krlvm/PowerTunnel/tree/libertytunnel) proxy
