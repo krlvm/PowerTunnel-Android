@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory
+			android:key="vpn_connection_setting"
+			android:title="@string/category_connection"
+			android:enabled="true">
+
+		<ListPreference
+				android:key="vpn_connection_mode"
+				android:title="@string/pref_vpn_connection_mode"
+				android:defaultValue="DISALLOW"
+				android:entries="@array/pref_vpn_connection_name"
+				android:entryValues="@array/pref_vpn_connection_value"
+				android:negativeButtonText="@null"
+				android:positiveButtonText="@null"/>
+
+		<PreferenceScreen
+				android:key="vpn_disallowed_application_list"
+				android:title="@string/pref_header_disallowed_application_list"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+
+		<PreferenceScreen
+				android:key="vpn_allowed_application_list"
+				android:title="@string/pref_header_allowed_application_list"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+
+		<PreferenceScreen
+				android:key="vpn_clear_all_selection"
+				android:title="@string/pref_clear_all" />
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

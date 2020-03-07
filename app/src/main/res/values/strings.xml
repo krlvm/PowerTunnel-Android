@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">PowerTunnel</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Status messages -->
+    <string name="server_disabled">Is not running</string>
+    <string name="server_enabled">Is not running</string>
+
+    <!-- Start/stop button -->
+    <string name="server_start">Start</string>
+    <string name="server_stop">Stop</string>
+
+    <!-- Progress messages -->
+    <string name="starting_server">Starting…</string>
+    <string name="stopping_server">Stopping…</string>
+    <string name="status_please_wait">Please, wait…</string>
+    <string name="startup_failed">Failed to start VPN service</string>
+
+    <!-- Main menu -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_show_about">About</string>
+
+    <!-- Settings -->
+    <string name="category_connection">Connection settings</string>
+    <string name="category_dpi">DPI circumvention settings</string>
+
+    <string name="pref_vpn_connection_mode">Connection mode</string>
+    <string name="pref_header_allowed_application_list">Allowed applications</string>
+    <string name="pref_header_disallowed_application_list">Disallowed applications</string>
+
+    <string name="pref_clear_all">Reset application lists</string>
+    <string name="pref_dialog_clear_all">Do you want to reset lists of selected applications?</string>
+
+    <string name="search">Search</string>
+    <string name="sort_by_app_name">Sort by app name</string>
+    <string name="sort_by_package">Sort by package name</string>
+
+    <string-array name="pref_vpn_connection_name">
+        <item>Exclude specified applications</item>
+        <item>Only allowed applications</item>
+    </string-array>
+    <string-array name="pref_vpn_connection_value">
+        <item>DISALLOW</item>
+        <item>ALLOW</item>
+    </string-array>
+
+    <string name="pref_allowed_application_list">Allowed applications</string>
+
+    <string-array name="pref_allowed_application_name" />
+    <string-array name="pref_allowed_application_value" />
+
+    <string name="pref_disallowed_application_list">Disallowed applications</string>
+    <string name="description">Simple, scalable, cross-platform and effective solution against government censorship</string>
+
+    <string-array name="pref_disallowed_application_name" />
+    <string-array name="pref_disallowed_application_value" />
+</resources>

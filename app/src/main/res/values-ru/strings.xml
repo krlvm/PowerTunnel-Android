@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PowerTunnel</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+    <string name="server_disabled">Выключен</string>
+    <string name="server_enabled">Включен</string>
+    <string name="server_start">Запустить</string>
+    <string name="server_stop">Остановить</string>
+    <string name="starting_server">Запуск…</string>
+    <string name="stopping_server">Остановка…</string>
+    <string name="status_please_wait">Пожалуйста, подождите…</string>
+    <string name="startup_failed">Ошибка при запуске VPN сервера</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="title_show_about">О программе</string>
+    <string name="category_connection">Настройки соединения</string>
+    <string name="category_dpi">Настройки обхода блокировок</string>
+    <string name="pref_vpn_connection_mode">Способ соединения</string>
+    <string name="pref_header_allowed_application_list">Разрешенные приложения</string>
+    <string name="pref_header_disallowed_application_list">Исключенные приложения</string>
+    <string name="pref_clear_all">Очистить списки приложений</string>
+    <string name="pref_dialog_clear_all">Вы уверены, что хотите очистить списки приложений?</string>
+    <string name="search">Поиск</string>
+    <string name="sort_by_app_name">Сортировка по имени приложения</string>
+    <string name="sort_by_package">Сортировка по имени пакета</string>
+    <string name="pref_allowed_application_list">Разрешенные приложения</string>
+    <string name="pref_disallowed_application_list">Исключенные приложения</string>
+    <string name="description">Простой, масштабируемый, быстрый и эффективный способ обхода блокировок</string>
+    <string-array name="pref_vpn_connection_name">
+        <item>Исключить указанные приложения</item>
+        <item>Только разрешенные приложения</item>
+    </string-array>
+</resources>
