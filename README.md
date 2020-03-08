@@ -18,23 +18,21 @@ The Android version of PowerTunnel is built on [VPN Server](https://github.com/r
 ### What is it
 Nowadays Internet censorship is introducing in many countries: governments analyze and block traffic to this sites using DPI - Deep Packet Inspection systems, forcing you using circumvention utilities like VPN, for example. That approach have many disadvantages, most noticeable - connection speed slowdown. In addition, these services cannot guarantee work stability and your data confidence.
 
-PowerTunnel is active DPI circumvention utility, that works only on your PC and don't send your traffic to third-party servers, respecting your privacy and do not slowing down your internet connection.
-
-PowerTunnel is more than a regular anti-censorship utility - using it, you can monitor your traffic and block any connection, advertising, for example.
+PowerTunnel for Android is active DPI circumvention utility, that works only on your phone and don't send your traffic to third-party servers, respecting your privacy and do not slowing down your internet connection.
 
 ### How does it work?
-PowerTunnel establishes a transparent proxy server on your PC and directs your traffic through it, applying DPI circumvention tricks.
+PowerTunnel for Android establishes a transparent proxy server on your phone and starts local VPN server, that forwards your traffic into the proxy server, where are DPI circumvention tricks applying.
 
 ## How can I get it?
 You can compile a binary yourself or download prepared binary [here](https://github.com/krlvm/PowerTunnel-Android/releases).
 
 ### Setup
-The installation process is described in detail [on the Wiki](https://github.com/krlvm/PowerTunnel-Android/wiki/Installation).
+Just install it as a regular Android application: no root access is needed.
 
 ### Doesn't work
 Most likely your ISP blocked the website you need by IP address, so only encrypted tunnel (VPN/Tor) can help you.
 
-Also, you can try enabling full chunking mode - it will be added in the upcoming stable release.
+Also, you can try enabling full chunking mode (will be added in the upcoming stable release).
 
 ## Dependencies
 * [TunProxy](https://github.com/raise-isayan/TunProxy) with [bugfixes](https://github.com/krlvm/TunProxy) - codebase, VPN server and traffic interceptor
