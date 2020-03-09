@@ -30,10 +30,11 @@ import java.util.*;
  */
 public class PowerTunnel {
 
-    public static final String NAME = "PowerTunnel Android";
+    public static final String NAME = "LibertyTunnel";
     public static final String VERSION = "1.0";
+    public static final String BASE_VERSION = "1.7.2";
     public static final int VERSION_CODE = 10; //base version code
-    public static final String REPOSITORY_URL = "https://github.com/krlvm/PowerTunnel-Android";
+    public static final String REPOSITORY_URL = "https://github.com/krlvm/PowerTunnel/tree/libertytunnel";
 
     private static HttpProxyServer SERVER;
     private static boolean RUNNING = false;
@@ -76,6 +77,7 @@ public class PowerTunnel {
      */
     private static void startServer() throws UnknownHostException {
         System.out.println("[.] Starting LittleProxy server on " + SERVER_IP_ADDRESS + ":" + SERVER_PORT);
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
         SERVER = DefaultHttpProxyServer.bootstrap().withFiltersSource(new HttpFiltersSourceAdapter() {
             @Override
             public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {

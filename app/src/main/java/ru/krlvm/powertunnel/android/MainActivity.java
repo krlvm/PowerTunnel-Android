@@ -8,24 +8,19 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toolbar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import ru.krlvm.powertunnel.PowerTunnel;
 import tun.proxy.SimplePreferenceActivity;
 import tun.proxy.service.Tun2HttpVpnService;
 
@@ -34,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_VPN = 1;
 
     private ImageView logo;
+    private TextView status;
     private Button start;
-    private MenuItem settings;
     private Handler statusHandler = new Handler();
     private Handler progressHandler = new Handler();
 
@@ -63,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         logo = findViewById(R.id.status_logo);
+        status = findViewById(R.id.status);
         start = findViewById(R.id.start_button);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,13 +73,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        settings = menu.findItem(R.id.action_activity_settings);
-        settings.setEnabled(start.isEnabled());
-        return true;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -93,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_activity_settings: {
+                if(isRunning()) {
+                    Toast.makeText(this, R.string.stop_server_to_edit_settings, Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 Intent intent = new Intent(this, SimplePreferenceActivity.class);
                 startActivity(intent);
                 break;
@@ -146,13 +139,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (isRunning()) {
-            logo.setImageResource(R.mipmap.ic_launcher_round);
+            logo.setImageResource(R.mipmap.ic_enabled);
+            status.setText(R.string.server_running);
             start.setText(R.string.server_stop);
-            settings.setEnabled(false);
         } else {
             logo.setImageResource(R.mipmap.ic_disabled);
+            status.setText(R.string.server_not_running);
             start.setText(R.string.server_start);
-            settings.setEnabled(true);
         }
     }
 
