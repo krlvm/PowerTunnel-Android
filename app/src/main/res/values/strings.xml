@@ -47,7 +47,7 @@
     </string-array>
 
     <string-array name="pref_dns_provider_name" translatable="false">
-        <item>CloudFlare</item>
+        <item>Cloudflare</item>
         <item>Google</item>
     </string-array>
     <string-array name="pref_dns_provider_value" translatable="false">

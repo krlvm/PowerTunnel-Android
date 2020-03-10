@@ -44,7 +44,8 @@ public class Updater {
             title = R.string.update_error_title;
             message = R.string.update_error;
         }
-        if(pendingUpdate != null && currentVerCode < Integer.parseInt(pendingUpdate[0])) {
+        final boolean ready = pendingUpdate != null && currentVerCode < Integer.parseInt(pendingUpdate[0]);
+        if(ready) {
             title = R.string.update_available_title;
             message = R.string.update_available;
             updatesFound = true;
@@ -63,7 +64,7 @@ public class Updater {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        if(pendingUpdate != null) {
+                        if(ready && pendingUpdate != null) {
                             Intent browserIntent = new Intent(Intent.ACTION_VIEW,
                                     Uri.parse("https://github.com/krlvm/PowerTunnel/releases/download/v" + pendingUpdate[1] + "/PowerTunnel.apk"));
                             MyApplication.getInstance().startActivity(browserIntent);
