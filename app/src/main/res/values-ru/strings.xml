@@ -40,4 +40,16 @@
     <string name="startup_failed_proxy">Ошибка при запуске прокси сервера</string>
     <string name="pref_chunk_size">Размер фрагмента</string>
     <string name="clear_selection">Очистить выбор</string>
+    <string name="about_version">Версия %1$s</string>
+    <string name="btn_check_for_updates">Проверить обновления</string>
+    <string name="title_activity_about">О программе</string>
+    <string name="no_updates">Вы используете последнюю версию PowerTunnel</string>
+    <string name="no_updates_title">Обновлений нет</string>
+    <string name="update_error">Ошибка при проверке обновлений, проверьте соединение с интернетом</string>
+    <string name="update_error_title">Ошибка</string>
+    <string name="update_available_title">Доступно обновление</string>
+    <string name="update_available">Версия %s готова к установке</string>
+    <string name="update_checking_title">Поиск обновлений…</string>
+    <string name="update_checking">Установленная версия: %s</string>
+    <string name="help">PowerTunnel работает лишь до тех пор, пока вы подключены к VPN.\n\Откройте настройки чтобы настроить список приложений, которые будут использовать PowerTunnel.</string>
 </resources>

@@ -4,15 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".AboutActivity">
 
+    <Button
+        android:id="@+id/updates_button"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/about_description"
+        tools:text="@string/btn_check_for_updates" />
 
     <ImageView
         android:id="@+id/status_logo"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="64dp"
-        android:src="@mipmap/ic_disabled"
+        android:layout_marginTop="32dp"
+        android:src="@mipmap/ic_enabled"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/app_name"
+        android:text="@string/title_activity_about"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -32,28 +43,18 @@
         app:layout_constraintTop_toBottomOf="@+id/status_logo" />
 
     <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/about_description"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
         android:layout_marginTop="8dp"
+        android:textAlignment="center"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/background_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:text="@string/server_not_running" />
-
-    <Button
-        android:id="@+id/start_button"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="225dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status"
-        tools:text="@string/server_start" />
+        tools:text="@string/description" />
 
     <TextView
         android:id="@+id/textView3"
@@ -64,5 +65,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/about_powertunnel"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:linksClickable="true"
+        android:scrollbars="vertical"
+        android:text="@string/about_powertunnel"
+        android:textAlignment="center"
+        android:textColorLink="@color/colorAccent"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updates_button"
+        app:layout_constraintVertical_bias="0.39" />
+
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/background_dark"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/about_powertunnel"
+        app:layout_constraintVertical_bias="0.769"
+        tools:text="@string/about_version" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

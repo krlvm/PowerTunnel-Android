@@ -1,12 +1,10 @@
 package ru.krlvm.powertunnel.android;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +19,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ru.krlvm.powertunnel.android.updater.UpdateIntent;
+import ru.krlvm.powertunnel.android.updater.Updater;
 import tun.proxy.preferences.SimplePreferenceActivity;
 import tun.proxy.service.Tun2HttpVpnService;
 
@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        ((TextView) findViewById(R.id.help)).setText(R.string.help); //somehow it's ignoring resource set in layout
+
+        Updater.checkUpdates(new UpdateIntent(null, MainActivity.this));
     }
 
     @Override
@@ -91,27 +94,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.action_about: {
-                new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.app_name) + " v" + getVersionName())
-                        .setMessage(getString(R.string.description) + "\n\n" +
-                                "This is a very early preview version and can be unstable\n\n" +
-                                "(c) krlvm, 2019-2020").show();
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
                 break;
             }
         }
         return true;
-    }
-
-    private String getVersionName() {
-        PackageManager packageManager = getPackageManager();
-        if (packageManager == null) {
-            return null;
-        }
-        try {
-            return packageManager.getPackageInfo(getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            return "Unknown";
-        }
     }
 
     @Override

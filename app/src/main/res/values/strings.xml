@@ -76,4 +76,17 @@
     <string name="startup_failed_proxy">Failed to start proxy server</string>
     <string name="pref_chunk_size">Default chunk size</string>
     <string name="clear_selection">Clear selection</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="btn_check_for_updates">Check for updates</string>
+    <string name="about_powertunnel" translatable="false"><b><a href="https://github.com/krlvm/PowerTunnel-Android">PowerTunnel for Android</a> is made possible by these open-source projects:</b>\n\n<a href="https://github.com/krlvm/PowerTunnel/tree/libertytunnel">LibertyTunnel</a> - a lightweight edition of <a href="https://github.com/krlvm/PowerTunnel">PowerTunnel</a>\n<a href="https://github.com/raise-isayan/TunProxy">TunProxy</a> - VPN server and traffic interceptor\n<a href="https://github.com/adamfisk/LittleProxy">LittleProxy</a> with some <a href="https://github.com/krlvm/PowerTunnel-Android/tree/master/app/src/main/java/org/littleshoot/proxy/impl">patches</a> - proxy server\n<a href="https://github.com/adamfisk/DNSSEC4J">DNSSEC4J</a> - DNSSec realization for LittleProxy</string>
+    <string name="title_activity_about">About PowerTunnel</string>
+    <string name="no_updates">You\'re running the latest version of PowerTunnel</string>
+    <string name="no_updates_title">No updates available</string>
+    <string name="update_error">An error occurred while checking updates, check the Internet connection</string>
+    <string name="update_error_title">Error</string>
+    <string name="update_available_title">An update available</string>
+    <string name="update_available">Version %s is ready to be installed</string>
+    <string name="update_checking_title">Checking for updates…</string>
+    <string name="update_checking">Installed version: %s</string>
+    <string name="help">PowerTunnel is working only until you are connected to the VPN\n\Open the settings if you need to adjust the list of applications that can use PowerTunnel.</string>
 </resources>
