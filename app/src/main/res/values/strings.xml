@@ -85,7 +85,7 @@
     <string name="update_error">An error occurred while checking updates, check the Internet connection</string>
     <string name="update_error_title">Error</string>
     <string name="update_available_title">An update available</string>
-    <string name="update_available">Version %s is ready to be installed</string>
+    <string name="update_available">Version %s is ready to install</string>
     <string name="update_checking_title">Checking for updates…</string>
     <string name="update_checking">Installed version: %s</string>
     <string name="help">PowerTunnel is working only until you are connected to the VPN\n\Open the settings if you need to adjust the list of applications that can use PowerTunnel.</string>
