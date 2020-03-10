@@ -9,11 +9,11 @@
     <string name="starting_server">Запуск…</string>
     <string name="stopping_server">Остановка…</string>
     <string name="status_please_wait">Пожалуйста, подождите…</string>
-    <string name="startup_failed">Ошибка при запуске VPN сервиса</string>
+    <string name="startup_failed_vpn">Ошибка при запуске VPN сервиса</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="title_show_about">О программе</string>
-    <string name="category_connection">Настройки соединения</string>
-    <string name="category_dpi">Настройки обхода блокировок</string>
+    <string name="pref_category_connection">Настройки соединения</string>
+    <string name="pref_category_dpi">Настройки обхода блокировок</string>
     <string name="pref_vpn_connection_mode">Способ соединения</string>
     <string name="pref_header_allowed_application_list">Разрешенные приложения</string>
     <string name="pref_header_disallowed_application_list">Исключенные приложения</string>
@@ -30,4 +30,14 @@
         <item>Исключить указанные приложения</item>
         <item>Только разрешенные приложения</item>
     </string-array>
+    <string name="pref_override_dns">Использовать другие DNS серверы</string>
+    <string name="pref_dns_provider">Поставщик DNS</string>
+    <string name="pref_category_dns">Разрешение доменных имен</string>
+    <string name="pref_use_dns_sec">Использовать DNSSec (экспериментальная настройка)</string>
+    <string name="pref_full_chunking">Режим полной фрагментации пакетов</string>
+    <string name="pref_mix_host_case">Изменять регистр адреса соединения</string>
+    <string name="pref_send_payload">Отправлять дополнительные 21КБ данных</string>
+    <string name="startup_failed_proxy">Ошибка при запуске прокси сервера</string>
+    <string name="pref_chunk_size">Размер фрагмента</string>
+    <string name="clear_selection">Очистить выбор</string>
 </resources>

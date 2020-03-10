@@ -1,7 +1,5 @@
 package ru.krlvm.powertunnel.android;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
@@ -21,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import tun.proxy.SimplePreferenceActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
+import tun.proxy.preferences.SimplePreferenceActivity;
 import tun.proxy.service.Tun2HttpVpnService;
 
 public class MainActivity extends AppCompatActivity {

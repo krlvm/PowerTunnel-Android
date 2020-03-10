@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name="tun.proxy.SimplePreferenceActivity"
+            android:name="tun.proxy.preferences.SimplePreferenceActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity">
             <meta-data

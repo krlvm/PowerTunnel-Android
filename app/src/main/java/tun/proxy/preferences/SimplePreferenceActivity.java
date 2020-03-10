@@ -1,4 +1,4 @@
-package tun.proxy;
+package tun.proxy.preferences;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -25,7 +25,6 @@ public class SimplePreferenceActivity extends PreferenceActivity {
 
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SimplePreferenceFragment()).commit();
-
     }
 
     @Override
@@ -109,6 +108,4 @@ public class SimplePreferenceActivity extends PreferenceActivity {
         }
         return mDelegate;
     }
-
-
 }

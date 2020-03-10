@@ -1,22 +1,24 @@
 package ru.krlvm.powertunnel;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.HttpRequest;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
 import org.littleshoot.proxy.HttpProxyServer;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
-import ru.krlvm.powertunnel.filter.ProxyFilter;
-import ru.krlvm.powertunnel.utilities.URLUtility;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.HttpRequest;
+import ru.krlvm.powertunnel.filter.ProxyFilter;
+import ru.krlvm.powertunnel.utilities.URLUtility;
 
 /**
  * The PowerTunnel Android Proxy Server
- * Code is synchronized with the LittleTunnel branch of PowerTunnel
+ * Code is synchronized with the LibertyTunnel branch of PowerTunnel
  * The server has to be started before the VPN server start
  *
  * LibertyTunnel Bootstrap class
@@ -45,18 +47,11 @@ public class PowerTunnel {
     public static int DEFAULT_CHUNK_SIZE = 2;
     public static int PAYLOAD_LENGTH = 0; //21 recommended
 
+    public static boolean USE_DNS_SEC = false;
     public static boolean MIX_HOST_CASE = false;
 
     private static final Set<String> GOVERNMENT_BLACKLIST = new HashSet<>();
     private static final Set<String> ISP_STUB_LIST = new HashSet<>();
-
-    public static void safeBootstrap() {
-        try {
-            PowerTunnel.bootstrap();
-        } catch (UnknownHostException ex) {
-            System.out.println("[x] Cannot use IP-Address '" + SERVER_IP_ADDRESS + "': " + ex.getMessage());
-        }
-    }
 
     /**
      * PowerTunnel bootstrap
@@ -84,7 +79,7 @@ public class PowerTunnel {
                 return new ProxyFilter(originalRequest);
             }
         }).withAddress(new InetSocketAddress(InetAddress.getByName(SERVER_IP_ADDRESS), SERVER_PORT))
-                .withTransparent(true).start();
+                .withTransparent(true).withUseDnsSec(USE_DNS_SEC).start();
         RUNNING = true;
         System.out.println("[.] Server started");
         System.out.println();

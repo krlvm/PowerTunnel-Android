@@ -16,15 +16,15 @@
     <string name="starting_server">Starting…</string>
     <string name="stopping_server">Stopping…</string>
     <string name="status_please_wait">Please, wait…</string>
-    <string name="startup_failed">Failed to start VPN service</string>
+    <string name="startup_failed_vpn">Failed to start VPN service</string>
 
     <!-- Main menu -->
     <string name="title_activity_settings">Settings</string>
     <string name="title_show_about">About</string>
 
     <!-- Settings -->
-    <string name="category_connection">Connection settings</string>
-    <string name="category_dpi">DPI circumvention settings</string>
+    <string name="pref_category_connection">Connection settings</string>
+    <string name="pref_category_dpi">DPI circumvention settings</string>
 
     <string name="pref_vpn_connection_mode">Connection mode</string>
     <string name="pref_header_allowed_application_list">Allowed applications</string>
@@ -41,9 +41,18 @@
         <item>Exclude specified applications</item>
         <item>Only allowed applications</item>
     </string-array>
-    <string-array name="pref_vpn_connection_value">
+    <string-array name="pref_vpn_connection_value" translatable="false">
         <item>DISALLOW</item>
         <item>ALLOW</item>
+    </string-array>
+
+    <string-array name="pref_dns_provider_name" translatable="false">
+        <item>CloudFlare</item>
+        <item>Google</item>
+    </string-array>
+    <string-array name="pref_dns_provider_value" translatable="false">
+        <item>CLOUDFLARE</item>
+        <item>GOOGLE</item>
     </string-array>
 
     <string name="pref_allowed_application_list">Allowed applications</string>
@@ -57,4 +66,14 @@
 
     <string-array name="pref_disallowed_application_name" />
     <string-array name="pref_disallowed_application_value" />
+    <string name="pref_override_dns">Override DNS servers</string>
+    <string name="pref_dns_provider">DNS Provider</string>
+    <string name="pref_category_dns">Domain name resolving</string>
+    <string name="pref_use_dns_sec">Use DNSSec (experimental)</string>
+    <string name="pref_full_chunking">Full chunking mode</string>
+    <string name="pref_mix_host_case">Mix host case</string>
+    <string name="pref_send_payload">Send additional 21KB payload</string>
+    <string name="startup_failed_proxy">Failed to start proxy server</string>
+    <string name="pref_chunk_size">Default chunk size</string>
+    <string name="clear_selection">Clear selection</string>
 </resources>

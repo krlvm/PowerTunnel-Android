@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.VpnService;
 import android.os.Binder;
 import android.os.Build;
@@ -19,15 +17,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.R;
 import tun.proxy.MyApplication;
+import tun.utils.Util;
 
 public class Tun2HttpVpnService extends VpnService {
     public static final String PREF_RUNNING = "pref_running";
@@ -40,7 +36,6 @@ public class Tun2HttpVpnService extends VpnService {
         System.loadLibrary("tun2http");
     }
 
-    private Builder lastBuilder = null;
     private ParcelFileDescriptor vpn = null;
 
     synchronized private static PowerManager.WakeLock getLock(Context context) {
@@ -84,17 +79,28 @@ public class Tun2HttpVpnService extends VpnService {
     }
 
     private void start() {
-        if(!PowerTunnel.isRunning()) {
-            PowerTunnel.safeBootstrap();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
+        PowerTunnel.FULL_CHUNKING = prefs.getBoolean("full_chunking", false);
+        PowerTunnel.DEFAULT_CHUNK_SIZE = Integer.parseInt(prefs.getString("chunk_size", "2"));
+        if(PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {
+            PowerTunnel.DEFAULT_CHUNK_SIZE = 2;
         }
-        Log.d("Tun2Boot", "Wait for CPP");
-        if (vpn == null) {
-            lastBuilder = getBuilder();
-            vpn = startVPN(lastBuilder);
-            if (vpn == null) {
-                throw new IllegalStateException(getString((R.string.startup_failed)));
+        PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
+        PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
+        if(!PowerTunnel.isRunning()) {
+            try {
+                PowerTunnel.bootstrap();
+            } catch (Exception ex) {
+                throw new IllegalStateException(getString((R.string.startup_failed_proxy)));
             }
-
+        }
+        Log.d("Tun2Boot", "Waiting for native start...");
+        if (vpn == null) {
+            vpn = startVPN(getBuilder());
+            if (vpn == null) {
+                throw new IllegalStateException(getString((R.string.startup_failed_vpn)));
+            }
             startNative(vpn);
         }
     }
@@ -134,22 +140,37 @@ public class Tun2HttpVpnService extends VpnService {
 
     private Builder getBuilder() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        // Build VPN service
         Builder builder = new Builder();
         builder.setSession(getString(R.string.app_name));
 
-        // VPN address
-        String vpn4 = prefs.getString("vpn4", "10.1.10.1");
-        builder.addAddress(vpn4, 32);
-        String vpn6 = prefs.getString("vpn6", "fd00:1:fd00:1:fd00:1:fd00:1");
-        builder.addAddress(vpn6, 128);
+        /* NATIVE VPN CONFIGURATION */
+        builder.addAddress("10.1.10.1", 32);
+        builder.addAddress("fd00:1:fd00:1:fd00:1:fd00:1", 128);
 
         builder.addRoute("0.0.0.0", 0);
         builder.addRoute("0:0:0:0:0:0:0:0", 0);
+        /* ----------------- */
 
-        builder.addDnsServer("1.1.1.1");
-        builder.addDnsServer("8.8.8.8");
+        List<String> dnsServers = Util.getDefaultDNS(this);
+        if(prefs.getBoolean("override_dns", false) || dnsServers.isEmpty()) {
+            dnsServers.clear();
+            switch (prefs.getString("dns_provider", "CLOUDFLARE")) {
+                default:
+                case "CLOUDFLARE": {
+                    dnsServers.add("1.1.1.1");
+                    dnsServers.add("1.0.0.1");
+                    break;
+                }
+                case "GOOGLE": {
+                    dnsServers.add("8.8.8.8");
+                    dnsServers.add("8.8.4.4");
+                    break;
+                }
+            }
+        }
+        for (String dns : dnsServers) {
+            builder.addDnsServer(dns);
+        }
 
         // MTU
         int mtu = jni_get_mtu();
@@ -158,24 +179,49 @@ public class Tun2HttpVpnService extends VpnService {
 
         // Add list of allowed applications
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            try {
-                MyApplication app = MyApplication.getInstance();
-                if (app.loadVPNMode() == MyApplication.VPNMode.DISALLOW) {
-                    Set<String> disallow = app.loadVPNApplication(MyApplication.VPNMode.DISALLOW);
-                    Log.d(TAG, "disallowed:" + disallow.size());
-                    builder.addDisallowedApplication(Arrays.asList(disallow.toArray(new String[0])));
-                    builder.addDisallowedApplication(getPackageName());
-                } else {
-                    Set<String> allow = app.loadVPNApplication(MyApplication.VPNMode.ALLOW);
-                    Log.d(TAG, "allowed:" + allow.size());
-                    builder.addAllowedApplication(Arrays.asList(allow.toArray(new String[0])));
+            MyApplication app = MyApplication.getInstance();
+            if (app.loadVPNMode() == MyApplication.VPNMode.DISALLOW) {
+                Set<String> disallow = app.loadVPNApplication(MyApplication.VPNMode.DISALLOW);
+                boolean disallowChanged = false;
+                for (String pkg : disallow) {
+                    try {
+                        builder.addDisallowedApplication(pkg);
+                    } catch (PackageManager.NameNotFoundException ignore) {
+                        //this package is deleted by user
+                        disallow.remove(pkg);
+                        disallowChanged = true;
+                    }
                 }
-            } catch (PackageManager.NameNotFoundException e) {
-                Log.e(TAG, e.getMessage(), e);
+                if(disallowChanged) {
+                    MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.DISALLOW, disallow);
+                    //these deleted packages are now removed from the registry
+                }
+                try {
+                    builder.addDisallowedApplication(getPackageName());
+                } catch (PackageManager.NameNotFoundException ex) {
+                    Log.d(TAG, "Unexpected error: PowerTunnel package cannot be found");
+                }
+            } else {
+                Set<String> allow = app.loadVPNApplication(MyApplication.VPNMode.ALLOW);
+                boolean allowChanged = false;
+                for (String pkg : allow) {
+                    if (pkg.equals(getPackageName())) {
+                        continue;
+                    }
+                    try {
+                        builder.addAllowedApplication(pkg);
+                    } catch (PackageManager.NameNotFoundException ignore) {
+                        //this package is deleted by user
+                        allow.remove(pkg);
+                        allowChanged = true;
+                    }
+                }
+                if(allowChanged) {
+                    MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.ALLOW, allow);
+                    //these deleted packages are now removed from the registry
+                }
             }
         }
-
-        // Add list of allowed applications
         return builder;
     }
 
@@ -236,11 +282,8 @@ public class Tun2HttpVpnService extends VpnService {
 
     @Override
     public void onCreate() {
-
-        // Native init
         jni_init();
         super.onCreate();
-
     }
 
     @Override
@@ -263,7 +306,6 @@ public class Tun2HttpVpnService extends VpnService {
     @Override
     public void onDestroy() {
         Log.i(TAG, "Destroy");
-
         try {
             if (vpn != null) {
                 stopNative(vpn);
@@ -273,17 +315,14 @@ public class Tun2HttpVpnService extends VpnService {
         } catch (Throwable ex) {
             Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
         }
-
         jni_done();
-
         super.onDestroy();
     }
 
     public class ServiceBinder extends Binder {
         @Override
-        public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
+        public boolean onTransact(int code, @androidx.annotation.NonNull Parcel data, Parcel reply, int flags)
                 throws RemoteException {
-            // see Implementation of android.net.VpnService.Callback.onTransact()
             if (code == IBinder.LAST_CALL_TRANSACTION) {
                 onRevoke();
                 return true;
@@ -293,105 +332,6 @@ public class Tun2HttpVpnService extends VpnService {
 
         public Tun2HttpVpnService getService() {
             return Tun2HttpVpnService.this;
-        }
-    }
-
-    private class Builder extends VpnService.Builder {
-        private NetworkInfo networkInfo;
-        private int mtu;
-        private List<String> listAddress = new ArrayList<>();
-        private List<String> listRoute = new ArrayList<>();
-        private List<InetAddress> listDns = new ArrayList<>();
-
-        private Builder() {
-            super();
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            networkInfo = cm.getActiveNetworkInfo();
-        }
-
-        @Override
-        public VpnService.Builder setMtu(int mtu) {
-            this.mtu = mtu;
-            super.setMtu(mtu);
-            return this;
-        }
-
-        @Override
-        public Builder addAddress(String address, int prefixLength) {
-            listAddress.add(address + "/" + prefixLength);
-            super.addAddress(address, prefixLength);
-            return this;
-        }
-
-        @Override
-        public Builder addRoute(String address, int prefixLength) {
-            listRoute.add(address + "/" + prefixLength);
-            super.addRoute(address, prefixLength);
-            return this;
-        }
-
-        @Override
-        public Builder addDnsServer(InetAddress address) {
-            listDns.add(address);
-            super.addDnsServer(address);
-            return this;
-        }
-
-        // min sdk 26
-        public Builder addAllowedApplication(List<String> packageList) throws PackageManager.NameNotFoundException {
-            //
-            for (String pkg : packageList) {
-                System.out.println("allowed:" + pkg);
-                addAllowedApplication(pkg);
-            }
-            return this;
-        }
-
-        public Builder addDisallowedApplication(List<String> packageList) throws PackageManager.NameNotFoundException {
-            //
-            for (String pkg : packageList) {
-                System.out.println("disallowed:" + pkg);
-                addDisallowedApplication(pkg);
-            }
-            return this;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            Builder other = (Builder) obj;
-
-            if (other == null)
-                return false;
-
-            if (this.networkInfo == null || other.networkInfo == null ||
-                    this.networkInfo.getType() != other.networkInfo.getType())
-                return false;
-
-            if (this.mtu != other.mtu)
-                return false;
-
-            if (this.listAddress.size() != other.listAddress.size())
-                return false;
-
-            if (this.listRoute.size() != other.listRoute.size())
-                return false;
-
-            if (this.listDns.size() != other.listDns.size())
-                return false;
-
-            for (String address : this.listAddress)
-                if (!other.listAddress.contains(address))
-                    return false;
-
-            for (String route : this.listRoute)
-                if (!other.listRoute.contains(route))
-                    return false;
-
-            for (InetAddress dns : this.listDns)
-                if (!other.listDns.contains(dns))
-                    return false;
-
-            return true;
         }
     }
 }
