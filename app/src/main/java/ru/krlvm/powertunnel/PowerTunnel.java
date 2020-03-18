@@ -1,8 +1,10 @@
 package ru.krlvm.powertunnel;
 
+import org.littleshoot.proxy.HostResolver;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
 import org.littleshoot.proxy.HttpProxyServer;
+import org.littleshoot.proxy.HttpProxyServerBootstrap;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
 import java.net.InetAddress;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
+import ru.krlvm.powertunnel.android.DOHUtility;
 import ru.krlvm.powertunnel.filter.ProxyFilter;
 import ru.krlvm.powertunnel.utilities.URLUtility;
 
@@ -50,6 +53,8 @@ public class PowerTunnel {
     public static boolean USE_DNS_SEC = false;
     public static boolean MIX_HOST_CASE = false;
 
+    public static String DOH_ADDRESS = null;
+
     private static final Set<String> GOVERNMENT_BLACKLIST = new HashSet<>();
     private static final Set<String> ISP_STUB_LIST = new HashSet<>();
 
@@ -73,13 +78,27 @@ public class PowerTunnel {
     private static void startServer() throws UnknownHostException {
         System.out.println("[.] Starting LittleProxy server on " + SERVER_IP_ADDRESS + ":" + SERVER_PORT);
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-        SERVER = DefaultHttpProxyServer.bootstrap().withFiltersSource(new HttpFiltersSourceAdapter() {
+        HttpProxyServerBootstrap bootstrap = DefaultHttpProxyServer.bootstrap().withFiltersSource(new HttpFiltersSourceAdapter() {
             @Override
             public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
                 return new ProxyFilter(originalRequest);
             }
         }).withAddress(new InetSocketAddress(InetAddress.getByName(SERVER_IP_ADDRESS), SERVER_PORT))
-                .withTransparent(true).withUseDnsSec(USE_DNS_SEC).start();
+                .withTransparent(true).withUseDnsSec(USE_DNS_SEC);
+        if(DOH_ADDRESS != null) {
+            System.out.println("[*] DoH mode is enabled");
+            bootstrap.withServerResolver(new HostResolver() {
+                @Override
+                public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
+                    try {
+                        return new InetSocketAddress(InetAddress.getByName(DOHUtility.resolve(host)), port);
+                    } catch (Exception e) {
+                        throw new UnknownHostException("Failed to query DoH server");
+                    }
+                }
+            });
+        }
+        SERVER = bootstrap.start();
         RUNNING = true;
         System.out.println("[.] Server started");
         System.out.println();

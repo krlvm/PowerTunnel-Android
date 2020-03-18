@@ -48,11 +48,15 @@
 
     <string-array name="pref_dns_provider_name" translatable="false">
         <item>Cloudflare</item>
+        <item>Cloudflare (DoH)</item>
         <item>Google</item>
+        <item>Google (DoH)</item>
     </string-array>
     <string-array name="pref_dns_provider_value" translatable="false">
         <item>CLOUDFLARE</item>
+        <item>CLOUDFLARE_DOH</item>
         <item>GOOGLE</item>
+        <item>GOOGLE_DOH</item>
     </string-array>
 
     <string name="pref_allowed_application_list">Allowed applications</string>
@@ -89,4 +93,6 @@
     <string name="update_checking_title">Checking for updates…</string>
     <string name="update_checking">Installed version: %s</string>
     <string name="help">PowerTunnel is working only until you are connected to the VPN\n\Open the settings if you need to adjust the list of applications that can use PowerTunnel.</string>
+    <string name="dns_fetch_error">Failed to fetch the DNS servers list</string>
+    <string name="error">Error</string>
 </resources>

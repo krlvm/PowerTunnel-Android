@@ -10,10 +10,29 @@ int loglevel = ANDROID_LOG_WARN;
 extern int max_tun_msg;
 extern struct ng_session *ng_session;
 
+bool pt_enable_doh = false;
+jobject doh_util;
+
 // JNI
+
+bool get_jni_env(JNIEnv **env) {
+    bool did_attach_thread = false;
+    *env = NULL;
+    // Check if the current thread is attached to the VM
+    auto get_env_result = (*jvm)->GetEnv(jvm, (void**)env, JNI_VERSION_1_6);
+    if (get_env_result == JNI_EDETACHED) {
+        if ((*jvm)->AttachCurrentThread(jvm, env, NULL) == JNI_OK) {
+            did_attach_thread = true;
+        }
+    } else if (get_env_result == JNI_EVERSION) {
+        // Unsupported JNI version. Throw an exception if you want to.
+    }
+    return did_attach_thread;
+}
 
 jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     log_android(ANDROID_LOG_INFO, "JNI load");
+    jvm = vm;
 
     JNIEnv *env;
     if ((*vm)->GetEnv(vm, (void **) &env, JNI_VERSION_1_6) != JNI_OK) {
@@ -73,7 +92,10 @@ Java_tun_proxy_service_Tun2HttpVpnService_jni_1init(JNIEnv *env, jobject instanc
 
 JNIEXPORT void JNICALL
 Java_tun_proxy_service_Tun2HttpVpnService_jni_1start(
-        JNIEnv *env, jobject instance, jint tun, jboolean fwd53, jint rcode, jstring proxyIp, jint proxyPort) {
+        JNIEnv *env, jobject instance, jint tun, jboolean fwd53, jint rcode, jstring proxyIp, jint proxyPort, jboolean doh) {
+
+    pt_enable_doh = (bool)(doh == JNI_TRUE);
+    doh_util = (*env)->NewGlobalRef(env, (*env)->FindClass(env, "ru/krlvm/powertunnel/android/DOHUtility"));
 
     const char *proxy_ip = (*env)->GetStringUTFChars(env, proxyIp, 0);
 

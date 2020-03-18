@@ -61,7 +61,7 @@ public class Tun2HttpVpnService extends VpnService {
 
     private native void jni_init();
 
-    private native void jni_start(int tun, boolean fwd53, int rcode, String proxyIp, int proxyPort);
+    private native void jni_start(int tun, boolean fwd53, int rcode, String proxyIp, int proxyPort, boolean doh);
 
     private native void jni_stop(int tun);
 
@@ -88,6 +88,7 @@ public class Tun2HttpVpnService extends VpnService {
         }
         PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
         PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
+        Log.d("Tun2Boot", "Waiting for native start...");
         if(!PowerTunnel.isRunning()) {
             try {
                 PowerTunnel.bootstrap();
@@ -95,7 +96,6 @@ public class Tun2HttpVpnService extends VpnService {
                 throw new IllegalStateException(getString((R.string.startup_failed_proxy)));
             }
         }
-        Log.d("Tun2Boot", "Waiting for native start...");
         if (vpn == null) {
             vpn = startVPN(getBuilder());
             if (vpn == null) {
@@ -152,19 +152,36 @@ public class Tun2HttpVpnService extends VpnService {
         /* ----------------- */
 
         List<String> dnsServers = Util.getDefaultDNS(this);
+        PowerTunnel.DOH_ADDRESS = null;
         if(prefs.getBoolean("override_dns", false) || dnsServers.isEmpty()) {
-            dnsServers.clear();
-            switch (prefs.getString("dns_provider", "CLOUDFLARE")) {
-                default:
-                case "CLOUDFLARE": {
-                    dnsServers.add("1.1.1.1");
-                    dnsServers.add("1.0.0.1");
-                    break;
+            String provider = prefs.getString("dns_provider", "CLOUDFLARE");
+            if(!provider.contains("_DOH")) {
+                dnsServers.clear();
+                switch (provider) {
+                    default:
+                    case "CLOUDFLARE": {
+                        dnsServers.add("1.1.1.1");
+                        dnsServers.add("1.0.0.1");
+                        break;
+                    }
+                    case "GOOGLE": {
+                        dnsServers.add("8.8.8.8");
+                        dnsServers.add("8.8.4.4");
+                        break;
+                    }
                 }
-                case "GOOGLE": {
-                    dnsServers.add("8.8.8.8");
-                    dnsServers.add("8.8.4.4");
-                    break;
+            } else {
+                dnsServers.clear();
+                switch (provider.replace("_DOH", "")) {
+                    default:
+                    case "CLOUDFLARE": {
+                        PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
+                        break;
+                    }
+                    case "GOOGLE": {
+                        PowerTunnel.DOH_ADDRESS = "https://dns.google/dns-query";
+                        break;
+                    }
                 }
             }
         }
@@ -230,7 +247,7 @@ public class Tun2HttpVpnService extends VpnService {
         String proxyHost = PowerTunnel.SERVER_IP_ADDRESS;
         int proxyPort = PowerTunnel.SERVER_PORT;
         if (proxyPort != 0 && !TextUtils.isEmpty(proxyHost)) {
-            jni_start(vpn.getFd(), false, 3, proxyHost, proxyPort);
+            jni_start(vpn.getFd(), false, 3, proxyHost, proxyPort, PowerTunnel.DOH_ADDRESS != null);
 
             prefs.edit().putBoolean(PREF_RUNNING, true).apply();
         }
