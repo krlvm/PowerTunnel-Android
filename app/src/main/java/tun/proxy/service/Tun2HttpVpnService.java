@@ -83,13 +83,14 @@ public class Tun2HttpVpnService extends VpnService {
         PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
         PowerTunnel.FULL_CHUNKING = prefs.getBoolean("full_chunking", false);
         PowerTunnel.DEFAULT_CHUNK_SIZE = Integer.parseInt(prefs.getString("chunk_size", "2"));
-        if(PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {
+        if (PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {
             PowerTunnel.DEFAULT_CHUNK_SIZE = 2;
         }
         PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
         PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
-        Log.d("Tun2Boot", "Waiting for native start...");
-        if(!PowerTunnel.isRunning()) {
+        configureDOH(prefs);
+        Log.i(TAG, "Waiting for VPN server start...");
+        if (!PowerTunnel.isRunning()) {
             try {
                 PowerTunnel.bootstrap();
             } catch (Exception ex) {
@@ -106,7 +107,7 @@ public class Tun2HttpVpnService extends VpnService {
     }
 
     private void stop() {
-        if(PowerTunnel.isRunning()) {
+        if (PowerTunnel.isRunning()) {
             PowerTunnel.stop();
         }
         if (vpn != null) {
@@ -153,9 +154,9 @@ public class Tun2HttpVpnService extends VpnService {
 
         List<String> dnsServers = Util.getDefaultDNS(this);
         PowerTunnel.DOH_ADDRESS = null;
-        if(prefs.getBoolean("override_dns", false) || dnsServers.isEmpty()) {
+        if (prefs.getBoolean("override_dns", false) || dnsServers.isEmpty()) {
             String provider = prefs.getString("dns_provider", "CLOUDFLARE");
-            if(!provider.contains("_DOH")) {
+            if (!provider.contains("_DOH")) {
                 dnsServers.clear();
                 switch (provider) {
                     default:
@@ -172,17 +173,7 @@ public class Tun2HttpVpnService extends VpnService {
                 }
             } else {
                 dnsServers.clear();
-                switch (provider.replace("_DOH", "")) {
-                    default:
-                    case "CLOUDFLARE": {
-                        PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
-                        break;
-                    }
-                    case "GOOGLE": {
-                        PowerTunnel.DOH_ADDRESS = "https://dns.google/dns-query";
-                        break;
-                    }
-                }
+                configureDOH(provider);
             }
         }
         for (String dns : dnsServers) {
@@ -209,7 +200,7 @@ public class Tun2HttpVpnService extends VpnService {
                         disallowChanged = true;
                     }
                 }
-                if(disallowChanged) {
+                if (disallowChanged) {
                     MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.DISALLOW, disallow);
                     //these deleted packages are now removed from the registry
                 }
@@ -233,13 +224,35 @@ public class Tun2HttpVpnService extends VpnService {
                         allowChanged = true;
                     }
                 }
-                if(allowChanged) {
+                if (allowChanged) {
                     MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.ALLOW, allow);
                     //these deleted packages are now removed from the registry
                 }
             }
         }
         return builder;
+    }
+
+    private void configureDOH(SharedPreferences prefs) {
+        PowerTunnel.DOH_ADDRESS = null;
+        if (prefs.getBoolean("override_dns", false)) {
+            configureDOH(prefs.getString("dns_provider", "CLOUDFLARE"));
+        }
+    }
+
+    private void configureDOH(String provider) {
+        PowerTunnel.DOH_ADDRESS = null;
+        switch (provider.replace("_DOH", "")) {
+            default:
+            case "CLOUDFLARE": {
+                PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
+                break;
+            }
+            case "GOOGLE": {
+                PowerTunnel.DOH_ADDRESS = "https://dns.google/dns-query";
+                break;
+            }
+        }
     }
 
     private void startNative(ParcelFileDescriptor vpn) {
