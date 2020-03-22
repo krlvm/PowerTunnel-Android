@@ -59,7 +59,7 @@ public class Updater {
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(intent.context);
         builder.setTitle(title)
-            .setCancelable(false)
+            .setCancelable(true)
             .setNegativeButton(R.string.ok,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
