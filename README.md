@@ -31,6 +31,24 @@ You can compile a binary yourself or download prepared binary [here](https://git
 ### Setup
 Just install it as a regular Android application: no root access is needed.
 
+## DNS lookup
+PowerTunnel for Android provides various ways to configure DNS lookup and host name resolving. It's not recommended to change PowerTunnel's DNS settings if you don't have valuable reasons to to that because it can be unstable and slowdown your Internet connection.
+
+### DNS over HTTPS mode
+You can enable DNS over HTTPS (DoH) mode in the settings - enable DNS override and select provider with the DoH label.
+
+All available DoH providers are tested and fully compatible with PowerTunnel, but nonetheless, if you try to determine your DNS [here](http://www.whatsmydnsserver.com/) you'll get nothing due to the internal architecture of PowerTunnel Android version.
+
+### DNSSec mode
+DNSSec mode appears to validate DNS responses.
+
+DNSSec mode is experimental and not recommended to use. Note that it useless and not working when DoH mode is enabled (because DoH already validating DNS responses on server-side). When there's some troubles with resolving, resolving is going on with the system's DNS settings.
+
+### Custom DNS providers
+You can also choose one of custom DNS providers (without DoH). It doesn't work with some of Android versions.
+
+When there's some troubles with resolving using the choosen custom provider, resolving is going on with the system's DNS settings.
+
 ### Doesn't work
 Most likely your ISP blocked the website you need by IP address, so only encrypted tunnel (VPN/Tor) can help you.
 
@@ -39,5 +57,6 @@ Also, you can try enabling full chunking mode (will be added in the upcoming sta
 ## Dependencies
 * [TunProxy](https://github.com/raise-isayan/TunProxy) with [bugfixes](https://github.com/krlvm/TunProxy) - codebase, VPN server and traffic interceptor
 * [LittleProxy](https://github.com/adamfisk/LittleProxy) with some [patches](https://github.com/krlvm/PowerTunnel-Android/tree/master/app/src/main/java/org/littleshoot/proxy/impl) - proxy server
+* [dnsjava](https://github.com/dnsjava/dnsjava) - DNS library, DoH realization
+* [dnssecjava](https://github.com/ibauersachs/dnssecjava) - DNSSec realization for dnsjava
 * [DNSSEC4J](https://github.com/adamfisk/DNSSEC4J) - DNSSec realization for LittleProxy
-* [dnsjava](https://github.com/dnsjava/dnsjava) - library for making DoH requests
