@@ -1,0 +1,19 @@
+This is a long-term support release
+
+New features:
+- DNS over HTTPS (DoH mode) - you can choose DoH provider in settings
+
+Improvements:
+- More custom DNS providers, including DoH
+- Updated DNSSec algorithm, still be experimental and not stable
+- Less persistent updater
+
+Bugfixes:
+- Custom DNS provider was ignored on certain Android versions
+
+Internal changes:
+- LibertyTunnel base PowerTunnel version updated to version 1.10
+- We moved from outdated DNSSEC4J to dnssecjava.
+
+Known issues:
+- DoH doesn't work with Android 10 and higher
