@@ -1,9 +1,18 @@
 package ru.krlvm.powertunnel;
 
+import org.jitsi.dnssec.validator.ValidatingResolver;
+import org.littleshoot.proxy.HostResolver;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
 import org.littleshoot.proxy.HttpProxyServer;
+import org.littleshoot.proxy.HttpProxyServerBootstrap;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
+import org.xbill.DNS.ARecord;
+import org.xbill.DNS.Lookup;
+import org.xbill.DNS.Record;
+import org.xbill.DNS.Resolver;
+import org.xbill.DNS.SimpleResolver;
+import org.xbill.DNS.Type;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -13,8 +22,10 @@ import java.util.Set;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
+import ru.krlvm.powertunnel.android.AndroidDohResolver;
 import ru.krlvm.powertunnel.filter.ProxyFilter;
 import ru.krlvm.powertunnel.utilities.URLUtility;
+import tun.proxy.service.Tun2HttpVpnService;
 
 /**
  * The PowerTunnel Android Proxy Server
@@ -50,6 +61,8 @@ public class PowerTunnel {
     public static boolean USE_DNS_SEC = false;
     public static boolean MIX_HOST_CASE = false;
 
+    public static String DOH_ADDRESS = null;
+
     private static final Set<String> GOVERNMENT_BLACKLIST = new HashSet<>();
     private static final Set<String> ISP_STUB_LIST = new HashSet<>();
 
@@ -73,16 +86,70 @@ public class PowerTunnel {
     private static void startServer() throws UnknownHostException {
         System.out.println("[.] Starting LittleProxy server on " + SERVER_IP_ADDRESS + ":" + SERVER_PORT);
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-        SERVER = DefaultHttpProxyServer.bootstrap().withFiltersSource(new HttpFiltersSourceAdapter() {
+        HttpProxyServerBootstrap bootstrap = DefaultHttpProxyServer.bootstrap().withFiltersSource(new HttpFiltersSourceAdapter() {
             @Override
             public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
                 return new ProxyFilter(originalRequest);
             }
         }).withAddress(new InetSocketAddress(InetAddress.getByName(SERVER_IP_ADDRESS), SERVER_PORT))
-                .withTransparent(true).withUseDnsSec(USE_DNS_SEC).start();
+                .withTransparent(true).withUseDnsSec(USE_DNS_SEC);
+        boolean useDoh = DOH_ADDRESS != null && !DOH_ADDRESS.isEmpty();
+        if (useDoh) {
+            if (DOH_ADDRESS.endsWith("/")) {
+                DOH_ADDRESS = DOH_ADDRESS.substring(0, DOH_ADDRESS.length() - 1);
+            }
+            System.out.println("[*] DNS over HTTPS is enabled: '" + DOH_ADDRESS + "'");
+            bootstrap.withServerResolver(new HostResolver() {
+                @Override
+                public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
+                    try {
+                        System.out.println("[DoH] Resolving: " + host);
+                        return new InetSocketAddress(AndroidDohResolver.resolve(host), port);
+                    } catch (Exception ex) {
+                        System.out.println(String.format("[x] DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
+                        ex.printStackTrace();
+                        //return new InetSocketAddress(InetAddress.getByName(host), port);
+                        throw new UnknownHostException(String.format("DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
+                    }
+                }
+            });
+        } else if(USE_DNS_SEC || Tun2HttpVpnService.DNS_OVERRIDE) {
+            System.out.println("[*] Enabled advanced resolver | DNSSec: " + USE_DNS_SEC + " / DNSOverride: " + Tun2HttpVpnService.DNS_OVERRIDE);
+            bootstrap.withServerResolver(new HostResolver() {
+                final Resolver resolver = getResolver();
+                @Override
+                public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
+                    try {
+                        Lookup lookup = new Lookup(host, Type.A);
+                        lookup.setResolver(resolver);
+                        Record[] records = lookup.run();
+                        if (lookup.getResult() == Lookup.SUCCESSFUL) {
+                            return new InetSocketAddress(((ARecord) records[0]).getAddress(), port);
+                        } else {
+                            throw new UnknownHostException(lookup.getErrorString());
+                        }
+                    } catch (Exception ex) {
+                        //System.out.println(String.format("[x] Failed to resolve '%s': %s", host, ex.getMessage()));
+                        //throw new UnknownHostException(String.format("Failed to resolve '%s': %s", host, ex.getMessage()));
+                        return new InetSocketAddress(InetAddress.getByName(host), port);
+                    }
+                }
+            });
+        }
+        SERVER = bootstrap.start();
         RUNNING = true;
         System.out.println("[.] Server started");
         System.out.println();
+    }
+
+    private static Resolver getResolver() throws UnknownHostException {
+        String primaryDnsServer = Tun2HttpVpnService.DNS_SERVERS.get(0);
+        Resolver resolver = new SimpleResolver(primaryDnsServer);
+        if(USE_DNS_SEC) {
+            System.out.println("[*] DNSSec is enabled");
+            resolver = new ValidatingResolver(resolver);
+        }
+        return resolver;
     }
 
     /**

@@ -8,7 +8,7 @@
 #include <android/log.h>
 
 #define LOG_TAG "Tun2Http_HTTP"
-#define LOG(v) {__android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, v);}
+#define LOG(v) { /*__android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, v);*/ }
 
 
 static const char http_503[] =
@@ -115,7 +115,7 @@ uint8_t *find_data(uint8_t *data, size_t data_len, char *value) {
 uint_t patch_buffer[2*MTU];
 
 uint8_t *patch_http_url(uint8_t *data, size_t *data_len) {
-    __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, "patch_http_url start");
+    //__android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, "patch_http_url start");
 
     char hostname[1024];
     uint8_t *host = find_data(data, *data_len, "Host: ");
@@ -128,11 +128,11 @@ uint8_t *patch_http_url(uint8_t *data, size_t *data_len) {
             length++;
         }
     } else {
-        LOG("patch_http_url no host");
+        //LOG("patch_http_url no host");
         return 0;
     }
 
-    __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, "patch_http_url find word");
+    //__android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, "patch_http_url find word");
 
     //GET POST PUT DELETE HEAD OPTIONS PATCH
     char *word;

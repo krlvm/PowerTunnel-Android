@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -61,7 +62,7 @@ public class Tun2HttpVpnService extends VpnService {
 
     private native void jni_init();
 
-    private native void jni_start(int tun, boolean fwd53, int rcode, String proxyIp, int proxyPort);
+    private native void jni_start(int tun, boolean fwd53, int rcode, String proxyIp, int proxyPort, boolean doh);
 
     private native void jni_stop(int tun);
 
@@ -78,24 +79,74 @@ public class Tun2HttpVpnService extends VpnService {
         return vpn != null;
     }
 
+    public static List<String> DNS_SERVERS = new ArrayList<>();
+    public static boolean DNS_OVERRIDE = false;
     private void start() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
         PowerTunnel.FULL_CHUNKING = prefs.getBoolean("full_chunking", false);
         PowerTunnel.DEFAULT_CHUNK_SIZE = Integer.parseInt(prefs.getString("chunk_size", "2"));
-        if(PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {
+        if (PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {
             PowerTunnel.DEFAULT_CHUNK_SIZE = 2;
         }
         PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
         PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
-        if(!PowerTunnel.isRunning()) {
+        DNS_SERVERS = Util.getDefaultDNS(this);
+        DNS_OVERRIDE = false;
+        PowerTunnel.DOH_ADDRESS = null;
+        if (prefs.getBoolean("override_dns", false) || DNS_SERVERS.isEmpty()) {
+            String provider = prefs.getString("dns_provider", "CLOUDFLARE");
+            DNS_SERVERS.clear();
+            DNS_OVERRIDE = true;
+            if (!provider.contains("_DOH")) {
+                switch (provider) {
+                    default:
+                    case "CLOUDFLARE": {
+                        DNS_SERVERS.add("1.1.1.1");
+                        DNS_SERVERS.add("1.0.0.1");
+                        break;
+                    }
+                    case "GOOGLE": {
+                        DNS_SERVERS.add("8.8.8.8");
+                        DNS_SERVERS.add("8.8.4.4");
+                        break;
+                    }
+                    case "ADGUARD": {
+                        DNS_SERVERS.add("176.103.130.130");
+                        DNS_SERVERS.add("176.103.130.131");
+                        break;
+                    }
+                }
+            } else {
+                switch (provider.replace("_DOH", "")) {
+                    default:
+                    case "CLOUDFLARE": {
+                        PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
+                        break;
+                    }
+                    case "GOOGLE": {
+                        PowerTunnel.DOH_ADDRESS = "https://dns.google/dns-query";
+                        break;
+                    }
+                    case "ADGUARD": {
+                        PowerTunnel.DOH_ADDRESS = "https://dns.adguard.com/dns-query";
+                        break;
+                    }
+                    case "SECDNS": {
+                        PowerTunnel.DOH_ADDRESS = "https://doh.securedns.eu/dns-query";
+                        break;
+                    }
+                }
+            }
+        }
+        Log.i(TAG, "Waiting for VPN server start...");
+        if (!PowerTunnel.isRunning()) {
             try {
                 PowerTunnel.bootstrap();
             } catch (Exception ex) {
                 throw new IllegalStateException(getString((R.string.startup_failed_proxy)));
             }
         }
-        Log.d("Tun2Boot", "Waiting for native start...");
         if (vpn == null) {
             vpn = startVPN(getBuilder());
             if (vpn == null) {
@@ -106,7 +157,7 @@ public class Tun2HttpVpnService extends VpnService {
     }
 
     private void stop() {
-        if(PowerTunnel.isRunning()) {
+        if (PowerTunnel.isRunning()) {
             PowerTunnel.stop();
         }
         if (vpn != null) {
@@ -138,6 +189,7 @@ public class Tun2HttpVpnService extends VpnService {
         }
     }
 
+
     private Builder getBuilder() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Builder builder = new Builder();
@@ -151,24 +203,7 @@ public class Tun2HttpVpnService extends VpnService {
         builder.addRoute("0:0:0:0:0:0:0:0", 0);
         /* ----------------- */
 
-        List<String> dnsServers = Util.getDefaultDNS(this);
-        if(prefs.getBoolean("override_dns", false) || dnsServers.isEmpty()) {
-            dnsServers.clear();
-            switch (prefs.getString("dns_provider", "CLOUDFLARE")) {
-                default:
-                case "CLOUDFLARE": {
-                    dnsServers.add("1.1.1.1");
-                    dnsServers.add("1.0.0.1");
-                    break;
-                }
-                case "GOOGLE": {
-                    dnsServers.add("8.8.8.8");
-                    dnsServers.add("8.8.4.4");
-                    break;
-                }
-            }
-        }
-        for (String dns : dnsServers) {
+        for (String dns : DNS_SERVERS) {
             builder.addDnsServer(dns);
         }
 
@@ -192,7 +227,7 @@ public class Tun2HttpVpnService extends VpnService {
                         disallowChanged = true;
                     }
                 }
-                if(disallowChanged) {
+                if (disallowChanged) {
                     MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.DISALLOW, disallow);
                     //these deleted packages are now removed from the registry
                 }
@@ -216,7 +251,7 @@ public class Tun2HttpVpnService extends VpnService {
                         allowChanged = true;
                     }
                 }
-                if(allowChanged) {
+                if (allowChanged) {
                     MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.ALLOW, allow);
                     //these deleted packages are now removed from the registry
                 }
@@ -230,7 +265,7 @@ public class Tun2HttpVpnService extends VpnService {
         String proxyHost = PowerTunnel.SERVER_IP_ADDRESS;
         int proxyPort = PowerTunnel.SERVER_PORT;
         if (proxyPort != 0 && !TextUtils.isEmpty(proxyHost)) {
-            jni_start(vpn.getFd(), false, 3, proxyHost, proxyPort);
+            jni_start(vpn.getFd(), false, 3, proxyHost, proxyPort, PowerTunnel.DOH_ADDRESS != null);
 
             prefs.edit().putBoolean(PREF_RUNNING, true).apply();
         }
