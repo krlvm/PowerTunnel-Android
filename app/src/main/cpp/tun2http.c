@@ -95,7 +95,7 @@ Java_tun_proxy_service_Tun2HttpVpnService_jni_1start(
         JNIEnv *env, jobject instance, jint tun, jboolean fwd53, jint rcode, jstring proxyIp, jint proxyPort, jboolean doh) {
 
     pt_enable_doh = (bool)(doh == JNI_TRUE);
-    doh_util = (*env)->NewGlobalRef(env, (*env)->FindClass(env, "ru/krlvm/powertunnel/android/DOHUtility"));
+    //doh_util = (*env)->NewGlobalRef(env, (*env)->FindClass(env, "ru/krlvm/powertunnel/android/DOHUtility"));
 
     const char *proxy_ip = (*env)->GetStringUTFChars(env, proxyIp, 0);
 

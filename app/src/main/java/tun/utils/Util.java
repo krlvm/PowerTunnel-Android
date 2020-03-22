@@ -52,6 +52,8 @@ public class Util {
         } else {
             defaultServers.add(jni_getprop("net.dns1"));
             defaultServers.add(jni_getprop("net.dns2"));
+            defaultServers.add(jni_getprop("net.dns3"));
+            defaultServers.add(jni_getprop("net.dns4"));
         }
         return defaultServers;
     }

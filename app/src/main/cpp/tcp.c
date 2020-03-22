@@ -455,14 +455,15 @@ void check_tcp_socket(const struct arguments *args,
 //#define DNS_LOOKUPS 1
 //#define USELESS_DNS_LOOKUPS 1
 static void lookup_hostname(struct sockaddr_in *addr, char *hostname, int hostlen, int needed) {
+    //__android_log_print(ANDROID_LOG_VERBOSE, "Tun2Http", "Looking up for %s", hostname);
     JNIEnv *jni_env;
     if (pt_enable_doh) {
-        get_jni_env(&jni_env);
+        /*get_jni_env(&jni_env);
         jstring pt_response = (jstring) (*jni_env)->CallStaticObjectMethod(jni_env, doh_util,
                 (*jni_env)->GetStaticMethodID(jni_env, doh_util, "resolve","(Ljava/lang/String;)Ljava/lang/String;"),
                 (*jni_env)->NewStringUTF(jni_env, hostname));
         strncpy(hostname, (char *) (*jni_env)->GetStringUTFChars(jni_env, pt_response, 0), hostlen);
-        hostname[hostlen - 1] = '\0';
+        hostname[hostlen - 1] = '\0';*/
     } else {
         #ifdef DNS_LOOKUPS
             struct hostent	*host;

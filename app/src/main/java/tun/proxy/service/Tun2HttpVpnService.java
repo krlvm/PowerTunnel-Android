@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -78,6 +79,8 @@ public class Tun2HttpVpnService extends VpnService {
         return vpn != null;
     }
 
+    public static List<String> DNS_SERVERS = new ArrayList<>();
+    public static boolean DNS_OVERRIDE = false;
     private void start() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
@@ -88,7 +91,54 @@ public class Tun2HttpVpnService extends VpnService {
         }
         PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
         PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
-        configureDOH(prefs);
+        DNS_SERVERS = Util.getDefaultDNS(this);
+        DNS_OVERRIDE = false;
+        PowerTunnel.DOH_ADDRESS = null;
+        if (prefs.getBoolean("override_dns", false) || DNS_SERVERS.isEmpty()) {
+            String provider = prefs.getString("dns_provider", "CLOUDFLARE");
+            DNS_SERVERS.clear();
+            DNS_OVERRIDE = true;
+            if (!provider.contains("_DOH")) {
+                switch (provider) {
+                    default:
+                    case "CLOUDFLARE": {
+                        DNS_SERVERS.add("1.1.1.1");
+                        DNS_SERVERS.add("1.0.0.1");
+                        break;
+                    }
+                    case "GOOGLE": {
+                        DNS_SERVERS.add("8.8.8.8");
+                        DNS_SERVERS.add("8.8.4.4");
+                        break;
+                    }
+                    case "ADGUARD": {
+                        DNS_SERVERS.add("176.103.130.130");
+                        DNS_SERVERS.add("176.103.130.131");
+                        break;
+                    }
+                }
+            } else {
+                switch (provider.replace("_DOH", "")) {
+                    default:
+                    case "CLOUDFLARE": {
+                        PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
+                        break;
+                    }
+                    case "GOOGLE": {
+                        PowerTunnel.DOH_ADDRESS = "https://dns.google/dns-query";
+                        break;
+                    }
+                    case "ADGUARD": {
+                        PowerTunnel.DOH_ADDRESS = "https://dns.adguard.com/dns-query";
+                        break;
+                    }
+                    case "SECDNS": {
+                        PowerTunnel.DOH_ADDRESS = "https://doh.securedns.eu/dns-query";
+                        break;
+                    }
+                }
+            }
+        }
         Log.i(TAG, "Waiting for VPN server start...");
         if (!PowerTunnel.isRunning()) {
             try {
@@ -139,6 +189,7 @@ public class Tun2HttpVpnService extends VpnService {
         }
     }
 
+
     private Builder getBuilder() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Builder builder = new Builder();
@@ -152,31 +203,7 @@ public class Tun2HttpVpnService extends VpnService {
         builder.addRoute("0:0:0:0:0:0:0:0", 0);
         /* ----------------- */
 
-        List<String> dnsServers = Util.getDefaultDNS(this);
-        PowerTunnel.DOH_ADDRESS = null;
-        if (prefs.getBoolean("override_dns", false) || dnsServers.isEmpty()) {
-            String provider = prefs.getString("dns_provider", "CLOUDFLARE");
-            if (!provider.contains("_DOH")) {
-                dnsServers.clear();
-                switch (provider) {
-                    default:
-                    case "CLOUDFLARE": {
-                        dnsServers.add("1.1.1.1");
-                        dnsServers.add("1.0.0.1");
-                        break;
-                    }
-                    case "GOOGLE": {
-                        dnsServers.add("8.8.8.8");
-                        dnsServers.add("8.8.4.4");
-                        break;
-                    }
-                }
-            } else {
-                dnsServers.clear();
-                configureDOH(provider);
-            }
-        }
-        for (String dns : dnsServers) {
+        for (String dns : DNS_SERVERS) {
             builder.addDnsServer(dns);
         }
 
@@ -231,28 +258,6 @@ public class Tun2HttpVpnService extends VpnService {
             }
         }
         return builder;
-    }
-
-    private void configureDOH(SharedPreferences prefs) {
-        PowerTunnel.DOH_ADDRESS = null;
-        if (prefs.getBoolean("override_dns", false)) {
-            configureDOH(prefs.getString("dns_provider", "CLOUDFLARE"));
-        }
-    }
-
-    private void configureDOH(String provider) {
-        PowerTunnel.DOH_ADDRESS = null;
-        switch (provider.replace("_DOH", "")) {
-            default:
-            case "CLOUDFLARE": {
-                PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
-                break;
-            }
-            case "GOOGLE": {
-                PowerTunnel.DOH_ADDRESS = "https://dns.google/dns-query";
-                break;
-            }
-        }
     }
 
     private void startNative(ParcelFileDescriptor vpn) {

@@ -52,8 +52,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.preference:preference:1.1.0'
-    implementation('dnsjava:dnsjava:3.0.0') {
+    implementation('dnsjava:dnsjava:3.0.2') {
         exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
+    implementation('org.jitsi:dnssecjava:2.0.0') {
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+        exclude group: 'dnsjava', module: 'dnsjava'
     }
     //implementation 'org.littleshoot:littleproxy:1.1.2'
     //implementation 'com.google.android.material:material:1.1.0'
