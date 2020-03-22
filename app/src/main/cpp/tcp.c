@@ -461,10 +461,8 @@ static void lookup_hostname(struct sockaddr_in *addr, char *hostname, int hostle
         jstring pt_response = (jstring) (*jni_env)->CallStaticObjectMethod(jni_env, doh_util,
                 (*jni_env)->GetStaticMethodID(jni_env, doh_util, "resolve","(Ljava/lang/String;)Ljava/lang/String;"),
                 (*jni_env)->NewStringUTF(jni_env, hostname));
-        __android_log_print(ANDROID_LOG_VERBOSE, "JniDoH", "Host bef: %s", hostname);
         strncpy(hostname, (char *) (*jni_env)->GetStringUTFChars(jni_env, pt_response, 0), hostlen);
         hostname[hostlen - 1] = '\0';
-        __android_log_print(ANDROID_LOG_VERBOSE, "JniDoH", "Host aft: %s", hostname);
     } else {
         #ifdef DNS_LOOKUPS
             struct hostent	*host;

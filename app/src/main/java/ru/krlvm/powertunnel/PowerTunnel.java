@@ -15,7 +15,6 @@ import java.util.Set;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
-import ru.krlvm.powertunnel.android.DOHUtility;
 import ru.krlvm.powertunnel.filter.ProxyFilter;
 import ru.krlvm.powertunnel.utilities.URLUtility;
 
@@ -91,9 +90,9 @@ public class PowerTunnel {
                 @Override
                 public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
                     try {
-                        return new InetSocketAddress(InetAddress.getByName(DOHUtility.resolve(host)), port);
-                    } catch (Exception e) {
-                        throw new UnknownHostException("Failed to query DoH server");
+                        return new InetSocketAddress(InetAddress.getByName(host), port);
+                    } catch (Exception ex) {
+                        throw new UnknownHostException("Failed to lookup hostname: " + ex.getMessage());
                     }
                 }
             });
