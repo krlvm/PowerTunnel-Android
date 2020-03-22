@@ -10,7 +10,7 @@ Simple, scalable, cross-platform and effective solution against government censo
 <a href="https://github.com/krlvm/PowerTunnel-Android/releases"><img src="https://img.shields.io/github/downloads/krlvm/PowerTunnel-Android/total?style=flat-square" alt="Downloads"/></a>
 <a href="https://github.com/krlvm/PowerTunnel-Android/wiki"><img src="https://img.shields.io/badge/help-wiki-yellow?style=flat-square" alt="Help on the Wiki"/></a>
 <br>
-<img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/images/ui.png" alt="PowerTunnel User Interface" height="750px" />
+<img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/images/ui.png" alt="PowerTunnel User Interface" height="700px" /><img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/images/ui-active.png" alt="PowerTunnel User Interface" height="700px" /><img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/images/ui-settings.png" alt="PowerTunnel User Interface" height="700px" />
 </div>
 
 The Android version of PowerTunnel is built on [VPN Server](https://github.com/raise-isayan/TunProxy) that intercepts traffic and directs it through the [LibertyTunnel](https://github.com/krlvm/PowerTunnel/tree/libertytunnel) proxy
@@ -19,6 +19,8 @@ The Android version of PowerTunnel is built on [VPN Server](https://github.com/r
 Nowadays Internet censorship is introducing in many countries: governments analyze and block traffic to this sites using DPI - Deep Packet Inspection systems, forcing you using circumvention utilities like VPN, for example. That approach have many disadvantages, most noticeable - connection speed slowdown. In addition, these services cannot guarantee work stability and your data confidence.
 
 PowerTunnel for Android is active DPI circumvention utility, that works only on your phone and don't send your traffic to third-party servers, respecting your privacy and do not slowing down your internet connection.
+
+Since PowerTunnel for Android uses the same architecture as the PC version, the Android version also uses proxy server - it lies under the VPN service and running at *127.0.0.1:8085*, so you can setup PowerTunnel in ways other than VPN.
 
 ### How does it work?
 PowerTunnel for Android establishes a transparent proxy server on your phone and starts local VPN server, that forwards your traffic into the proxy server, where are DPI circumvention tricks applying.
@@ -38,3 +40,4 @@ Also, you can try enabling full chunking mode (will be added in the upcoming sta
 * [TunProxy](https://github.com/raise-isayan/TunProxy) with [bugfixes](https://github.com/krlvm/TunProxy) - codebase, VPN server and traffic interceptor
 * [LittleProxy](https://github.com/adamfisk/LittleProxy) with some [patches](https://github.com/krlvm/PowerTunnel-Android/tree/master/app/src/main/java/org/littleshoot/proxy/impl) - proxy server
 * [DNSSEC4J](https://github.com/adamfisk/DNSSEC4J) - DNSSec realization for LittleProxy
+* [dnsjava](https://github.com/dnsjava/dnsjava) - library for making DoH requests
