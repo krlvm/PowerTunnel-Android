@@ -45,7 +45,7 @@ public class PowerTunnel {
 
     public static final String NAME = "LibertyTunnel";
     public static final String VERSION = "1.0";
-    public static final String BASE_VERSION = "1.7.2";
+    public static final String BASE_VERSION = "1.10";
     public static final int VERSION_CODE = 10; //base version code
     public static final String REPOSITORY_URL = "https://github.com/krlvm/PowerTunnel/tree/libertytunnel";
 
@@ -70,6 +70,7 @@ public class PowerTunnel {
      * PowerTunnel bootstrap
      */
     public static void bootstrap() throws UnknownHostException {
+        System.out.println("[*] Base PowerTunnel/LibertyTunnel version is " + BASE_VERSION);
         //Load data
         GOVERNMENT_BLACKLIST.add("*");
         //ISP_STUB_LIST.add("");
@@ -103,7 +104,7 @@ public class PowerTunnel {
                 @Override
                 public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
                     try {
-                        System.out.println("[DoH] Resolving: " + host);
+                        //System.out.println("[DoH] Resolving: " + host);
                         return new InetSocketAddress(AndroidDohResolver.resolve(host), port);
                     } catch (Exception ex) {
                         System.out.println(String.format("[x] DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
