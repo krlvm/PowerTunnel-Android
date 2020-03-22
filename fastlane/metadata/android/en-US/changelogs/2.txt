@@ -1,0 +1,21 @@
+This is a long-term support release
+
+New features:
+- Option to use the system default DNS servers
+- Option to choose between the Cloudflare and Google DNS servers
+- Experimental DNSSec option
+- Mix host case and payload circumvent methods
+- Update notifier
+- Clear allowed/disallowed application selections
+
+Added translations:
+- Russian language
+
+Improvements:
+- Improved performance and stability
+- Interface polishing
+
+Bugfixes:
+- PowerTunnel logo is now displaying properly
+- PowerTunnel is now no longer crashes on reopening
+- Fixed the crash occurring at start when some allowed or disallowed applications are deleted

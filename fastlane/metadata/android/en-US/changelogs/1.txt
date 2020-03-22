@@ -1,0 +1,12 @@
+Very early preview version.
+
+Working features:
+- Allow/disallow certain application to circumvent DPI
+- HTTP/HTTPS circumvention (without government blacklists)
+
+Known issues:
+- Low quality PowerTunnel logo
+- Misaligned UI on small devices
+- Closing and reopening PowerTunnel activity when VPN is enabled causes application creash
+- Sometimes Bad request to URI in Chrome when Data Saver is enabled
+- Start fails when allowed/disallowed package is deleted
