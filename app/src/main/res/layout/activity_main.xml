@@ -50,6 +50,7 @@
 
         <Button
             android:id="@+id/start_button"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="225dp"
             android:layout_height="50dp"
             android:layout_marginTop="32dp" />

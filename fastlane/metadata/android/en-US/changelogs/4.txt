@@ -1,0 +1,8 @@
+This is a servicing release to 1.x branch
+
+Improvements:
+- Changelog is displaying in update info now
+
+Bugfixes:
+- Fixed the misaligned layout on the small layout
+- Fixed app crash on the old Android versions
