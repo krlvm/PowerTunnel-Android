@@ -27,6 +27,18 @@ public class Updater {
         return string;
     }
 
+    private static String getChangelog(int version) throws IOException {
+        URL url = new URL("https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/fastlane/metadata/android/en-US/changelogs/" + version + ".txt");
+        StringBuilder builder = new StringBuilder();
+        LineNumberReader reader = new LineNumberReader(new InputStreamReader(url.openStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            builder.append('\n').append(line);
+        }
+        reader.close();
+        return builder.toString();
+    }
+
     private static void continueUpdating(UpdateIntent intent) {
         if(intent.dialog != null) {
             if(intent.dialog.isShowing()) {
@@ -55,12 +67,13 @@ public class Updater {
         }
         String messageString = null;
         if(message == R.string.update_available) {
-            messageString = MyApplication.getInstance().getString(R.string.update_available, pendingUpdate[1]);
+            messageString = MyApplication.getInstance().getString(R.string.update_available, pendingUpdate[1])
+                    + "\n" + pendingUpdate[2];
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(intent.context);
         builder.setTitle(title)
             .setCancelable(true)
-            .setNegativeButton(R.string.ok,
+            .setPositiveButton(R.string.download,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -92,6 +105,7 @@ public class Updater {
         protected String doInBackground(UpdateIntent... intents) {
             intent = intents[0];
             boolean result = true;
+            int versionCode = -1;
             try {
                 String response = load();
                 String[] data = response.split(";");
@@ -99,13 +113,16 @@ public class Updater {
                     result = false;
                 } else {
                     try {
-                        Integer.parseInt(data[0]);
+                        versionCode = Integer.parseInt(data[0]);
                     } catch (NumberFormatException ex) {
                         result = false;
                     }
                 }
                 if(result) {
-                    pendingUpdate = data;
+                    pendingUpdate = new String[3];
+                    pendingUpdate[0] = data[0];
+                    pendingUpdate[1] = data[1];
+                    pendingUpdate[2] = getChangelog(versionCode);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

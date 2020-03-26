@@ -54,4 +54,5 @@
     <string name="help">PowerTunnel работает лишь до тех пор, пока вы подключены к VPN.\n\Откройте настройки чтобы настроить список приложений, которые будут использовать PowerTunnel.</string>
     <string name="dns_fetch_error">Ошибка при получении списка адресов DNS серверов</string>
     <string name="error">Ошибка</string>
+    <string name="download">Скачать</string>
 </resources>

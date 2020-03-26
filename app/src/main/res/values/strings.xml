@@ -101,4 +101,5 @@
     <string name="help">PowerTunnel is working only until you are connected to the VPN\n\Open the settings if you need to adjust the list of applications that can use PowerTunnel.</string>
     <string name="dns_fetch_error">Failed to fetch the DNS servers list</string>
     <string name="error">Error</string>
+    <string name="download">Download</string>
 </resources>
