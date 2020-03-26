@@ -42,7 +42,7 @@
     <string name="clear_selection">Очистить выбор</string>
     <string name="about_version">Версия %1$s</string>
     <string name="btn_check_for_updates">Проверить обновления</string>
-    <string name="title_activity_about">О программе</string>
+    <string name="title_activity_about">О PowerTunnel</string>
     <string name="no_updates">Вы используете последнюю версию PowerTunnel</string>
     <string name="no_updates_title">Обновлений нет</string>
     <string name="update_error">Ошибка при проверке обновлений, проверьте соединение с интернетом</string>
