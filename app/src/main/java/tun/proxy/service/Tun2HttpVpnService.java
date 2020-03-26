@@ -204,7 +204,11 @@ public class Tun2HttpVpnService extends VpnService {
         /* ----------------- */
 
         for (String dns : DNS_SERVERS) {
-            builder.addDnsServer(dns);
+            try {
+                builder.addDnsServer(dns);
+            } catch (IllegalArgumentException ignore) {
+                //bad address, most likely running on an old android version
+            }
         }
 
         // MTU

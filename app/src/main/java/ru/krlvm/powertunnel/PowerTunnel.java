@@ -116,26 +116,28 @@ public class PowerTunnel {
             });
         } else if(USE_DNS_SEC || Tun2HttpVpnService.DNS_OVERRIDE) {
             System.out.println("[*] Enabled advanced resolver | DNSSec: " + USE_DNS_SEC + " / DNSOverride: " + Tun2HttpVpnService.DNS_OVERRIDE);
-            bootstrap.withServerResolver(new HostResolver() {
-                final Resolver resolver = getResolver();
-                @Override
-                public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
-                    try {
-                        Lookup lookup = new Lookup(host, Type.A);
-                        lookup.setResolver(resolver);
-                        Record[] records = lookup.run();
-                        if (lookup.getResult() == Lookup.SUCCESSFUL) {
-                            return new InetSocketAddress(((ARecord) records[0]).getAddress(), port);
-                        } else {
-                            throw new UnknownHostException(lookup.getErrorString());
+            final Resolver resolver = getResolver();
+            if(resolver != null) {
+                bootstrap.withServerResolver(new HostResolver() {
+                    @Override
+                    public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
+                        try {
+                            Lookup lookup = new Lookup(host, Type.A);
+                            lookup.setResolver(resolver);
+                            Record[] records = lookup.run();
+                            if (lookup.getResult() == Lookup.SUCCESSFUL) {
+                                return new InetSocketAddress(((ARecord) records[0]).getAddress(), port);
+                            } else {
+                                throw new UnknownHostException(lookup.getErrorString());
+                            }
+                        } catch (Exception ex) {
+                            //System.out.println(String.format("[x] Failed to resolve '%s': %s", host, ex.getMessage()));
+                            //throw new UnknownHostException(String.format("Failed to resolve '%s': %s", host, ex.getMessage()));
+                            return new InetSocketAddress(InetAddress.getByName(host), port);
                         }
-                    } catch (Exception ex) {
-                        //System.out.println(String.format("[x] Failed to resolve '%s': %s", host, ex.getMessage()));
-                        //throw new UnknownHostException(String.format("Failed to resolve '%s': %s", host, ex.getMessage()));
-                        return new InetSocketAddress(InetAddress.getByName(host), port);
                     }
-                }
-            });
+                });
+            }
         }
         SERVER = bootstrap.start();
         RUNNING = true;
@@ -144,6 +146,11 @@ public class PowerTunnel {
     }
 
     private static Resolver getResolver() throws UnknownHostException {
+        try {
+            Class.forName("java.time.Duration"); //one of dnsjava Java 8 imports
+        } catch (ClassNotFoundException ex) {
+            return null;
+        }
         String primaryDnsServer = Tun2HttpVpnService.DNS_SERVERS.get(0);
         Resolver resolver = new SimpleResolver(primaryDnsServer);
         if(USE_DNS_SEC) {
