@@ -80,6 +80,7 @@ public class Updater {
                         if(ready && pendingUpdate != null) {
                             Intent browserIntent = new Intent(Intent.ACTION_VIEW,
                                     Uri.parse("https://github.com/krlvm/PowerTunnel/releases/download/v" + pendingUpdate[1] + "/PowerTunnel.apk"));
+                            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             MyApplication.getInstance().startActivity(browserIntent);
                         }
                     }
