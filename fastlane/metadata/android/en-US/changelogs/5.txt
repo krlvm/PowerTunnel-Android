@@ -1,0 +1,4 @@
+This is a servicing release to 1.2.x branch
+
+Bugfixes:
+- Fixed connectivity issues
