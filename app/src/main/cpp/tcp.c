@@ -265,7 +265,7 @@ void check_tcp_socket(const struct arguments *args,
         if (s->tcp.state == TCP_LISTEN) {
             // Check socket connect
             if (ev->events & EPOLLIN) {
-                uint8_t buffer[512];
+                char buffer[512];
                 ssize_t bytes = recv(s->socket, buffer, 12, 0);
                 if (bytes < 0) {
                     log_android(ANDROID_LOG_ERROR, "%s recv SOCKS5 error %d: %s",
