@@ -73,11 +73,11 @@ public class Updater {
         AlertDialog.Builder builder = new AlertDialog.Builder(intent.context);
         builder.setTitle(title)
             .setCancelable(true)
-            .setPositiveButton(R.string.download,
+            .setPositiveButton(ready ? R.string.download : R.string.ok,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        if(ready && pendingUpdate != null) {
+                        if(ready) {
                             Intent browserIntent = new Intent(Intent.ACTION_VIEW,
                                     Uri.parse("https://github.com/krlvm/PowerTunnel/releases/download/v" + pendingUpdate[1] + "/PowerTunnel.apk"));
                             browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
