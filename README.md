@@ -38,7 +38,13 @@ PowerTunnel for Android provides various ways to configure DNS lookup and host n
 #### DNS over HTTPS mode
 You can enable DNS over HTTPS (DoH) mode in the settings - enable DNS override and select provider with the DoH label.
 
-All available DoH providers are tested and fully compatible with PowerTunnel, but nonetheless, if you try to determine your DNS [here](http://www.whatsmydnsserver.com/) you'll get nothing due to the internal architecture of PowerTunnel Android version.
+All available DoH providers are tested and fully compatible with PowerTunnel, you can also specify your favorite server.
+
+You can check does DoH work [there](https://ipleak.net/).
+
+If you try to determine your DNS [here](http://www.whatsmydnsserver.com/) you'll get nothing due to the internal architecture of PowerTunnel Android version, even though X actually works.
+
+At the moment, DoH doesn't work on some of Android 10 and higher devices. If you're experiencing the same problem, please, submit your phone vendor.
 
 #### DNSSec mode
 DNSSec mode appears to validate DNS responses.
