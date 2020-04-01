@@ -1,0 +1,11 @@
+This is a long-term support release
+
+New features:
+- You can specify your favorite DNS provider now
+
+Added translations:
+- Polish language
+
+Bugfixes:
+- Fixed some DNS resolving issues
+- Update notifier doesn't suggests to update where there's no updates

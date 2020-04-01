@@ -8,8 +8,8 @@ android {
         applicationId "ru.krlvm.powertunnel.android"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.2.1"
+        versionCode 6
+        versionName "1.3"
 
         externalNativeBuild {
             cmake {
