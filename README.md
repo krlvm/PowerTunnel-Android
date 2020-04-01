@@ -56,6 +56,9 @@ You can also choose one of custom DNS providers (without DoH). It doesn't work w
 
 When there's some troubles with resolving using the choosen custom provider, resolving is going on with the system's DNS settings.
 
+#### How to specify my favorite DNS provider
+Just type its address in the settings. If the address is starting with `https://` it will be recognized as DoH provider. 
+
 ## Doesn't work
 Most likely your ISP blocked the website you need by IP address, so only encrypted tunnel (VPN/Tor) can help you.
 
