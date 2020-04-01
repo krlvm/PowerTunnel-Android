@@ -3,10 +3,12 @@ package tun.proxy.preferences;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.view.MenuItem;
 
@@ -17,6 +19,7 @@ import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
 import tun.proxy.MyApplication;
 import tun.proxy.preferences.fragments.PackageListPreferenceFragment;
+import tun.proxy.preferences.preference.EditTextSummaryPreference;
 
 import static android.preference.Preference.OnPreferenceChangeListener;
 import static android.preference.Preference.OnPreferenceClickListener;
@@ -27,10 +30,17 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
     public static final String VPN_DISALLOWED_APPLICATION_LIST = "vpn_disallowed_application_list";
     public static final String VPN_ALLOWED_APPLICATION_LIST = "vpn_allowed_application_list";
     public static final String VPN_CLEAR_ALL_SELECTION = "vpn_clear_all_selection";
+    public static final String DNS_PROVIDER = "dns_provider";
+    public static final String SPECIFIED_DNS = "specified_dns_provider";
 
     private ListPreference prefPackage;
     private PreferenceScreen prefDisallow;
     private PreferenceScreen prefAllow;
+
+    private ListPreference prefDns;
+    private EditTextSummaryPreference prefSpecDns;
+
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,18 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
         prefAllow.setOnPreferenceClickListener(this);
         clearAllSelection.setOnPreferenceClickListener(this);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+        prefSpecDns = ((EditTextSummaryPreference) findPreference(SPECIFIED_DNS));
+
+        prefDns = ((ListPreference) findPreference(DNS_PROVIDER));
+        prefDns.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                updateSpecDnsStatus(((String) newValue));
+                return true;
+            }
+        });
+
         prefPackage.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object value) {
@@ -61,7 +83,12 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
             }
         });
 
+        updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "CLOUDFLARE"));
         updateMenuItem();
+    }
+
+    private void updateSpecDnsStatus(String provider) {
+        prefSpecDns.setEnabled(provider.equals("SPECIFIED"));
     }
 
     @Override

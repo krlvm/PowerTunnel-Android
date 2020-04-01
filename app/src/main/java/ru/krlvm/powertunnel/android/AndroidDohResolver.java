@@ -26,7 +26,7 @@ import ru.krlvm.powertunnel.PowerTunnel;
 /**
  * Parts of code were derived from project
  * dohjava (https://github.com/NUMtechnology/dohjava)
- * licensed under the MIT license
+ * that licensed under the MIT license
  */
 public class AndroidDohResolver {
 

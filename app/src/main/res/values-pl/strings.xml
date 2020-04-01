@@ -76,4 +76,6 @@
     <string name="dns_fetch_error">Pobieranie listy serwerów DNS nie powiodło się</string>
     <string name="error">Błąd</string>
     <string name="download">Pobierz</string>
+    <string name="specify_dns_provider">Określ dostawcę DNS</string>
+    <string name="specified_dns_provider">Określony dostawca DNS</string>
 </resources>

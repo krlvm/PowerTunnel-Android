@@ -54,6 +54,7 @@
         <item>AdGuard</item>
         <item>AdGuard (DoH)</item>
         <item>SecureDNS (DoH)</item>
+        <item>@string/specified_dns_provider</item>
     </string-array>
     <string-array name="pref_dns_provider_value" translatable="false">
         <item>CLOUDFLARE</item>
@@ -63,6 +64,7 @@
         <item>ADGUARD</item>
         <item>ADGUARD_DOH</item>
         <item>SECDNS_DOH</item>
+        <item>SPECIFIED</item>
     </string-array>
 
     <string name="pref_allowed_application_list">Allowed applications</string>
@@ -102,4 +104,6 @@
     <string name="dns_fetch_error">Failed to fetch the DNS servers list</string>
     <string name="error">Error</string>
     <string name="download">Download</string>
+    <string name="specify_dns_provider">Specify DNS provider</string>
+    <string name="specified_dns_provider">Specified DNS provider</string>
 </resources>

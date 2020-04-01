@@ -96,9 +96,20 @@ public class Tun2HttpVpnService extends VpnService {
         PowerTunnel.DOH_ADDRESS = null;
         if (prefs.getBoolean("override_dns", false) || DNS_SERVERS.isEmpty()) {
             String provider = prefs.getString("dns_provider", "CLOUDFLARE");
-            DNS_SERVERS.clear();
             DNS_OVERRIDE = true;
+            if(provider.equals("SPECIFIED")) {
+                String specifiedDnsProvider = prefs.getString("specified_dns_provider", "");
+                if(!specifiedDnsProvider.trim().isEmpty()) {
+                    if(specifiedDnsProvider.startsWith("https://")) {
+                        PowerTunnel.DOH_ADDRESS = specifiedDnsProvider;
+                    } else {
+                        DNS_SERVERS.clear();
+                        DNS_SERVERS.add(specifiedDnsProvider);
+                    }
+                }
+            }
             if (!provider.contains("_DOH")) {
+                DNS_SERVERS.clear();
                 switch (provider) {
                     default:
                     case "CLOUDFLARE": {
@@ -139,7 +150,7 @@ public class Tun2HttpVpnService extends VpnService {
                 }
             }
         }
-        Log.i(TAG, "Waiting for VPN server start...");
+        Log.i(TAG, "Waiting for VPN server to start...");
         if (!PowerTunnel.isRunning()) {
             try {
                 PowerTunnel.bootstrap();
