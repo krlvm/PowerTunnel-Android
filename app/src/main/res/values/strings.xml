@@ -92,13 +92,13 @@
     <string name="title_activity_about">About PowerTunnel</string>
     <string name="no_updates">You\'re running the latest version of PowerTunnel</string>
     <string name="no_updates_title">No updates available</string>
-    <string name="update_error">An error occurred while checking updates, check the Internet connection</string>
+    <string name="update_error">An error occurred while checking for updates, check the Internet connection</string>
     <string name="update_error_title">Error</string>
-    <string name="update_available_title">An update available</string>
+    <string name="update_available_title">An update is available</string>
     <string name="update_available">Version %s is ready to install</string>
     <string name="update_checking_title">Checking for updates…</string>
     <string name="update_checking">Installed version: %s</string>
-    <string name="help">PowerTunnel is working only until you are connected to the VPN\n\Open the settings if you need to adjust the list of applications that can use PowerTunnel.</string>
+    <string name="help">PowerTunnel works only while you are connected to the VPN\n\Open the settings if you need to adjust the list of applications that can use PowerTunnel.</string>
     <string name="dns_fetch_error">Failed to fetch the DNS servers list</string>
     <string name="error">Error</string>
     <string name="download">Download</string>
