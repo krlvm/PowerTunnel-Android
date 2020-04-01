@@ -1,0 +1,79 @@
+<resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Anuluj</string>
+
+    <!-- Status messages -->
+    <string name="server_not_running">Usługa wyłączona</string>
+    <string name="server_running">Usługa włączona</string>
+
+    <!-- Start/stop button -->
+    <string name="server_start">Włącz</string>
+    <string name="server_stop">Wyłącz</string>
+
+    <!-- Progress messages -->
+    <string name="starting_server">Włączanie…</string>
+    <string name="stopping_server">Wyłączanie…</string>
+    <string name="status_please_wait">Proszę czekać…</string>
+    <string name="startup_failed_vpn">Włączanie usługi VPN nie powiodło się</string>
+
+    <!-- Main menu -->
+    <string name="title_activity_settings">Ustawienia</string>
+    <string name="title_show_about">O aplikacji</string>
+
+    <!-- Settings -->
+    <string name="pref_category_connection">Ustawienia połączeń</string>
+    <string name="pref_category_dpi">Ustawienia omijania DPI</string>
+
+    <string name="pref_vpn_connection_mode">Tryb połączenia</string>
+    <string name="pref_header_allowed_application_list">Zezwolone aplikacje</string>
+    <string name="pref_header_disallowed_application_list">Zablokowane aplikacje </string>
+
+    <string name="pref_clear_all">Zresetuj listy aplikacji</string>
+    <string name="pref_dialog_clear_all">Czy na pewno chcesz zresetować listy wybranych aplikacji?</string>
+
+    <string name="search">Szukaj</string>
+    <string name="sort_by_app_name">Sortuj według nazwy aplikacji</string>
+    <string name="sort_by_package">Sortuj według nazwy pakietu</string>
+
+    <string-array name="pref_vpn_connection_name">
+        <item>Wyklucz wybrane aplikacje</item>
+        <item>Zezwól tylko wybranym aplikacjom</item>
+    </string-array>
+
+    <string name="pref_allowed_application_list">Dozwolone aplikacje</string>
+
+    <string-array name="pref_allowed_application_name" />
+    <string-array name="pref_allowed_application_value" />
+
+    <string name="pref_disallowed_application_list">Niedozwolone aplikacje</string>
+    <string name="description">Proste, skalowalne, między-platformowe i efektywne rozwiązanie przeciwko cenzurze ze strony rządu</string>
+    <string name="stop_server_to_edit_settings">Zatrzymaj PowerTunnel by edytować ustawienia</string>
+
+    <string-array name="pref_disallowed_application_name" />
+    <string-array name="pref_disallowed_application_value" />
+    <string name="pref_override_dns">Zmień serwery DNS</string>
+    <string name="pref_dns_provider">Serwer DNS</string>
+    <string name="pref_category_dns">Rozpoznawanie nazw domen</string>
+    <string name="pref_use_dns_sec">Użyj DNSSec (eksperymentalne)</string>
+    <string name="pref_full_chunking">Tryb fragmentowania</string>
+    <string name="pref_mix_host_case">Wymieszaj wielkość liter w nazwie hosta</string>
+    <string name="pref_send_payload">Wysyłaj dodatkowe 21KB z połączeniami</string>
+    <string name="startup_failed_proxy">Uruchamianie serwera proxy nie powiodło się</string>
+    <string name="pref_chunk_size">Domyślny rozmiar fragmentów</string>
+    <string name="clear_selection">Wyczyść zaznaczenie</string>
+    <string name="about_version">Wersja %1$s</string>
+    <string name="btn_check_for_updates">Sprawdź dostępność aktualizacji</string>
+    <string name="title_activity_about">O PowerTunnel</string>
+    <string name="no_updates">Używasz najnowszej wersji PowerTunnel</string>
+    <string name="no_updates_title">Brak dostępnych aktualizacji</string>
+    <string name="update_error">Wystąpił błąd podczas sprawdzania aktualizacji, sprawdź połądzenie z Internetem.</string>
+    <string name="update_error_title">Błąd</string>
+    <string name="update_available_title">Aktualizacja jest dostępna</string>
+    <string name="update_available">Wersja %s jest gotowa do instalacji</string>
+    <string name="update_checking_title">Sprawdzanie aktualizacji…</string>
+    <string name="update_checking">Zainstalowana wersja: %s</string>
+    <string name="help">PowerTunnel działa tylko tak długo, jak działa połączenie VPN\n\Otwórz ustawienia, by dostosować listę aplikacji, które mogą używać PowerTunnel.</string>
+    <string name="dns_fetch_error">Pobieranie listy serwerów DNS nie powiodło się</string>
+    <string name="error">Błąd</string>
+    <string name="download">Pobierz</string>
+</resources>
