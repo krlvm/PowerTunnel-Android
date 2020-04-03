@@ -57,4 +57,13 @@
     <string name="download">Скачать</string>
     <string name="specify_dns_provider">Укажите поставщика DNS</string>
     <string name="specified_dns_provider">Указанный поставщик DNS</string>
+
+    <string-array name="pref_theme">
+        <item>Автоматически (системная настройка)</item>
+        <item>Включена</item>
+        <item>Выключена</item>
+        <item>В режиме энергосбережения</item>
+    </string-array>
+    <string name="pref_theme_title">Темная тема</string>
+    <string name="pref_category_appearance">Внешний вид</string>
 </resources>

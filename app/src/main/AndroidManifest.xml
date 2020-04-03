@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".AboutActivity"
+            android:name=".activities.AboutActivity"
             android:label="@string/title_activity_about"
             android:parentActivityName=".MainActivity">
             <meta-data

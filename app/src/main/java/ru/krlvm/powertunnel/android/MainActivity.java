@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 
+import ru.krlvm.powertunnel.android.activities.AboutActivity;
 import ru.krlvm.powertunnel.android.updater.UpdateIntent;
 import ru.krlvm.powertunnel.android.updater.Updater;
 import tun.proxy.preferences.SimplePreferenceActivity;
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        applyTheme(this);
 
         logo = findViewById(R.id.status_logo);
         status = findViewById(R.id.status);
@@ -105,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        applyTheme(this);
         updateStatus();
         statusHandler.post(statusRunnable);
         Intent intent = new Intent(this, Tun2HttpVpnService.class);
@@ -186,6 +193,36 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_VPN) {
             updateStatus();
             Tun2HttpVpnService.start(this);
+        }
+    }
+
+    public static void applyTheme(Context context) {
+        applyTheme(PreferenceManager.getDefaultSharedPreferences(context));
+    }
+
+    public static void applyTheme(SharedPreferences prefs) {
+        applyTheme(prefs.getString("theme", "AUTO"));
+    }
+
+    public static void applyTheme(String theme) {
+        //System.out.println("Theme: " + theme);
+        switch (theme) {
+            case "AUTO": {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            }
+            case "LIGHT": {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            }
+            case "DARK": {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            }
+            case "BATTERY": {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                break;
+            }
         }
     }
 }

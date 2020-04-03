@@ -83,6 +83,14 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
             }
         });
 
+        findPreference("theme").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                MainActivity.applyTheme(((String) newValue));
+                return true;
+            }
+        });
+
         updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "CLOUDFLARE"));
         updateMenuItem();
     }

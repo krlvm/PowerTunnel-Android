@@ -1,4 +1,4 @@
-package ru.krlvm.powertunnel.android;
+package ru.krlvm.powertunnel.android.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ru.krlvm.powertunnel.android.BuildConfig;
+import ru.krlvm.powertunnel.android.MainActivity;
+import ru.krlvm.powertunnel.android.R;
 import ru.krlvm.powertunnel.android.updater.UpdateIntent;
 import ru.krlvm.powertunnel.android.updater.Updater;
 
@@ -34,5 +37,11 @@ public class AboutActivity extends AppCompatActivity {
                 Updater.checkUpdates(new UpdateIntent(progress, AboutActivity.this));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainActivity.applyTheme(this);
     }
 }

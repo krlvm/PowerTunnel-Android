@@ -78,4 +78,13 @@
     <string name="download">Pobierz</string>
     <string name="specify_dns_provider">Określ dostawcę DNS</string>
     <string name="specified_dns_provider">Określony dostawca DNS</string>
+
+    <string-array name="pref_theme">
+        <item>Auto (preferencje systemowe)</item>
+        <item>Włączone</item>
+        <item>Wyłączone</item>
+        <item>W trybie oszczędzania baterii</item>
+    </string-array>
+    <string name="pref_theme_title">Ciemny schemat</string>
+    <string name="pref_category_appearance">Wygląd</string>
 </resources>

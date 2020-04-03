@@ -67,6 +67,19 @@
         <item>SPECIFIED</item>
     </string-array>
 
+    <string-array name="pref_theme">
+        <item>Auto (system preference)</item>
+        <item>Enabled</item>
+        <item>Disabled</item>
+        <item>In Battery Saver mode</item>
+    </string-array>
+    <string-array name="pref_theme_values" translatable="false">
+        <item>AUTO</item>
+        <item>DARK</item>
+        <item>LIGHT</item>
+        <item>BATTERY</item>
+    </string-array>
+
     <string name="pref_allowed_application_list">Allowed applications</string>
 
     <string-array name="pref_allowed_application_name" />
@@ -106,4 +119,22 @@
     <string name="download">Download</string>
     <string name="specify_dns_provider">Specify DNS provider</string>
     <string name="specified_dns_provider">Specified DNS provider</string>
+    <string name="pref_theme_title">Dark theme</string>
+    <string name="pref_category_appearance">Appearance</string>
+    <string name="title_activity_settings2">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>
