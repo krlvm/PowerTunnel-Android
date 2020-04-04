@@ -57,12 +57,12 @@ You can also choose one of custom DNS providers (without DoH). It doesn't work w
 When there's some troubles with resolving using the choosen custom provider, resolving is going on with the system's DNS settings.
 
 #### How to specify my favorite DNS provider
-Just type its address in the settings. If the address is starting with `https://` it will be recognized as DoH provider. 
+Just type its address in the settings. If the address starts with `https://` it will be recognized as a DoH provider. 
 
 ## Doesn't work
 Most likely your ISP blocked the website you need by IP address, so only encrypted tunnel (VPN/Tor) can help you.
 
-Also, you can try enabling full chunking mode (will be added in the upcoming stable release).
+Also, you can try enabling full chunking mode.
 
 ## Contributing
 PowerTunnel is open-source software: you can help in the development process.
@@ -77,7 +77,7 @@ Localization contributors:
 - Polish: [Atrate](https://github.com/Atrate)
 
 ## Dependencies
-* [TunProxy](https://github.com/raise-isayan/TunProxy) with [bugfixes](https://github.com/krlvm/TunProxy) - codebase, VPN server and traffic interceptor
+* [TunProxy](https://github.com/raise-isayan/TunProxy) - VPN server and traffic interceptor
 * [LittleProxy](https://github.com/adamfisk/LittleProxy) with some [patches](https://github.com/krlvm/PowerTunnel-Android/tree/master/app/src/main/java/org/littleshoot/proxy/impl) - proxy server
 * [dnsjava](https://github.com/dnsjava/dnsjava) - DNS library, DoH realization
 * [dnssecjava](https://github.com/ibauersachs/dnssecjava) - DNSSec realization for dnsjava
