@@ -63,7 +63,7 @@
     <string name="clear_selection">Wyczyść zaznaczenie</string>
     <string name="about_version">Wersja %1$s</string>
     <string name="btn_check_for_updates">Sprawdź dostępność aktualizacji</string>
-    <string name="title_activity_about">O PowerTunnel</string>
+    <string name="title_activity_about">O aplikacji</string>
     <string name="no_updates">Używasz najnowszej wersji PowerTunnel</string>
     <string name="no_updates_title">Brak dostępnych aktualizacji</string>
     <string name="update_error">Wystąpił błąd podczas sprawdzania aktualizacji, sprawdź połądzenie z Internetem.</string>
