@@ -1,5 +1,6 @@
 package ru.krlvm.powertunnel.android;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -79,6 +80,19 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.help)).setText(R.string.help); //somehow it's ignoring resource set in layout
 
         Updater.checkUpdates(new UpdateIntent(null, MainActivity.this));
+
+        //TODO: remove this code by July, 2020
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if(prefs.getString("dns_provider", "CLOUDFLARE").equals("SECDNS_DOH")) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("dns_provider", "CLOUDFLARE_DOH");
+            editor.apply();
+            editor.commit();
+            AlertDialog.Builder note = new AlertDialog.Builder(this)
+                    .setTitle(R.string.notification)
+                    .setMessage(R.string.secdns_discounted);
+            note.show();
+        }
     }
 
     @Override

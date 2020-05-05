@@ -53,7 +53,6 @@
         <item>Google (DoH)</item>
         <item>AdGuard</item>
         <item>AdGuard (DoH)</item>
-        <item>SecureDNS (DoH)</item>
         <item>@string/specified_dns_provider</item>
     </string-array>
     <string-array name="pref_dns_provider_value" translatable="false">
@@ -63,7 +62,6 @@
         <item>GOOGLE_DOH</item>
         <item>ADGUARD</item>
         <item>ADGUARD_DOH</item>
-        <item>SECDNS_DOH</item>
         <item>SPECIFIED</item>
     </string-array>
 
@@ -121,4 +119,6 @@
     <string name="specified_dns_provider">Specified DNS provider</string>
     <string name="pref_theme_title">Dark theme</string>
     <string name="pref_category_appearance">Appearance</string>
+    <string name="secdns_discounted">SecureDNS DNS provider has been discounted since April 30, 2020. Your DNS provider was automatically changed to CloudFlare DoH to avoid connectivity issues.</string>
+    <string name="notification">Notification</string>
 </resources>

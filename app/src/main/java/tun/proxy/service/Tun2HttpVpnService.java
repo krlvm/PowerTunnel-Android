@@ -143,8 +143,9 @@ public class Tun2HttpVpnService extends VpnService {
                         PowerTunnel.DOH_ADDRESS = "https://dns.adguard.com/dns-query";
                         break;
                     }
+                    //TODO: remove this code by July, 2020
                     case "SECDNS": {
-                        PowerTunnel.DOH_ADDRESS = "https://doh.securedns.eu/dns-query";
+                        PowerTunnel.DOH_ADDRESS = null;
                         break;
                     }
                 }

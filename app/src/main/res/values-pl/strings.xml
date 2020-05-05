@@ -87,4 +87,6 @@
     </string-array>
     <string name="pref_theme_title">Ciemny schemat</string>
     <string name="pref_category_appearance">Wygląd</string>
+    <string name="secdns_discounted">Dostawca DNS SecureDNS jest dyskontowany od 30 kwietnia 2020 r. Twój dostawca DNS został automatycznie zmieniony na CloudFlare DoH, aby uniknąć problemów z łącznością.</string>
+    <string name="notification">Uwaga</string>
 </resources>

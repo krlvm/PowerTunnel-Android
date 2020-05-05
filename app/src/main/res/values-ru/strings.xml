@@ -66,4 +66,6 @@
     </string-array>
     <string name="pref_theme_title">Темная тема</string>
     <string name="pref_category_appearance">Внешний вид</string>
+    <string name="secdns_discounted">Поставщик DNS SecureDNS прекратил работу по состоянию на 30 апреля 2020 года. Ваш поставщик DNS был автоматически заменен на CloudFlare DoH чтобы избежать проблем с подключением.</string>
+    <string name="notification">Уведомление</string>
 </resources>
