@@ -1,0 +1,2 @@
+Changes:
+- Removed discounted SecureDNS DNS provider
