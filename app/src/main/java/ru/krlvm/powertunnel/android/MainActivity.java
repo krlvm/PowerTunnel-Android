@@ -11,6 +11,7 @@ import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         ((TextView) findViewById(R.id.help)).setText(R.string.help); //somehow it's ignoring resource set in layout
+        ((TextView) findViewById(R.id.main_copyright)).setMovementMethod(LinkMovementMethod.getInstance());
 
         Updater.checkUpdates(new UpdateIntent(null, MainActivity.this));
 
