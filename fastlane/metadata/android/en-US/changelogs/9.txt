@@ -1,0 +1,5 @@
+New features:
+- Proxy mode. You can use PowerTunnel as regular proxy instead of VPN now. It can be useful in cases when you need PowerTunnel and another VPN connection on the same time. Note: you will have to manually configure proxy server in your apps if you enable proxy mode.
+
+Improvements:
+- Improved overall stability of the application

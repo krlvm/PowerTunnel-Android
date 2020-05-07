@@ -22,7 +22,7 @@ Nowadays Internet censorship is introducing in many countries: governments analy
 
 PowerTunnel for Android is active DPI circumvention utility, that works only on your phone and don't send your traffic to third-party servers, respecting your privacy and do not slowing down your internet connection.
 
-Since PowerTunnel for Android uses the same architecture as the PC version, the Android version also uses proxy server - it lies under the VPN service and running at *127.0.0.1:8085*, so you can setup PowerTunnel in ways other than VPN.
+Since PowerTunnel for Android uses the same architecture as the PC version, the Android version also uses proxy server - it lies under the VPN service and running at *127.0.0.1:8085*, so you can setup PowerTunnel in ways other than VPN. Just enable proxy mode in the settings.
 
 ### How does it work?
 PowerTunnel for Android establishes a transparent proxy server on your phone and starts local VPN server, that forwards your traffic into the proxy server, where are DPI circumvention tricks applying.
