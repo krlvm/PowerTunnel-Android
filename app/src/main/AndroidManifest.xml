@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name="tun.proxy.MyApplication"
@@ -47,6 +48,8 @@
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
+
+        <service android:name="ru.krlvm.powertunnel.android.service.ProxyModeService" />
 
         <receiver
             android:name="tun.proxy.receiver.BootReceiver"

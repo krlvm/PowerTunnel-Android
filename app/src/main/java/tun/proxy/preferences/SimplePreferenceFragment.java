@@ -1,6 +1,8 @@
 package tun.proxy.preferences;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +13,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -41,6 +44,7 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
     private EditTextSummaryPreference prefSpecDns;
 
     private SharedPreferences prefs;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,8 +95,30 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
             }
         });
 
+        findPreference("proxy_mode").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if(((boolean) newValue) && context != null) {
+                    Toast.makeText(context, R.string.proxy_mode_warning, Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+        });
+
         updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "CLOUDFLARE"));
         updateMenuItem();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        context = activity.getApplicationContext();
     }
 
     private void updateSpecDnsStatus(String provider) {

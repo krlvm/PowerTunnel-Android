@@ -22,10 +22,10 @@ import java.util.Set;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
-import ru.krlvm.powertunnel.android.AndroidDohResolver;
+import ru.krlvm.powertunnel.android.PTManager;
+import ru.krlvm.powertunnel.android.resolver.AndroidDohResolver;
 import ru.krlvm.powertunnel.filter.ProxyFilter;
 import ru.krlvm.powertunnel.utilities.URLUtility;
-import tun.proxy.service.Tun2HttpVpnService;
 
 /**
  * The PowerTunnel Android Proxy Server
@@ -114,8 +114,8 @@ public class PowerTunnel {
                     }
                 }
             });
-        } else if(USE_DNS_SEC || Tun2HttpVpnService.DNS_OVERRIDE) {
-            System.out.println("[*] Enabled advanced resolver | DNSSec: " + USE_DNS_SEC + " / DNSOverride: " + Tun2HttpVpnService.DNS_OVERRIDE);
+        } else if(USE_DNS_SEC || PTManager.DNS_OVERRIDE) {
+            System.out.println("[*] Enabled advanced resolver | DNSSec: " + USE_DNS_SEC + " / DNSOverride: " + PTManager.DNS_OVERRIDE);
             final Resolver resolver = getResolver();
             if(resolver != null) {
                 bootstrap.withServerResolver(new HostResolver() {
@@ -151,7 +151,7 @@ public class PowerTunnel {
         } catch (ClassNotFoundException ex) {
             return null;
         }
-        String primaryDnsServer = Tun2HttpVpnService.DNS_SERVERS.get(0);
+        String primaryDnsServer = PTManager.DNS_SERVERS.get(0);
         Resolver resolver = new SimpleResolver(primaryDnsServer);
         if(USE_DNS_SEC) {
             System.out.println("[*] DNSSec is enabled");

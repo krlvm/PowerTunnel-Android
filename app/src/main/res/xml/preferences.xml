@@ -40,6 +40,11 @@
 		<PreferenceScreen
 			android:key="vpn_clear_all_selection"
 			android:title="@string/pref_clear_all" />
+		<SwitchPreference
+			android:title="@string/pref_proxy_mode"
+			android:summary="@string/pref_proxy_mode_desc"
+			android:key="proxy_mode"
+			android:defaultValue="false"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_category_dns">

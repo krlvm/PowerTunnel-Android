@@ -68,4 +68,9 @@
     <string name="pref_category_appearance">Внешний вид</string>
     <string name="secdns_discounted">Поставщик DNS SecureDNS прекратил работу по состоянию на 30 апреля 2020 года. Ваш поставщик DNS был автоматически заменен на CloudFlare DoH чтобы избежать проблем с подключением.</string>
     <string name="notification">Уведомление</string>
+    <string name="pref_proxy_mode_desc">Использовать прокси без VPN</string>
+    <string name="pref_proxy_mode">Режим прокси</string>
+    <string name="help_proxy">PowerTunnel работает в режиме прокси.\nВам нужно вручную настраивать прокси-сервер в приложениях.\n\nАдрес прокси-сервера:\n%s</string>
+    <string name="notification_proxy_background">Прокси-сервер PowerTunnel активен</string>
+    <string name="proxy_mode_warning">Теперь вы должны вручную настроить прокси-сервер в приложениях. Если у вас есть проблемы, вернитесь к режиму VPN, отключив режим прокси.</string>
 </resources>

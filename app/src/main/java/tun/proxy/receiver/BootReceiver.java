@@ -8,6 +8,7 @@ import android.net.VpnService;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import ru.krlvm.powertunnel.android.MainActivity;
 import tun.proxy.service.Tun2HttpVpnService;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -19,6 +20,10 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(!MainActivity.isVPN(prefs)) {
+            //We're in proxy mode
+            return;
+        }
         boolean isRunning = prefs.getBoolean(Tun2HttpVpnService.PREF_RUNNING, false);
         if (isRunning) {
             Intent prepare = VpnService.prepare(context);

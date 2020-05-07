@@ -17,14 +17,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import ru.krlvm.powertunnel.PowerTunnel;
+import ru.krlvm.powertunnel.android.PTManager;
 import ru.krlvm.powertunnel.android.R;
 import tun.proxy.MyApplication;
-import tun.utils.Util;
 
 public class Tun2HttpVpnService extends VpnService {
     public static final String PREF_RUNNING = "pref_running";
@@ -79,86 +77,11 @@ public class Tun2HttpVpnService extends VpnService {
         return vpn != null;
     }
 
-    public static List<String> DNS_SERVERS = new ArrayList<>();
-    public static boolean DNS_OVERRIDE = false;
     private void start() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
-        PowerTunnel.FULL_CHUNKING = prefs.getBoolean("full_chunking", false);
-        PowerTunnel.DEFAULT_CHUNK_SIZE = Integer.parseInt(prefs.getString("chunk_size", "2"));
-        if (PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {
-            PowerTunnel.DEFAULT_CHUNK_SIZE = 2;
-        }
-        PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
-        PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
-        DNS_SERVERS = Util.getDefaultDNS(this);
-        DNS_OVERRIDE = false;
-        PowerTunnel.DOH_ADDRESS = null;
-        if (prefs.getBoolean("override_dns", false) || DNS_SERVERS.isEmpty()) {
-            String provider = prefs.getString("dns_provider", "CLOUDFLARE");
-            DNS_OVERRIDE = true;
-            if(provider.equals("SPECIFIED")) {
-                String specifiedDnsProvider = prefs.getString("specified_dns_provider", "");
-                if(!specifiedDnsProvider.trim().isEmpty()) {
-                    if(specifiedDnsProvider.startsWith("https://")) {
-                        PowerTunnel.DOH_ADDRESS = specifiedDnsProvider;
-                    } else {
-                        DNS_SERVERS.clear();
-                        DNS_SERVERS.add(specifiedDnsProvider);
-                    }
-                }
-            }
-            if (!provider.contains("_DOH")) {
-                DNS_SERVERS.clear();
-                switch (provider) {
-                    default:
-                    case "CLOUDFLARE": {
-                        DNS_SERVERS.add("1.1.1.1");
-                        DNS_SERVERS.add("1.0.0.1");
-                        break;
-                    }
-                    case "GOOGLE": {
-                        DNS_SERVERS.add("8.8.8.8");
-                        DNS_SERVERS.add("8.8.4.4");
-                        break;
-                    }
-                    case "ADGUARD": {
-                        DNS_SERVERS.add("176.103.130.130");
-                        DNS_SERVERS.add("176.103.130.131");
-                        break;
-                    }
-                }
-            } else {
-                switch (provider.replace("_DOH", "")) {
-                    default:
-                    case "CLOUDFLARE": {
-                        PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
-                        break;
-                    }
-                    case "GOOGLE": {
-                        PowerTunnel.DOH_ADDRESS = "https://dns.google/dns-query";
-                        break;
-                    }
-                    case "ADGUARD": {
-                        PowerTunnel.DOH_ADDRESS = "https://dns.adguard.com/dns-query";
-                        break;
-                    }
-                    //TODO: remove this code by July, 2020
-                    case "SECDNS": {
-                        PowerTunnel.DOH_ADDRESS = null;
-                        break;
-                    }
-                }
-            }
-        }
+        PTManager.configure(this, prefs);
+        PTManager.startProxy(this);
         Log.i(TAG, "Waiting for VPN server to start...");
-        if (!PowerTunnel.isRunning()) {
-            try {
-                PowerTunnel.bootstrap();
-            } catch (Exception ex) {
-                throw new IllegalStateException(getString((R.string.startup_failed_proxy)));
-            }
-        }
         if (vpn == null) {
             vpn = startVPN(getBuilder());
             if (vpn == null) {
@@ -169,9 +92,7 @@ public class Tun2HttpVpnService extends VpnService {
     }
 
     private void stop() {
-        if (PowerTunnel.isRunning()) {
-            PowerTunnel.stop();
-        }
+        PTManager.stopProxy();
         if (vpn != null) {
             stopNative(vpn);
             stopVPN(vpn);
@@ -215,7 +136,7 @@ public class Tun2HttpVpnService extends VpnService {
         builder.addRoute("0:0:0:0:0:0:0:0", 0);
         /* ----------------- */
 
-        for (String dns : DNS_SERVERS) {
+        for (String dns : PTManager.DNS_SERVERS) {
             try {
                 builder.addDnsServer(dns);
             } catch (IllegalArgumentException ignore) {

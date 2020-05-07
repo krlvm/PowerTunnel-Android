@@ -89,4 +89,9 @@
     <string name="pref_category_appearance">Wygląd</string>
     <string name="secdns_discounted">Dostawca DNS SecureDNS jest dyskontowany od 30 kwietnia 2020 r. Twój dostawca DNS został automatycznie zmieniony na CloudFlare DoH, aby uniknąć problemów z łącznością.</string>
     <string name="notification">Uwaga</string>
+    <string name="pref_proxy_mode">Tryb proxy</string>
+    <string name="pref_proxy_mode_desc">Uruchom proxy bez VPN</string>
+    <string name="help_proxy">PowerTunnel działa w trybie proxy.\nMusisz ręcznie skonfigurować ustawienia proxy w aplikacjach.\n\nAdres proxy:\n%s</string>
+    <string name="notification_proxy_background">Serwer proxy PowerTunnel jest uruchomiony</string>
+    <string name="proxy_mode_warning">Teraz musisz ręcznie ustawić proxy aplikacji. Jeśli masz problemy, przełącz się z powrotem do trybu VPN wyłączającego tryb proxy.</string>
 </resources>

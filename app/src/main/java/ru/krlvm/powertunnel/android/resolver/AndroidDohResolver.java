@@ -1,4 +1,4 @@
-package ru.krlvm.powertunnel.android;
+package ru.krlvm.powertunnel.android.resolver;
 
 import org.xbill.DNS.ARecord;
 import org.xbill.DNS.DClass;

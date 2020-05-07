@@ -24,7 +24,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
+import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.activities.AboutActivity;
+import ru.krlvm.powertunnel.android.service.ProxyModeService;
 import ru.krlvm.powertunnel.android.updater.UpdateIntent;
 import ru.krlvm.powertunnel.android.updater.Updater;
 import tun.proxy.preferences.SimplePreferenceActivity;
@@ -63,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        applyTheme(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        applyTheme(prefs);
 
         logo = findViewById(R.id.status_logo);
         status = findViewById(R.id.status);
@@ -72,19 +75,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isRunning()) {
-                    stopVpn();
+                    stopTunnel();
                 } else {
-                    startVpn();
+                    startTunnel();
                 }
             }
         });
-        ((TextView) findViewById(R.id.help)).setText(R.string.help); //somehow it's ignoring resource set in layout
+        displayHelp(prefs);
         ((TextView) findViewById(R.id.main_copyright)).setMovementMethod(LinkMovementMethod.getInstance());
 
         Updater.checkUpdates(new UpdateIntent(null, MainActivity.this));
 
         //TODO: remove this code by July, 2020
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if(prefs.getString("dns_provider", "CLOUDFLARE").equals("SECDNS_DOH")) {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("dns_provider", "CLOUDFLARE_DOH");
@@ -95,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
                     .setMessage(R.string.secdns_discounted);
             note.show();
         }
+    }
+
+    private void displayHelp(SharedPreferences prefs) {
+        ((TextView) findViewById(R.id.help)).setText(isVPN(prefs) ? getString(R.string.help) :
+                getString(R.string.help_proxy, (PowerTunnel.SERVER_IP_ADDRESS + ":" + PowerTunnel.SERVER_PORT)));
     }
 
     @Override
@@ -128,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         applyTheme(this);
+        displayHelp(PreferenceManager.getDefaultSharedPreferences(this));
         updateStatus();
         statusHandler.post(statusRunnable);
         Intent intent = new Intent(this, Tun2HttpVpnService.class);
@@ -135,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     boolean isRunning() {
-        return service != null && service.isRunning();
+        return PowerTunnel.isRunning();
     }
 
     @Override
@@ -160,35 +168,61 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void stopVpn() {
-        final ProgressDialog dialog = progress(false);
+    private void startTunnel() {
+        final ProgressDialog dialog = progress(true);
         dialog.show();
         updateStatus();
+        final boolean vpn = isVPN(PreferenceManager.getDefaultSharedPreferences(this));
         progressHandler.post(new Runnable() {
             @Override
             public void run() {
-                Tun2HttpVpnService.stop(MainActivity.this);
+                if(vpn) {
+                    startVpn();
+                } else {
+                    startProxy();
+                }
                 dialog.dismiss();
             }
         });
     }
 
     private void startVpn() {
-        final ProgressDialog dialog = progress(true);
+        Intent i = VpnService.prepare(MainActivity.this);
+        if (i != null) {
+            startActivityForResult(i, REQUEST_VPN);
+        } else {
+            onActivityResult(REQUEST_VPN, RESULT_OK, null);
+        }
+    }
+
+    private void startProxy() {
+        startService(new Intent(this, ProxyModeService.class));
+    }
+
+    private void stopTunnel() {
+        final ProgressDialog dialog = progress(false);
         dialog.show();
         updateStatus();
+        final boolean vpn = isVPN(PreferenceManager.getDefaultSharedPreferences(this));
         progressHandler.post(new Runnable() {
             @Override
             public void run() {
-                Intent i = VpnService.prepare(MainActivity.this);
-                if (i != null) {
-                    startActivityForResult(i, REQUEST_VPN);
+                if(vpn) {
+                    stopVpn();
                 } else {
-                    onActivityResult(REQUEST_VPN, RESULT_OK, null);
+                    stopProxy();
                 }
                 dialog.dismiss();
             }
         });
+    }
+
+    private void stopVpn() {
+        Tun2HttpVpnService.stop(MainActivity.this);
+    }
+
+    private void stopProxy() {
+        stopService(new Intent(this, ProxyModeService.class));
     }
 
     private ProgressDialog progress(boolean starting) {
@@ -221,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void applyTheme(String theme) {
-        //System.out.println("Theme: " + theme);
         switch (theme) {
             case "AUTO": {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
@@ -240,5 +273,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    public static boolean isVPN(SharedPreferences prefs) {
+        return !prefs.getBoolean("proxy_mode", false);
+    }
+
+    public void startProxyService() {
+
     }
 }
