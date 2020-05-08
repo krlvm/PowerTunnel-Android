@@ -77,6 +77,13 @@ public class PowerTunnel {
         System.out.println("[i] Loaded '" + GOVERNMENT_BLACKLIST.size() + "' government blocked sites");
         System.out.println();
 
+        //Fill payload cache
+        ProxyFilter.PAYLOAD.clear();
+        for(int i = 0; i < PAYLOAD_LENGTH; i++) {
+            ProxyFilter.PAYLOAD.add(new String(new char[1000])
+                    .replace("\0", String.valueOf(i % 10)).intern());
+        }
+
         //Start server
         startServer();
     }

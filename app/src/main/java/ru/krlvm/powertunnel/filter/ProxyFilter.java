@@ -1,13 +1,15 @@
 package ru.krlvm.powertunnel.filter;
 
+import org.littleshoot.proxy.HttpFiltersAdapter;
+
+import java.util.LinkedList;
+import java.util.List;
+
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
-import org.littleshoot.proxy.HttpFiltersAdapter;
 import ru.krlvm.powertunnel.PowerTunnel;
-import ru.krlvm.powertunnel.utilities.HttpUtility;
 
 /**
  * Implementation of LittleProxy filter
@@ -86,9 +88,11 @@ public class ProxyFilter extends HttpFiltersAdapter {
         request.headers().remove("Host");
         if(PowerTunnel.PAYLOAD_LENGTH > 0) {
             for (int i = 0; i < PowerTunnel.PAYLOAD_LENGTH; i++) {
-                request.headers().add("X-Padding" + i, new String(new char[1000]).replace("\0", String.valueOf(i % 10)));
+                request.headers().add("X-Padding" + i, PAYLOAD.get(i));
             }
         }
         request.headers().add("hOSt", host + ".");
     }
+
+    public static final List<String> PAYLOAD = new LinkedList<>();
 }
