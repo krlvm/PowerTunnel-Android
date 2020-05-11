@@ -73,4 +73,5 @@
     <string name="help_proxy">PowerTunnel работает в режиме прокси.\nВам нужно вручную настраивать прокси-сервер в приложениях.\n\nАдрес прокси-сервера:\n%s</string>
     <string name="notification_proxy_background">Прокси-сервер PowerTunnel активен</string>
     <string name="proxy_mode_warning">Теперь вы должны вручную настроить прокси-сервер в приложениях. Если у вас есть проблемы, вернитесь к режиму VPN, отключив режим прокси.</string>
+    <string name="notification_channel_proxy">Прокси PowerTunnel</string>
 </resources>

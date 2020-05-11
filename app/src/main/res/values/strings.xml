@@ -127,4 +127,5 @@
     <string name="help_proxy">PowerTunnel works in proxy mode.\nYou have to manually configure proxy settings in applications.\n\nProxy address:\n%s</string>
     <string name="notification_proxy_background">PowerTunnel Proxy is running</string>
     <string name="proxy_mode_warning">Now you have to set applications proxy manually. If you have problems, switch back to VPN mode disabling proxy mode.</string>
+    <string name="notification_channel_proxy">PowerTunnel Proxy</string>
 </resources>

@@ -94,4 +94,5 @@
     <string name="help_proxy">PowerTunnel działa w trybie proxy.\nMusisz ręcznie skonfigurować ustawienia proxy w aplikacjach.\n\nAdres proxy:\n%s</string>
     <string name="notification_proxy_background">Serwer proxy PowerTunnel jest uruchomiony</string>
     <string name="proxy_mode_warning">Teraz musisz ręcznie ustawić proxy aplikacji. Jeśli masz problemy, przełącz się z powrotem do trybu VPN wyłączającego tryb proxy.</string>
+    <string name="notification_channel_proxy">Serwer proxy PowerTunnel</string>
 </resources>

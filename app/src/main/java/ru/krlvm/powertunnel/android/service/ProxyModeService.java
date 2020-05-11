@@ -28,9 +28,9 @@ public class ProxyModeService extends Service {
     public void onCreate() {
         super.onCreate();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID,
-                    NotificationManager.IMPORTANCE_LOW);
-            channel.setDescription(CHANNEL_ID);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, getString(R.string.notification_channel_proxy),
+                    NotificationManager.IMPORTANCE_MIN);
+            channel.setDescription(getString(R.string.notification_channel_proxy));
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             if(notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
