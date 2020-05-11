@@ -30,7 +30,7 @@
     <string name="pref_header_allowed_application_list">Allowed applications</string>
     <string name="pref_header_disallowed_application_list">Disallowed applications</string>
 
-    <string name="pref_clear_all">Reset application lists</string>
+    <string name="pref_clear_all">Clear application lists</string>
     <string name="pref_dialog_clear_all">Are you sure you want to reset the lists of selected applications?</string>
 
     <string name="search">Search</string>
@@ -128,4 +128,9 @@
     <string name="notification_proxy_background">PowerTunnel Proxy is running</string>
     <string name="proxy_mode_warning">Now you have to set applications proxy manually. If you have problems, switch back to VPN mode disabling proxy mode.</string>
     <string name="notification_channel_proxy">PowerTunnel Proxy</string>
+    <string name="pref_category_vpn">VPN settings</string>
+    <string name="pref_proxy_ip">Local proxy server address</string>
+    <string name="pref_proxy_port">Local proxy server port</string>
+    <string name="reset_connection_settings">Reset proxy settings</string>
+    <string name="reset_connection_settings_summary">Return to default address and port</string>
 </resources>

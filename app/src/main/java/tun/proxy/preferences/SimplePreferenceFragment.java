@@ -35,10 +35,14 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
     public static final String VPN_CLEAR_ALL_SELECTION = "vpn_clear_all_selection";
     public static final String DNS_PROVIDER = "dns_provider";
     public static final String SPECIFIED_DNS = "specified_dns_provider";
+    public static final String RESET_CONNECTION_SETTINGS = "reset_connection_settings";
+    public static final String PROXY_IP = "proxy_ip";
+    public static final String PROXY_PORT = "proxy_port";
 
     private ListPreference prefPackage;
     private PreferenceScreen prefDisallow;
     private PreferenceScreen prefAllow;
+    private PreferenceScreen clearAllSelection;
 
     private ListPreference prefDns;
     private EditTextSummaryPreference prefSpecDns;
@@ -56,10 +60,11 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
         prefDisallow = (PreferenceScreen) findPreference(VPN_DISALLOWED_APPLICATION_LIST);
         prefAllow = (PreferenceScreen) findPreference(VPN_ALLOWED_APPLICATION_LIST);
 
-        final PreferenceScreen clearAllSelection = (PreferenceScreen) findPreference(VPN_CLEAR_ALL_SELECTION);
+        clearAllSelection = (PreferenceScreen) findPreference(VPN_CLEAR_ALL_SELECTION);
         prefDisallow.setOnPreferenceClickListener(this);
         prefAllow.setOnPreferenceClickListener(this);
         clearAllSelection.setOnPreferenceClickListener(this);
+        findPreference(RESET_CONNECTION_SETTINGS).setOnPreferenceClickListener(this);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
         prefSpecDns = ((EditTextSummaryPreference) findPreference(SPECIFIED_DNS));
@@ -95,12 +100,15 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
             }
         });
 
+        updateProxyVpn(!prefs.getBoolean("proxy_mode", false));
         findPreference("proxy_mode").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if(((boolean) newValue) && context != null) {
+                boolean vpnMode = !(boolean)newValue;
+                if(!vpnMode && context != null) {
                     Toast.makeText(context, R.string.proxy_mode_warning, Toast.LENGTH_LONG).show();
                 }
+                updateProxyVpn(vpnMode);
                 return true;
             }
         });
@@ -121,6 +129,14 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
         context = activity.getApplicationContext();
     }
 
+    private void updateProxyVpn(boolean vpnMode) {
+        prefPackage.setEnabled(vpnMode);
+        prefAllow.setEnabled(vpnMode);
+        prefDisallow.setEnabled(vpnMode);
+        clearAllSelection.setEnabled(vpnMode);
+        updateMenuItem(vpnMode);
+    }
+
     private void updateSpecDnsStatus(String provider) {
         prefSpecDns.setEnabled(provider.equals("SPECIFIED"));
     }
@@ -132,6 +148,13 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
     }
 
     private void updateMenuItem() {
+        updateMenuItem(!prefs.getBoolean("proxy_mode", false));
+    }
+
+    private void updateMenuItem(boolean vpnMode) {
+        if(!vpnMode) {
+            return;
+        }
         int countDisallow = MyApplication.getInstance().loadVPNApplication(MyApplication.VPNMode.DISALLOW).size();
         prefDisallow.setTitle(getString(R.string.pref_disallowed_application_list) + (countDisallow > 0 ? " (" + countDisallow + ")" : ""));
         prefDisallow.setEnabled(MyApplication.VPNMode.DISALLOW.name().equals(prefPackage.getValue()));
@@ -154,13 +177,15 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
     @Override
     public boolean onPreferenceClick(Preference preference) {
         switch (preference.getKey()) {
-            case VPN_DISALLOWED_APPLICATION_LIST:
+            case VPN_DISALLOWED_APPLICATION_LIST: {
                 transitionFragment(PackageListPreferenceFragment.newInstance(MyApplication.VPNMode.DISALLOW));
                 break;
-            case VPN_ALLOWED_APPLICATION_LIST:
+            }
+            case VPN_ALLOWED_APPLICATION_LIST: {
                 transitionFragment(PackageListPreferenceFragment.newInstance(MyApplication.VPNMode.ALLOW));
                 break;
-            case VPN_CLEAR_ALL_SELECTION:
+            }
+            case VPN_CLEAR_ALL_SELECTION: {
                 new AlertDialog.Builder(getActivity())
                         .setTitle(getString(R.string.pref_clear_all))
                         .setMessage(getString(R.string.pref_dialog_clear_all))
@@ -175,8 +200,13 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
                         })
                         .setNegativeButton(R.string.cancel, null)
                         .show();
-
-            break;
+                break;
+            }
+            case RESET_CONNECTION_SETTINGS: {
+                ((EditTextSummaryPreference) findPreference(PROXY_IP)).setText(getString(R.string.proxy_ip));
+                ((EditTextSummaryPreference) findPreference(PROXY_PORT)).setText(getString(R.string.proxy_port));
+                break;
+            }
         }
         return false;
     }

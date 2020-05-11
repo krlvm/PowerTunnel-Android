@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+
+    <string name="proxy_ip" translatable="false">127.0.0.1</string>
+    <string name="proxy_port" translatable="false">8085</string>
+
+</resources>

@@ -9,20 +9,45 @@
 			android:defaultValue="AUTO"
 			android:entries="@array/pref_theme"
 			android:entryValues="@array/pref_theme_values"
-			android:negativeButtonText="@null"
-			android:positiveButtonText="@null"
 			android:summary="%s"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_category_connection">
+		<tun.proxy.preferences.preference.EditTextSummaryPreference
+			android:key="proxy_ip"
+			android:title="@string/pref_proxy_ip"
+			android:defaultValue="@string/proxy_ip"
+			android:summary="%s"
+			app:useSimpleSummaryProvider="true" />
+
+		<tun.proxy.preferences.preference.EditTextSummaryPreference
+			android:key="proxy_port"
+			android:title="@string/pref_proxy_port"
+			android:defaultValue="@string/proxy_port"
+			android:summary="%s"
+			android:inputType="numberDecimal"
+			android:maxLength="4"
+			app:useSimpleSummaryProvider="true" />
+
+		<PreferenceScreen
+			android:key="reset_connection_settings"
+			android:title="@string/reset_connection_settings"
+			android:summary="@string/reset_connection_settings_summary" />
+
+		<SwitchPreference
+			android:title="@string/pref_proxy_mode"
+			android:summary="@string/pref_proxy_mode_desc"
+			android:key="proxy_mode"
+			android:defaultValue="false"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/pref_category_vpn">
 		<ListPreference
 			android:key="vpn_connection_mode"
 			android:title="@string/pref_vpn_connection_mode"
 			android:defaultValue="DISALLOW"
 			android:entries="@array/pref_vpn_connection_name"
 			android:entryValues="@array/pref_vpn_connection_value"
-			android:negativeButtonText="@null"
-			android:positiveButtonText="@null"
 			android:summary="%s"/>
 
 		<PreferenceScreen
@@ -40,11 +65,6 @@
 		<PreferenceScreen
 			android:key="vpn_clear_all_selection"
 			android:title="@string/pref_clear_all" />
-		<SwitchPreference
-			android:title="@string/pref_proxy_mode"
-			android:summary="@string/pref_proxy_mode_desc"
-			android:key="proxy_mode"
-			android:defaultValue="false"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_category_dns">
@@ -59,8 +79,6 @@
 			android:defaultValue="CLOUDFLARE"
 			android:entries="@array/pref_dns_provider_name"
 			android:entryValues="@array/pref_dns_provider_value"
-			android:negativeButtonText="@null"
-			android:positiveButtonText="@null"
 			android:dependency="override_dns"
 			android:summary="%s"/>
 
