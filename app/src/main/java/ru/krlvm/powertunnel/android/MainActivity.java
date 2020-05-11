@@ -2,9 +2,11 @@ package ru.krlvm.powertunnel.android;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.net.VpnService;
@@ -35,6 +37,7 @@ import tun.proxy.service.Tun2HttpVpnService;
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_VPN = 1;
+    public static final String STARTUP_FAIL_BROADCAST = "ru.krlvm.powertunnel.android.action.STARTUP_FAIL";
 
     private ImageView logo;
     private TextView status;
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        configureProxyServer(prefs);
         applyTheme(prefs);
 
         logo = findViewById(R.id.status_logo);
@@ -83,6 +87,20 @@ public class MainActivity extends AppCompatActivity {
         });
         displayHelp(prefs);
         ((TextView) findViewById(R.id.main_copyright)).setMovementMethod(LinkMovementMethod.getInstance());
+
+        //Listen to startup failures
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(STARTUP_FAIL_BROADCAST);
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(R.string.startup_failed_proxy)
+                        .setMessage(R.string.startup_failed_proxy_message)
+                        .show();
+                context.getString((R.string.startup_failed_proxy));
+            }
+        }, filter);
 
         Updater.checkUpdates(new UpdateIntent(null, MainActivity.this));
 
@@ -134,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        configureProxyServer(PreferenceManager.getDefaultSharedPreferences(this));
         applyTheme(this);
         displayHelp(PreferenceManager.getDefaultSharedPreferences(this));
         updateStatus();
@@ -153,7 +172,13 @@ public class MainActivity extends AppCompatActivity {
         unbindService(serviceConnection);
     }
 
-    void updateStatus() {
+    private void configureProxyServer(SharedPreferences prefs) {
+        PowerTunnel.SERVER_IP_ADDRESS = prefs.getString("proxy_ip", getString(R.string.proxy_ip));
+        PowerTunnel.SERVER_PORT = Integer.parseInt(prefs.getString("proxy_port",
+                getString(R.string.proxy_port)));
+    }
+
+    private void updateStatus() {
         if (service == null) {
             return;
         }
@@ -277,9 +302,5 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean isVPN(SharedPreferences prefs) {
         return !prefs.getBoolean("proxy_mode", false);
-    }
-
-    public void startProxyService() {
-
     }
 }

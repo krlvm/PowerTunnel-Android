@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.krlvm.powertunnel.PowerTunnel;
+import ru.krlvm.powertunnel.android.exceptions.ProxyStartFailureException;
 import tun.utils.Util;
 
 public class PTManager {
@@ -84,14 +85,23 @@ public class PTManager {
         }
     }
 
-    public static void startProxy(Context context) {
-        if (!PowerTunnel.isRunning()) {
+    public static Exception safeStartProxy() {
         try {
-            PowerTunnel.bootstrap();
-        } catch (Exception ex) {
-            throw new IllegalStateException(context.getString((R.string.startup_failed_proxy)));
+            startProxy();
+            return null;
+        } catch (ProxyStartFailureException ex) {
+            return ex;
         }
     }
+
+    public static void startProxy() throws ProxyStartFailureException {
+        if (!PowerTunnel.isRunning()) {
+            try {
+                PowerTunnel.bootstrap();
+            } catch (Exception ex) {
+                throw new ProxyStartFailureException(ex.getMessage(), ex);
+            }
+        }
     }
 
     public static void stopProxy() {

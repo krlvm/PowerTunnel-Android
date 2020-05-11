@@ -79,4 +79,5 @@
     <string name="pref_proxy_port">Порт локального прокси-сервера</string>
     <string name="reset_connection_settings">Сбросить настройки прокси-сервера</string>
     <string name="reset_connection_settings_summary">Вернуться к адресу и порту по умолчанию</string>
+    <string name="startup_failed_proxy_message">Не удается запустить прокси-сервер, попробуйте сбросить конфигурацию прокси-сервера в настройках</string>
 </resources>

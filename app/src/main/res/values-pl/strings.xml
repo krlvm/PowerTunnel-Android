@@ -100,4 +100,5 @@
     <string name="pref_proxy_port">Port lokalnego serwera proxy</string>
     <string name="reset_connection_settings">Zresetuj ustawienia proxy</string>
     <string name="reset_connection_settings_summary">Wróć do domyślnego adresu i portu</string>
+    <string name="startup_failed_proxy_message">Nie można uruchomić serwera proxy, spróbuj zresetować konfigurację proxy w ustawieniach</string>
 </resources>

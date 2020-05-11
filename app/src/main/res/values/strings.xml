@@ -133,4 +133,5 @@
     <string name="pref_proxy_port">Local proxy server port</string>
     <string name="reset_connection_settings">Reset proxy settings</string>
     <string name="reset_connection_settings_summary">Return to default address and port</string>
+    <string name="startup_failed_proxy_message">Unable to start proxy server, try to reset proxy configuration in settings</string>
 </resources>

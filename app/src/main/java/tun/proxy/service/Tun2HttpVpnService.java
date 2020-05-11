@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import ru.krlvm.powertunnel.PowerTunnel;
+import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.PTManager;
 import ru.krlvm.powertunnel.android.R;
 import tun.proxy.MyApplication;
@@ -80,7 +81,14 @@ public class Tun2HttpVpnService extends VpnService {
     private void start() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         PTManager.configure(this, prefs);
-        PTManager.startProxy(this);
+
+        Exception proxyFailure = PTManager.safeStartProxy();
+        if(proxyFailure != null) {
+            sendBroadcast(new Intent(MainActivity.STARTUP_FAIL_BROADCAST));
+            stop();
+            return;
+        }
+
         Log.i(TAG, "Waiting for VPN server to start...");
         if (vpn == null) {
             vpn = startVPN(getBuilder());
