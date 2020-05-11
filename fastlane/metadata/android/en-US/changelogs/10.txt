@@ -1,0 +1,14 @@
+General changes:
+- Added support for Android 4.2 and higher
+- Proxy mode notification has lower priority now
+- VPN settings grays out when proxy mode is enabled
+
+New features:
+- Ability to configure local proxy address and port
+
+Improvements:
+- PowerTunnel displays proxy startup error now
+
+Bugfixes:
+- Fixed memory leak, high CPU utilization and fast battery drain on "payload" DPI circumvention method
+- Fixed main activity duplication in proxy mode

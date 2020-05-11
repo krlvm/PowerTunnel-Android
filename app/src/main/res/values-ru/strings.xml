@@ -37,7 +37,7 @@
     <string name="pref_full_chunking">Режим полной фрагментации пакетов</string>
     <string name="pref_mix_host_case">Изменять регистр адреса соединения</string>
     <string name="pref_send_payload">Отправлять дополнительные 21КБ данных</string>
-    <string name="startup_failed_proxy">Ошибка при запуске прокси сервера</string>
+    <string name="startup_failed_proxy">Ошибка при запуске прокси-сервера</string>
     <string name="pref_chunk_size">Размер фрагмента</string>
     <string name="clear_selection">Очистить выбор</string>
     <string name="about_version">Версия %1$s</string>
