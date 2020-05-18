@@ -51,7 +51,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.preference:preference:1.1.1'
-    implementation('dnsjava:dnsjava:3.0.2') {
+    implementation('dnsjava:dnsjava:3.1.0') {
         exclude group: 'org.slf4j', module: 'slf4j-api'
     }
     implementation('org.jitsi:dnssecjava:2.0.0') {
