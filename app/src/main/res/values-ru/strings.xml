@@ -40,7 +40,7 @@
     <string name="startup_failed_proxy">Ошибка при запуске прокси-сервера</string>
     <string name="pref_chunk_size">Размер фрагмента</string>
     <string name="clear_selection">Очистить выбор</string>
-    <string name="about_version">Версия %1$s</string>
+    <string name="about_version">Версия %1$s\n&lt;br>&lt;a href="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/LICENSE">Лицензия MIT&lt;/a></string>
     <string name="btn_check_for_updates">Проверить обновления</string>
     <string name="title_activity_about">О программе</string>
     <string name="no_updates">Вы используете последнюю версию PowerTunnel</string>
