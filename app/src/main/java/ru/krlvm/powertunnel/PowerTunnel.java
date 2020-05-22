@@ -53,6 +53,8 @@ public class PowerTunnel {
     public static String SERVER_IP_ADDRESS = "127.0.0.1";
     public static int SERVER_PORT = 8085;
 
+    public static boolean ALLOW_REQUESTS_TO_ORIGIN_SERVER = false;
+
     public static boolean FULL_CHUNKING = false;
     public static int DEFAULT_CHUNK_SIZE = 2;
     public static int PAYLOAD_LENGTH = 0; //21 recommended
@@ -99,7 +101,8 @@ public class PowerTunnel {
                 return new ProxyFilter(originalRequest);
             }
         }).withAddress(new InetSocketAddress(InetAddress.getByName(SERVER_IP_ADDRESS), SERVER_PORT))
-                .withTransparent(true).withUseDnsSec(USE_DNS_SEC);
+                .withTransparent(true).withUseDnsSec(USE_DNS_SEC)
+                .withAllowRequestToOriginServer(ALLOW_REQUESTS_TO_ORIGIN_SERVER);
         boolean useDoh = DOH_ADDRESS != null && !DOH_ADDRESS.isEmpty();
         if (useDoh) {
             if (DOH_ADDRESS.endsWith("/")) {

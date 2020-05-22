@@ -17,6 +17,7 @@ public class PTManager {
 
     public static void configure(Context context, SharedPreferences prefs) {
         PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
+        PowerTunnel.ALLOW_REQUESTS_TO_ORIGIN_SERVER = prefs.getBoolean("allow_req_to_oserv", true);
         PowerTunnel.FULL_CHUNKING = prefs.getBoolean("full_chunking", false);
         PowerTunnel.DEFAULT_CHUNK_SIZE = Integer.parseInt(prefs.getString("chunk_size", "2"));
         if (PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {

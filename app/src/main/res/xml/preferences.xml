@@ -35,6 +35,11 @@
 			android:summary="@string/reset_connection_settings_summary" />
 
 		<SwitchPreference
+			android:title="@string/pref_fix_conn_issues"
+			android:key="allow_req_to_oserv"
+			android:defaultValue="true"/>
+
+		<SwitchPreference
 			android:title="@string/pref_proxy_mode"
 			android:summary="@string/pref_proxy_mode_desc"
 			android:key="proxy_mode"
