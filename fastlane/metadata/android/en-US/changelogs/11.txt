@@ -3,3 +3,4 @@ Improvements:
 
 Bugfixes:
 - Fixed connectivity issues (bad gateway), the fix can be disabled in options.
+- Fixed some layout issues
