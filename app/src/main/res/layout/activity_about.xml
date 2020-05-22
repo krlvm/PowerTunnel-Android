@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AboutActivity">
+    tools:context="activities.AboutActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +38,8 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/textColor" />
+            android:textColor="@color/textColor"
+            android:gravity="center_horizontal" />
 
         <Button
             android:id="@+id/updates_button"
@@ -59,7 +60,8 @@
             android:textAlignment="center"
             android:textColorLink="@color/colorAccent"
             android:textSize="16sp"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/about_version"
@@ -67,7 +69,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
             android:textStyle="bold"
-            android:layout_marginTop="40dp" />
+            android:textAlignment="center"
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/about_copyright"

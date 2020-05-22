@@ -17,6 +17,8 @@ Simple, scalable, cross-platform and effective solution against government censo
 
 The Android version of PowerTunnel is built on [VPN Server](https://github.com/raise-isayan/TunProxy) that intercepts traffic and directs it through the [LibertyTunnel](https://github.com/krlvm/PowerTunnel/tree/libertytunnel) proxy
 
+***You can't publish the app on the Google Play Store without permission: it is a violation of the license and the DMCA.***
+
 ### What is it
 Nowadays Internet censorship is introducing in many countries: governments analyze and block traffic to this sites using DPI - Deep Packet Inspection systems, forcing you using circumvention utilities like VPN, for example. That approach have many disadvantages, most noticeable - connection speed slowdown. In addition, these services cannot guarantee work stability and your data confidence.
 
