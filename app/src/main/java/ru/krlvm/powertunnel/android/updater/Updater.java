@@ -115,7 +115,7 @@ public class Updater {
                 } else {
                     try {
                         int minApiVersion = Integer.parseInt(data[2]);
-                        if(minApiVersion < android.os.Build.VERSION.SDK_INT) {
+                        if(android.os.Build.VERSION.SDK_INT >= minApiVersion) {
                             versionCode = Integer.parseInt(data[0]);
                         } else {
                             result = false;

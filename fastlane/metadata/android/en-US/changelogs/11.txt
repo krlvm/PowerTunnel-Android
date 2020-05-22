@@ -1,0 +1,5 @@
+Improvements:
+- Optimized memory usage
+
+Bugfixes:
+- Fixed connectivity issues (bad gateway), the fix can be disabled in options.
