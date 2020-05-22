@@ -17,7 +17,6 @@ import org.xbill.DNS.Type;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.util.HashSet;
 import java.util.Set;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -63,8 +62,8 @@ public class PowerTunnel {
 
     public static String DOH_ADDRESS = null;
 
-    private static final Set<String> GOVERNMENT_BLACKLIST = new HashSet<>();
-    private static final Set<String> ISP_STUB_LIST = new HashSet<>();
+    private static final Set<String> GOVERNMENT_BLACKLIST = null; //= new HashSet<>();
+    private static final Set<String> ISP_STUB_LIST        = null; //= new HashSet<>();
 
     /**
      * PowerTunnel bootstrap
@@ -72,9 +71,9 @@ public class PowerTunnel {
     public static void bootstrap() throws UnknownHostException {
         System.out.println("[*] Base PowerTunnel/LibertyTunnel version is " + BASE_VERSION);
         //Load data
-        GOVERNMENT_BLACKLIST.add("*");
+        //GOVERNMENT_BLACKLIST.add("*");
         //ISP_STUB_LIST.add("");
-        System.out.println("[i] Loaded '" + GOVERNMENT_BLACKLIST.size() + "' government blocked sites");
+        //System.out.println("[i] Loaded '" + GOVERNMENT_BLACKLIST.size() + "' government blocked sites");
         System.out.println();
 
         //Fill payload cache
@@ -184,8 +183,8 @@ public class PowerTunnel {
      */
     public static void stop() {
         stopServer();
-        GOVERNMENT_BLACKLIST.clear();
-        ISP_STUB_LIST.clear();
+        //GOVERNMENT_BLACKLIST.clear();
+        //ISP_STUB_LIST.clear();
     }
 
     /**
@@ -234,7 +233,8 @@ public class PowerTunnel {
      * @return is address blocked by the government
      */
     public static boolean isBlockedByGovernment(String address) {
-        return URLUtility.checkIsHostContainsInList(address.toLowerCase(), GOVERNMENT_BLACKLIST);
+        return true;
+        //return URLUtility.checkIsHostContainsInList(address.toLowerCase(), GOVERNMENT_BLACKLIST);
         //return GOVERNMENT_BLACKLIST.contains(address.toLowerCase());
     }
 }
