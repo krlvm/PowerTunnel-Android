@@ -20,7 +20,7 @@ public class Updater {
     private static String[] pendingUpdate;
 
     private static String load() throws IOException {
-        URL url = new URL("https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/version.txt");
+        URL url = new URL("https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/new_version.txt");
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(url.openStream()));
         String string = reader.readLine();
         reader.close();
@@ -110,11 +110,16 @@ public class Updater {
             try {
                 String response = load();
                 String[] data = response.split(";");
-                if (data.length != 2) {
+                if (data.length != 3) {
                     result = false;
                 } else {
                     try {
-                        versionCode = Integer.parseInt(data[0]);
+                        int minApiVersion = Integer.parseInt(data[2]);
+                        if(minApiVersion < android.os.Build.VERSION.SDK_INT) {
+                            versionCode = Integer.parseInt(data[0]);
+                        } else {
+                            result = false;
+                        }
                     } catch (NumberFormatException ex) {
                         result = false;
                     }
