@@ -29,6 +29,7 @@ import androidx.preference.PreferenceManager;
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.activities.AboutActivity;
 import ru.krlvm.powertunnel.android.service.ProxyModeService;
+import ru.krlvm.powertunnel.android.ui.NoUnderlineSpan;
 import ru.krlvm.powertunnel.android.updater.UpdateIntent;
 import ru.krlvm.powertunnel.android.updater.Updater;
 import tun.proxy.preferences.SimplePreferenceActivity;
@@ -86,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         displayHelp(prefs);
-        ((TextView) findViewById(R.id.main_copyright)).setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView copyright = findViewById(R.id.main_copyright);
+        NoUnderlineSpan.stripUnderlines(copyright);
+        copyright.setMovementMethod(LinkMovementMethod.getInstance());
 
         //Listen to startup failures
         IntentFilter filter = new IntentFilter();

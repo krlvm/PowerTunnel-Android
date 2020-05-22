@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import ru.krlvm.powertunnel.android.BuildConfig;
 import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.ui.NoUnderlineSpan;
 import ru.krlvm.powertunnel.android.updater.UpdateIntent;
 import ru.krlvm.powertunnel.android.updater.Updater;
 
@@ -25,11 +26,10 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         TextView version = findViewById(R.id.about_version);
         String versionText = getString(R.string.about_version, BuildConfig.VERSION_NAME);
-        System.out.println(versionText);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            version.setText(Html.fromHtml(versionText, Html.FROM_HTML_MODE_COMPACT));
+            version.setText(NoUnderlineSpan.stripUnderlines(Html.fromHtml(versionText, Html.FROM_HTML_MODE_COMPACT)));
         } else {
-            version.setText(Html.fromHtml(versionText));
+            version.setText(NoUnderlineSpan.stripUnderlines(Html.fromHtml(versionText)));
         }
         version.setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.about_description)).setText(R.string.description);
