@@ -1,0 +1,2 @@
+New features:
+- Ability to specify DNS server port
