@@ -62,6 +62,7 @@ public class PowerTunnel {
     public static boolean USE_DNS_SEC = false;
     public static boolean MIX_HOST_CASE = false;
 
+    public static int DNS_PORT = -1;
     public static String DOH_ADDRESS = null;
 
     private static final Set<String> GOVERNMENT_BLACKLIST = null; //= new HashSet<>();
@@ -158,10 +159,15 @@ public class PowerTunnel {
         try {
             Class.forName("java.time.Duration"); //one of dnsjava Java 8 imports
         } catch (ClassNotFoundException ex) {
+            System.out.println("[x] DNS is not compatible with this version of Android");
             return null;
         }
         String primaryDnsServer = PTManager.DNS_SERVERS.get(0);
         Resolver resolver = new SimpleResolver(primaryDnsServer);
+        if(DNS_PORT != -1) {
+            System.out.println("[*] Custom DNS port: " + DNS_PORT);
+            resolver.setPort(DNS_PORT);
+        }
         if(USE_DNS_SEC) {
             System.out.println("[*] DNSSec is enabled");
             resolver = new ValidatingResolver(resolver);

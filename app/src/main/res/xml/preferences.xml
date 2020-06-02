@@ -94,6 +94,15 @@
 			android:dependency="override_dns"
 			app:useSimpleSummaryProvider="true" />
 
+		<tun.proxy.preferences.preference.EditTextSummaryPreference
+			android:key="dns_port"
+			android:title="@string/pref_dns_port"
+			android:defaultValue=""
+			android:summary="%s"
+			android:inputType="numberDecimal"
+			android:maxLength="4"
+			app:useSimpleSummaryProvider="true" />
+
 		<SwitchPreference
 			android:title="@string/pref_use_dns_sec"
 			android:key="use_dns_sec"

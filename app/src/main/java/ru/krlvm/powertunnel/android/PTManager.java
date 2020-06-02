@@ -84,6 +84,10 @@ public class PTManager {
                 }
             }
         }
+        String dnsPortVal = prefs.getString("dns_port", "");
+        try {
+            PowerTunnel.DNS_PORT = Integer.parseInt(dnsPortVal);
+        } catch (NumberFormatException ex) {}
     }
 
     public static Exception safeStartProxy() {
