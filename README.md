@@ -3,6 +3,8 @@
 <br><h1>PowerTunnel for Android</h1><br>
 Simple, scalable, cross-platform and effective solution against government censorship for Android
 
+<h3><b>Please, read <a href="https://gist.github.com/krlvm/76595f2fec7e23cf5e20f8ccfa43997a">important announcement</a></b></h3>
+
 <a href="https://t.me/powertunnel_dpi">Telegram channel</a>
 <br>
 <a href="https://github.com/krlvm/PowerTunnel">Looking for the PC version?<a/>
