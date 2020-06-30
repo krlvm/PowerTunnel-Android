@@ -16,6 +16,11 @@ public class PTManager {
     public static boolean DNS_OVERRIDE = false;
 
     public static void configure(Context context, SharedPreferences prefs) {
+        PowerTunnel.DOT_AFTER_HOST_HEADER = prefs.getBoolean("dot_after_host", true);
+        PowerTunnel.MIX_HOST_HEADER_CASE = prefs.getBoolean("mix_host_header_case", true);
+        PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
+        PowerTunnel.LINE_BREAK_BEFORE_GET = prefs.getBoolean("break_before_get", false);
+        PowerTunnel.ADDITIONAL_SPACE_AFTER_GET = prefs.getBoolean("space_after_get", false);
         PowerTunnel.APPLY_HTTP_TRICKS_TO_HTTPS = prefs.getBoolean("apply_http_https", false);
         PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
         PowerTunnel.ALLOW_REQUESTS_TO_ORIGIN_SERVER = prefs.getBoolean("allow_req_to_oserv", true);
@@ -24,7 +29,6 @@ public class PTManager {
         if (PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {
             PowerTunnel.DEFAULT_CHUNK_SIZE = 2;
         }
-        PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
         PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
         DNS_SERVERS = Util.getDefaultDNS(context);
         DNS_OVERRIDE = false;

@@ -104,4 +104,8 @@
     <string name="pref_fix_conn_issues">Napraw problemy z łącznością</string>
     <string name="pref_dns_port">Port DNS</string>
     <string name="pref_apply_http_https">Zastosuj sztuczki HTTP do HTTPS</string>
+    <string name="pref_break_get">Przerwa przed GET</string>
+    <string name="space_after_get">Spacja po GET</string>
+    <string name="pref_dot_after_host">Dodaj kropkę po hoście</string>
+    <string name="pref_mix_host_header_case">Mieszaj wielkość liter nagłówka hosta</string>
 </resources>

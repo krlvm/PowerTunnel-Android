@@ -5,7 +5,6 @@ import org.littleshoot.proxy.HttpFiltersAdapter;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
@@ -19,12 +18,10 @@ import ru.krlvm.powertunnel.PowerTunnel;
  */
 public class ProxyFilter extends HttpFiltersAdapter {
 
-    public ProxyFilter(HttpRequest originalRequest, ChannelHandlerContext ctx) {
-        super(originalRequest, ctx);
-    }
-
     public ProxyFilter(HttpRequest originalRequest) {
         super(originalRequest);
+        //Allow us to modify 'HOST' request header
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 
     /**
@@ -72,7 +69,7 @@ public class ProxyFilter extends HttpFiltersAdapter {
     }*/
 
     /**
-     * DPI circumvention algorithm
+     * DPI circumvention algorithm for HTTP requests
      *
      * @param request - original HttpRequest
      */
@@ -89,13 +86,30 @@ public class ProxyFilter extends HttpFiltersAdapter {
             }
             host = modified.toString();
         }
-        request.headers().remove("Host");
         if(PowerTunnel.PAYLOAD_LENGTH > 0) {
+            request.headers().remove("Host");
             for (int i = 0; i < PowerTunnel.PAYLOAD_LENGTH; i++) {
                 request.headers().add("X-Padding" + i, PAYLOAD.get(i));
             }
         }
-        request.headers().add("hOSt", host + ".");
+        if(request.getMethod() != HttpMethod.CONNECT && PowerTunnel.isHTTPMethodTricksEnabled()) {
+            String method = request.getMethod().name();
+            if(PowerTunnel.LINE_BREAK_BEFORE_GET) {
+                method = "\r\n" + method;
+            }
+            if(PowerTunnel.ADDITIONAL_SPACE_AFTER_GET) {
+                method = method + " ";
+            }
+            request.setMethod(new HttpMethod(method));
+        }
+        if(PowerTunnel.DOT_AFTER_HOST_HEADER) {
+            host = host + ".";
+            request.headers().remove("Host");
+        }
+        if(!request.headers().contains("Host")) {
+            String hostHeader = PowerTunnel.MIX_HOST_HEADER_CASE ? "hOSt" : "Host";
+            request.headers().add(hostHeader, host);
+        }
     }
 
     public static final List<String> PAYLOAD = new LinkedList<>();

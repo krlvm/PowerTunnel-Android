@@ -204,25 +204,17 @@
 package org.littleshoot.proxy.impl;
 
 import com.google.common.net.HostAndPort;
-import io.netty.bootstrap.Bootstrap;
-import io.netty.bootstrap.ChannelFactory;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.*;
-import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.channel.udt.nio.NioUdtProvider;
-import io.netty.handler.codec.http.*;
-import io.netty.handler.timeout.IdleStateHandler;
-import io.netty.handler.traffic.GlobalTrafficShapingHandler;
-import io.netty.util.ReferenceCounted;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
-import org.littleshoot.proxy.*;
-import ru.krlvm.powertunnel.PowerTunnel;
-import ru.krlvm.powertunnel.utilities.HttpUtility;
 
-import javax.net.ssl.SSLProtocolException;
-import javax.net.ssl.SSLSession;
+import org.littleshoot.proxy.ActivityTracker;
+import org.littleshoot.proxy.ChainedProxy;
+import org.littleshoot.proxy.ChainedProxyAdapter;
+import org.littleshoot.proxy.ChainedProxyManager;
+import org.littleshoot.proxy.FullFlowContext;
+import org.littleshoot.proxy.HttpFilters;
+import org.littleshoot.proxy.MitmManager;
+import org.littleshoot.proxy.TransportProtocol;
+import org.littleshoot.proxy.UnknownTransportProtocolException;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -230,7 +222,48 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.RejectedExecutionException;
 
-import static org.littleshoot.proxy.impl.ConnectionState.*;
+import javax.net.ssl.SSLProtocolException;
+import javax.net.ssl.SSLSession;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.bootstrap.ChannelFactory;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.channel.udt.nio.NioUdtProvider;
+import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpContent;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpMessage;
+import io.netty.handler.codec.http.HttpObject;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpRequestEncoder;
+import io.netty.handler.codec.http.HttpResponse;
+import io.netty.handler.codec.http.HttpResponseDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.LastHttpContent;
+import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.handler.traffic.GlobalTrafficShapingHandler;
+import io.netty.util.ReferenceCounted;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
+import ru.krlvm.powertunnel.PowerTunnel;
+
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CHUNK;
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CONNECT_OK;
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_INITIAL;
+import static org.littleshoot.proxy.impl.ConnectionState.CONNECTING;
+import static org.littleshoot.proxy.impl.ConnectionState.DISCONNECTED;
+import static org.littleshoot.proxy.impl.ConnectionState.HANDSHAKING;
 
 /**
  * <p>
@@ -1228,6 +1261,6 @@ public class ProxyToServerConnection extends org.littleshoot.proxy.impl.ProxyCon
     };
 
     static {
-        System.out.println(ProxyToServerConnection.class.getSimpleName() + " is patched");
+        System.out.println("Internals | " + ProxyToServerConnection.class.getSimpleName() + " is patched");
     }
 }

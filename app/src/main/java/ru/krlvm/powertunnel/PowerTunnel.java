@@ -57,7 +57,13 @@ public class PowerTunnel {
 
     public static boolean FULL_CHUNKING = false;
     public static int DEFAULT_CHUNK_SIZE = 2;
+
     public static int PAYLOAD_LENGTH = 0; //21 recommended
+
+    public static boolean LINE_BREAK_BEFORE_GET = false;
+    public static boolean ADDITIONAL_SPACE_AFTER_GET = false;
+    public static boolean DOT_AFTER_HOST_HEADER = true;
+    public static boolean MIX_HOST_HEADER_CASE = true;
 
     public static boolean USE_DNS_SEC = false;
     public static boolean MIX_HOST_CASE = false;
@@ -97,7 +103,6 @@ public class PowerTunnel {
      */
     private static void startServer() throws UnknownHostException {
         System.out.println("[.] Starting LittleProxy server on " + SERVER_IP_ADDRESS + ":" + SERVER_PORT);
-        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
         HttpProxyServerBootstrap bootstrap = DefaultHttpProxyServer.bootstrap().withFiltersSource(new HttpFiltersSourceAdapter() {
             @Override
             public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
@@ -247,5 +252,9 @@ public class PowerTunnel {
         return true;
         //return URLUtility.checkIsHostContainsInList(address.toLowerCase(), GOVERNMENT_BLACKLIST);
         //return GOVERNMENT_BLACKLIST.contains(address.toLowerCase());
+    }
+
+    public static boolean isHTTPMethodTricksEnabled() {
+        return ADDITIONAL_SPACE_AFTER_GET || LINE_BREAK_BEFORE_GET;
     }
 }

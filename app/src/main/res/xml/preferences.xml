@@ -123,8 +123,24 @@
 			android:defaultValue="2"
 			app:useSimpleSummaryProvider="true" />
 		<SwitchPreference
+			android:title="@string/pref_dot_after_host"
+			android:key="dot_after_host"
+			android:defaultValue="true"/>
+		<SwitchPreference
+			android:title="@string/pref_mix_host_header_case"
+			android:key="mix_host_header_case"
+			android:defaultValue="true"/>
+		<SwitchPreference
 			android:title="@string/pref_mix_host_case"
 			android:key="mix_host_case"
+			android:defaultValue="false"/>
+		<SwitchPreference
+			android:title="@string/pref_break_get"
+			android:key="break_before_get"
+			android:defaultValue="false"/>
+		<SwitchPreference
+			android:title="@string/space_after_get"
+			android:key="space_after_get"
 			android:defaultValue="false"/>
 		<SwitchPreference
 			android:title="@string/pref_send_payload"
