@@ -269,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception ex) {
             return;
         }
-        System.out.println(cert);
         installIntent.putExtra(KeyChain.EXTRA_CERTIFICATE, cert.toString().getBytes());
         installIntent.putExtra(KeyChain.EXTRA_NAME, "PowerTunnel Root CA");
         startActivityForResult(installIntent, REQUEST_CERT);

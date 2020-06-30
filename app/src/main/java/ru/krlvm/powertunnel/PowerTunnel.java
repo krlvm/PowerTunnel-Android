@@ -73,6 +73,7 @@ public class PowerTunnel {
 
     public static boolean USE_DNS_SEC = false;
     public static boolean MIX_HOST_CASE = false;
+    public static boolean COMPLETE_MIX_HOST_CASE = false;
 
     public static boolean APPLY_HTTP_TRICKS_TO_HTTPS = false;
 

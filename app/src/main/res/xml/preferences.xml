@@ -139,6 +139,10 @@
 			android:key="mix_host_case"
 			android:defaultValue="false"/>
 		<SwitchPreference
+			android:title="@string/pref_complete_mix_host_case"
+			android:key="complete_mix_host_case"
+			android:defaultValue="false"/>
+		<SwitchPreference
 			android:title="@string/pref_break_get"
 			android:key="break_before_get"
 			android:defaultValue="false"/>

@@ -113,4 +113,5 @@
     <string name="cert_not_installed">Certyfikat nie został zainstalowany, sztuczki SNI nie będą działać</string>
     <string name="please_install_cert">Aby korzystać z trików SNI, musisz zainstalować PowerTunnel Root CA</string>
     <string name="pref_chunking">Włącz dzielenie</string>
+    <string name="pref_complete_mix_host_case">Kompletne mieszanie przypadków hostów</string>
 </resources>

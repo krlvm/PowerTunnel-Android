@@ -76,15 +76,19 @@ public class ProxyFilter extends HttpFiltersAdapter {
     private static void circumventDPI(HttpRequest request) {
         String host = request.headers().get("Host");
         if(PowerTunnel.MIX_HOST_CASE) {
-            StringBuilder modified = new StringBuilder();
-            for(int i = 0; i < host.length(); i++) {
-                char c = host.toCharArray()[i];
-                if(i % 2 == 0) {
-                    c = Character.toUpperCase(c);
+            if(PowerTunnel.COMPLETE_MIX_HOST_CASE) {
+                StringBuilder modified = new StringBuilder();
+                for (int i = 0; i < host.length(); i++) {
+                    char c = host.toCharArray()[i];
+                    if (i % 2 == 0) {
+                        c = Character.toUpperCase(c);
+                    }
+                    modified.append(c);
                 }
-                modified.append(c);
+                host = modified.toString();
+            } else {
+                host = host.substring(0, host.length()-1) + host.substring(host.length()-1).toUpperCase();
             }
-            host = modified.toString();
         }
         if(PowerTunnel.PAYLOAD_LENGTH > 0) {
             request.headers().remove("Host");

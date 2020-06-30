@@ -146,4 +146,5 @@
     <string name="cert_not_installed">Certificate not installed, SNI tricks will not work</string>
     <string name="please_install_cert">You need to install PowerTunnel Root CA to use SNI tricks</string>
     <string name="pref_chunking">Enable chunking</string>
+    <string name="pref_complete_mix_host_case">Complete host case mixing</string>
 </resources>

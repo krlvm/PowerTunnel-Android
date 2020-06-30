@@ -34,6 +34,7 @@ public class PTManager {
         PowerTunnel.DOT_AFTER_HOST_HEADER = prefs.getBoolean("dot_after_host", true);
         PowerTunnel.MIX_HOST_HEADER_CASE = prefs.getBoolean("mix_host_header_case", true);
         PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
+        PowerTunnel.COMPLETE_MIX_HOST_CASE = prefs.getBoolean("complete_mix_host_case", false);
         PowerTunnel.LINE_BREAK_BEFORE_GET = prefs.getBoolean("break_before_get", false);
         PowerTunnel.ADDITIONAL_SPACE_AFTER_GET = prefs.getBoolean("space_after_get", false);
         PowerTunnel.APPLY_HTTP_TRICKS_TO_HTTPS = prefs.getBoolean("apply_http_https", false);

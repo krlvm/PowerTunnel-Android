@@ -92,4 +92,5 @@
     <string name="cert_not_installed">Сертификат не установлен, обход через SNI не будет работать</string>
     <string name="please_install_cert">Вам нужно установить корневой сертификат PowerTunnel для использования обхода через SNI</string>
     <string name="pref_chunking">Фрагментация пакетов</string>
+    <string name="pref_complete_mix_host_case">Полное изменение регистра адреса соединения</string>
 </resources>
