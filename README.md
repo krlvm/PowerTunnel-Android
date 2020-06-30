@@ -88,3 +88,6 @@ Localization contributors:
 * [dnsjava](https://github.com/dnsjava/dnsjava) - DNS library, DoH realization
 * [dnssecjava](https://github.com/ibauersachs/dnssecjava) - DNSSec realization for dnsjava
 * [DNSSEC4J](https://github.com/adamfisk/DNSSEC4J) - DNSSec realization for LittleProxy
+
+### Credits
+* [blockcheck](https://github.com/ValdikSS/blockcheck)

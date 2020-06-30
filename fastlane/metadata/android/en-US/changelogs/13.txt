@@ -1,0 +1,7 @@
+New features:
+- Ability to disable the standard DPI circumvention methods
+- New HTTP DPI circumvention methods
+
+Improvements:
+- Improved performance
+- Improved battery usage
