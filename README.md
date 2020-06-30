@@ -84,7 +84,8 @@ Localization contributors:
 
 ## Dependencies
 * [TunProxy](https://github.com/raise-isayan/TunProxy) - VPN server and traffic interceptor
-* [LittleProxy](https://github.com/adamfisk/LittleProxy) with some [patches](https://github.com/krlvm/PowerTunnel-Android/tree/master/app/src/main/java/org/littleshoot/proxy/impl) - proxy server
+* [LittleProxy](https://github.com/adamfisk/LittleProxy) - proxy server
+* [LittleProxy-MITM](https://github.com/ganskef/LittleProxy-mitm) - an extension for LittleProxy to work with SSL
 * [dnsjava](https://github.com/dnsjava/dnsjava) - DNS library, DoH realization
 * [dnssecjava](https://github.com/ibauersachs/dnssecjava) - DNSSec realization for dnsjava
 * [DNSSEC4J](https://github.com/adamfisk/DNSSEC4J) - DNSSec realization for LittleProxy
