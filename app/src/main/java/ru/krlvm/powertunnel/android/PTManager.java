@@ -16,6 +16,7 @@ public class PTManager {
     public static boolean DNS_OVERRIDE = false;
 
     public static void configure(Context context, SharedPreferences prefs) {
+        PowerTunnel.APPLY_HTTP_TRICKS_TO_HTTPS = prefs.getBoolean("apply_http_https", false);
         PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
         PowerTunnel.ALLOW_REQUESTS_TO_ORIGIN_SERVER = prefs.getBoolean("allow_req_to_oserv", true);
         PowerTunnel.FULL_CHUNKING = prefs.getBoolean("full_chunking", false);

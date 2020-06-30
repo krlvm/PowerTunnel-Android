@@ -72,7 +72,7 @@
     <string name="pref_proxy_mode">Режим прокси</string>
     <string name="help_proxy">PowerTunnel работает в режиме прокси.\nВам нужно вручную настраивать прокси-сервер в приложениях.\n\nАдрес прокси-сервера:\n%s</string>
     <string name="notification_proxy_background">Прокси-сервер PowerTunnel активен</string>
-    <string name="proxy_mode_warning">Теперь вы должны вручную настроить прокси-сервер в приложениях. Если у вас есть проблемы, вернитесь к режиму VPN, отключив режим прокси.</string>
+    <string name="proxy_mode_warning">Теперь вы должны вручную настроить прокси-сервер в приложениях. Если вы испытываете проблемы, вернитесь к режиму VPN, отключив режим прокси.</string>
     <string name="notification_channel_proxy">Прокси PowerTunnel</string>
     <string name="pref_category_vpn">Настройки VPN</string>
     <string name="pref_proxy_ip">Адрес локального прокси-сервера</string>
@@ -82,4 +82,5 @@
     <string name="startup_failed_proxy_message">Не удается запустить прокси-сервер, попробуйте сбросить конфигурацию прокси-сервера в настройках</string>
     <string name="pref_fix_conn_issues">Исправлять ошибки при соединении</string>
     <string name="pref_dns_port">Порт DNS</string>
+    <string name="pref_apply_http_https">Применять обход HTTP для HTTPS</string>
 </resources>

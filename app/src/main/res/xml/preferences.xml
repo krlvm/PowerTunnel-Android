@@ -130,5 +130,9 @@
 			android:title="@string/pref_send_payload"
 			android:key="send_payload"
 			android:defaultValue="false"/>
+		<SwitchPreference
+			android:title="@string/pref_apply_http_https"
+			android:key="apply_http_https"
+			android:defaultValue="false"/>
 	</PreferenceCategory>
 </PreferenceScreen>

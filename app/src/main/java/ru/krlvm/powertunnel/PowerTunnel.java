@@ -62,6 +62,8 @@ public class PowerTunnel {
     public static boolean USE_DNS_SEC = false;
     public static boolean MIX_HOST_CASE = false;
 
+    public static boolean APPLY_HTTP_TRICKS_TO_HTTPS = false;
+
     public static int DNS_PORT = -1;
     public static String DOH_ADDRESS = null;
 

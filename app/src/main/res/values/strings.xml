@@ -136,4 +136,5 @@
     <string name="startup_failed_proxy_message">Unable to start proxy server, try to reset proxy configuration in settings</string>
     <string name="pref_fix_conn_issues">Fix connectivity issues</string>
     <string name="pref_dns_port">DNS port</string>
+    <string name="pref_apply_http_https">Apply HTTP tricks to HTTPS</string>
 </resources>
