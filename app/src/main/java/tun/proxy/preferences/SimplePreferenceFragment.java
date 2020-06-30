@@ -112,6 +112,15 @@ public class SimplePreferenceFragment extends PreferenceFragment implements OnPr
                 return true;
             }
         });
+        findPreference("sni").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if(((boolean) newValue) && context != null) {
+                    Toast.makeText(context, R.string.sni_warning, Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+        });
 
         updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "CLOUDFLARE"));
         updateMenuItem();
