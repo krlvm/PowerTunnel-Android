@@ -179,11 +179,13 @@ public class MainActivity extends AppCompatActivity {
         cBroadcastRecv = new BroadcastReceiver(){
             @Override
             public void onReceive(Context context, Intent intent) {
-                installCertificate();
+                if(PowerTunnel.SNI_TRICK != null) {
+                    installCertificate();
+                }
             }
         };
         IntentFilter filter = new IntentFilter(PTManager.PROMPT_CERT);
-        registerReceiver(cBroadcastRecv,filter);
+        registerReceiver(cBroadcastRecv, filter);
     }
 
     boolean isRunning() {
