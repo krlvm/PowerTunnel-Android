@@ -13,6 +13,7 @@ import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.security.KeyChain;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
+import java.io.File;
+import java.util.Scanner;
+
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.activities.AboutActivity;
 import ru.krlvm.powertunnel.android.service.ProxyModeService;
@@ -37,7 +41,11 @@ import tun.proxy.service.Tun2HttpVpnService;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static File DATA_DIR;
+
     public static final int REQUEST_VPN = 1;
+    private static final int REQUEST_CERT = 2;
+
     public static final String STARTUP_FAIL_BROADCAST = "ru.krlvm.powertunnel.android.action.STARTUP_FAIL";
 
     private ImageView logo;
@@ -64,10 +72,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private BroadcastReceiver cBroadcastRecv = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DATA_DIR = getFilesDir();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         configureProxyServer(prefs);
@@ -163,6 +175,15 @@ public class MainActivity extends AppCompatActivity {
         statusHandler.post(statusRunnable);
         Intent intent = new Intent(this, Tun2HttpVpnService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+
+        cBroadcastRecv = new BroadcastReceiver(){
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                installCertificate();
+            }
+        };
+        IntentFilter filter = new IntentFilter(PTManager.PROMPT_CERT);
+        registerReceiver(cBroadcastRecv,filter);
     }
 
     boolean isRunning() {
@@ -174,6 +195,9 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         statusHandler.removeCallbacks(statusRunnable);
         unbindService(serviceConnection);
+        if(cBroadcastRecv != null) {
+            unregisterReceiver(cBroadcastRecv);
+        }
     }
 
     private void configureProxyServer(SharedPreferences prefs) {
@@ -228,6 +252,29 @@ public class MainActivity extends AppCompatActivity {
         startService(new Intent(this, ProxyModeService.class));
     }
 
+    private void installCertificate() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.app_name)
+                .setMessage(R.string.please_install_cert)
+                .show();
+        Intent installIntent = KeyChain.createInstallIntent();
+        StringBuilder cert = new StringBuilder();
+        try {
+            File f = new File(DATA_DIR.getAbsolutePath() + "/powertunnel-root-ca.pem");
+            Scanner r = new Scanner(f);
+            while (r.hasNextLine()) {
+                cert.append(r.nextLine()).append("\n");
+            }
+            r.close();
+        } catch (Exception ex) {
+            return;
+        }
+        System.out.println(cert);
+        installIntent.putExtra(KeyChain.EXTRA_CERTIFICATE, cert.toString().getBytes());
+        installIntent.putExtra(KeyChain.EXTRA_NAME, "PowerTunnel Root CA");
+        startActivityForResult(installIntent, REQUEST_CERT);
+    }
+
     private void stopTunnel() {
         final ProgressDialog dialog = progress(false);
         dialog.show();
@@ -266,12 +313,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        if (requestCode == REQUEST_VPN) {
-            updateStatus();
-            Tun2HttpVpnService.start(this);
+
+        switch (requestCode) {
+            case REQUEST_VPN: {
+                if (resultCode == RESULT_OK) {
+                    updateStatus();
+                    Tun2HttpVpnService.start(this);
+                }
+                break;
+            }
+            case REQUEST_CERT: {
+                if(resultCode == RESULT_OK) {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("cert_installed", true);
+                    editor.commit();
+                    Toast.makeText(this, R.string.cert_installed, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, R.string.cert_not_installed, Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
         }
     }
 

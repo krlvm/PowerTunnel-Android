@@ -257,6 +257,7 @@ import io.netty.util.ReferenceCounted;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import ru.krlvm.powertunnel.PowerTunnel;
+import ru.krlvm.powertunnel.enums.SNITrick;
 
 import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CHUNK;
 import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CONNECT_OK;
@@ -314,7 +315,7 @@ public class ProxyToServerConnection extends org.littleshoot.proxy.impl.ProxyCon
      * when retrying a connection without SNI to work around Java's SNI handling issue (see
      * {@link #connectionFailed(Throwable)}).
      */
-    private volatile boolean disableSni = false;
+    private volatile boolean disableSni = PowerTunnel.SNI_TRICK == SNITrick.ERASE;//false;
 
     /**
      * While we're in the process of connecting, it's possible that we'll
@@ -413,13 +414,13 @@ public class ProxyToServerConnection extends org.littleshoot.proxy.impl.ProxyCon
     }
 
     @Override
-    public boolean isShouldBeFragmented() {
+    public boolean _powerTunnelIsBlocked() {
         return true;
         //return PowerTunnel.isBlockedByGovernment(HttpUtility.formatHost(serverHostAndPort)); todo
     }
 
     @Override
-    public int getPTFragmentSize() {
+    public int _powerTunnelFragmentSize() {
         return PowerTunnel.DEFAULT_CHUNK_SIZE;
     }
 
@@ -797,7 +798,7 @@ public class ProxyToServerConnection extends org.littleshoot.proxy.impl.ProxyCon
                             .serverSslEngine()));
                 } else {
                     connectionFlow.then(serverConnection.EncryptChannel(proxyServer.getMitmManager()
-                            .serverSslEngine(parsedHostAndPort.getHost(), parsedHostAndPort.getPort())));
+                            .serverSslEngine(parsedHostAndPort.getHost() + ".", parsedHostAndPort.getPort())));
                 }
 
             	connectionFlow
@@ -1259,6 +1260,10 @@ public class ProxyToServerConnection extends org.littleshoot.proxy.impl.ProxyCon
             }
         }
     };
+
+    private boolean isMITMEnabled() {
+        return proxyServer.getMitmManager() != null && PowerTunnel.SNI_TRICK != null && _powerTunnelIsBlocked();
+    }
 
     static {
         System.out.println("Internals | " + ProxyToServerConnection.class.getSimpleName() + " is patched");

@@ -1,13 +1,18 @@
 package ru.krlvm.powertunnel.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+
+import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.exceptions.ProxyStartFailureException;
+import ru.krlvm.powertunnel.enums.SNITrick;
 import tun.utils.Util;
 
 public class PTManager {
@@ -16,6 +21,16 @@ public class PTManager {
     public static boolean DNS_OVERRIDE = false;
 
     public static void configure(Context context, SharedPreferences prefs) {
+        PowerTunnel.SNI_TRICK = prefs.getBoolean("sni", false) ? SNITrick.SPOIL : null;
+        if(!prefs.contains("mitm_password")) {
+            String newPassword = UUID.randomUUID().toString();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("mitm_password", newPassword);
+            editor.commit();
+            PowerTunnel.MITM_PASSWORD = newPassword.toCharArray();
+        } else {
+            PowerTunnel.MITM_PASSWORD = prefs.getString("mitm_password", UUID.randomUUID().toString()).toCharArray();
+        }
         PowerTunnel.DOT_AFTER_HOST_HEADER = prefs.getBoolean("dot_after_host", true);
         PowerTunnel.MIX_HOST_HEADER_CASE = prefs.getBoolean("mix_host_header_case", true);
         PowerTunnel.MIX_HOST_CASE = prefs.getBoolean("mix_host_case", false);
@@ -24,6 +39,7 @@ public class PTManager {
         PowerTunnel.APPLY_HTTP_TRICKS_TO_HTTPS = prefs.getBoolean("apply_http_https", false);
         PowerTunnel.USE_DNS_SEC = prefs.getBoolean("use_dns_sec", false);
         PowerTunnel.ALLOW_REQUESTS_TO_ORIGIN_SERVER = prefs.getBoolean("allow_req_to_oserv", true);
+        PowerTunnel.CHUNKING_ENABLED = prefs.getBoolean("chunking", true);
         PowerTunnel.FULL_CHUNKING = prefs.getBoolean("full_chunking", false);
         PowerTunnel.DEFAULT_CHUNK_SIZE = Integer.parseInt(prefs.getString("chunk_size", "2"));
         if (PowerTunnel.DEFAULT_CHUNK_SIZE < 1) {
@@ -95,24 +111,30 @@ public class PTManager {
         } catch (NumberFormatException ex) {}
     }
 
-    public static Exception safeStartProxy() {
+    public static Exception safeStartProxy(Context context) {
         try {
-            startProxy();
+            startProxy(context);
             return null;
         } catch (ProxyStartFailureException ex) {
             return ex;
         }
     }
 
-    public static void startProxy() throws ProxyStartFailureException {
+    public static void startProxy(Context context) throws ProxyStartFailureException {
         if (!PowerTunnel.isRunning()) {
             try {
                 PowerTunnel.bootstrap();
             } catch (Exception ex) {
                 throw new ProxyStartFailureException(ex.getMessage(), ex);
             }
+            if(!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cert_installed", false)) {
+                Intent intent = new Intent(PROMPT_CERT);
+                intent.setPackage(context.getPackageName());
+                context.sendBroadcast(intent);
+            }
         }
     }
+    public static final String PROMPT_CERT = "PROMPT_CERT";
 
     public static void stopProxy() {
         if (PowerTunnel.isRunning()) {

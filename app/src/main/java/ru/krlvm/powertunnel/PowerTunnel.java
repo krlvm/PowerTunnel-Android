@@ -23,7 +23,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 import ru.krlvm.powertunnel.android.PTManager;
 import ru.krlvm.powertunnel.android.resolver.AndroidDohResolver;
+import ru.krlvm.powertunnel.enums.SNITrick;
 import ru.krlvm.powertunnel.filter.ProxyFilter;
+import ru.krlvm.powertunnel.utilities.MITMUtility;
 import ru.krlvm.powertunnel.utilities.URLUtility;
 
 /**
@@ -55,10 +57,14 @@ public class PowerTunnel {
 
     public static boolean ALLOW_REQUESTS_TO_ORIGIN_SERVER = false;
 
+    public static boolean CHUNKING_ENABLED = true;
     public static boolean FULL_CHUNKING = false;
     public static int DEFAULT_CHUNK_SIZE = 2;
 
     public static int PAYLOAD_LENGTH = 0; //21 recommended
+
+    public static SNITrick SNI_TRICK = null;
+    public static char[] MITM_PASSWORD = null;
 
     public static boolean LINE_BREAK_BEFORE_GET = false;
     public static boolean ADDITIONAL_SPACE_AFTER_GET = false;
@@ -79,7 +85,7 @@ public class PowerTunnel {
     /**
      * PowerTunnel bootstrap
      */
-    public static void bootstrap() throws UnknownHostException {
+    public static void bootstrap() throws Exception {
         System.out.println("[*] Base PowerTunnel/LibertyTunnel version is " + BASE_VERSION);
         //Load data
         //GOVERNMENT_BLACKLIST.add("*");
@@ -101,7 +107,7 @@ public class PowerTunnel {
     /**
      * Starts LittleProxy server
      */
-    private static void startServer() throws UnknownHostException {
+    private static void startServer() throws Exception {
         System.out.println("[.] Starting LittleProxy server on " + SERVER_IP_ADDRESS + ":" + SERVER_PORT);
         HttpProxyServerBootstrap bootstrap = DefaultHttpProxyServer.bootstrap().withFiltersSource(new HttpFiltersSourceAdapter() {
             @Override
@@ -154,6 +160,13 @@ public class PowerTunnel {
                         }
                     }
                 });
+            }
+        }
+        if (SNI_TRICK != null) {
+            try {
+                bootstrap.withManInTheMiddle(MITMUtility.mitmManager());
+            } catch (Exception ex) {
+                throw new Exception("Failed to initialize MITM Manager for SNI tricks: " + ex.getMessage(), ex);
             }
         }
         SERVER = bootstrap.start();

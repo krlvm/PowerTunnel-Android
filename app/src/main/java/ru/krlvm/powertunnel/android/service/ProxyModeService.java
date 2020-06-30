@@ -55,7 +55,7 @@ public class ProxyModeService extends Service {
         Log.i(TAG, "Starting proxy server...");
         PTManager.configure(this, PreferenceManager.getDefaultSharedPreferences(this));
 
-        Exception proxyFailure = PTManager.safeStartProxy();
+        Exception proxyFailure = PTManager.safeStartProxy(this);
         if(proxyFailure != null) {
             sendBroadcast(new Intent(MainActivity.STARTUP_FAIL_BROADCAST));
             stopForeground(true);

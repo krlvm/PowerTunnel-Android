@@ -108,4 +108,9 @@
     <string name="space_after_get">Spacja po GET</string>
     <string name="pref_dot_after_host">Dodaj kropkę po hoście</string>
     <string name="pref_mix_host_header_case">Mieszaj wielkość liter nagłówka hosta</string>
+    <string name="pref_sni">Spoil SNI (eksperymentalny)</string>
+    <string name="cert_installed">Certyfikat został pomyślnie zainstalowany</string>
+    <string name="cert_not_installed">Certyfikat nie został zainstalowany, sztuczki SNI nie będą działać</string>
+    <string name="please_install_cert">Aby korzystać z trików SNI, musisz zainstalować PowerTunnel Root CA</string>
+    <string name="pref_chunking">Włącz dzielenie</string>
 </resources>

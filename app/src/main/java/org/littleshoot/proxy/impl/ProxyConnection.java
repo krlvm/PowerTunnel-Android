@@ -230,6 +230,7 @@ import io.netty.util.ReferenceCounted;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import io.netty.util.concurrent.Promise;
+import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.utilities.PacketUtility;
 
 import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CHUNK;
@@ -488,8 +489,8 @@ abstract class ProxyConnection<I extends HttpObject> extends
      */
     private boolean alreadyChunked = false;
     protected void writeRaw(ByteBuf buf) {
-        if(!alreadyChunked && isShouldBeFragmented()) {
-            int chunkSize = getPTFragmentSize();
+        if(PowerTunnel.CHUNKING_ENABLED && !alreadyChunked && _powerTunnelIsBlocked()) {
+            int chunkSize = _powerTunnelFragmentSize();
             for (byte[] byteChunk : PacketUtility.chunk(buf, chunkSize)) {
                 writeToChannel(Unpooled.wrappedBuffer(byteChunk));
             }
@@ -499,11 +500,11 @@ abstract class ProxyConnection<I extends HttpObject> extends
         }
     }
 
-    public boolean isShouldBeFragmented() {
+    public boolean _powerTunnelIsBlocked() {
         return false;
     }
 
-    public int getPTFragmentSize() {
+    public int _powerTunnelFragmentSize() {
         return 1;
     }
 

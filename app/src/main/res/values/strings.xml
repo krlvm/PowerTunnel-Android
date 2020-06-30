@@ -141,4 +141,9 @@
     <string name="pref_break_get">Break before GET</string>
     <string name="pref_dot_after_host">Add a dot after host</string>
     <string name="pref_mix_host_header_case">Mix host header case</string>
+    <string name="pref_sni">Spoil SNI (experimental)</string>
+    <string name="cert_installed">Certificate successfully installed</string>
+    <string name="cert_not_installed">Certificate not installed, SNI tricks will not work</string>
+    <string name="please_install_cert">You need to install PowerTunnel Root CA to use SNI tricks</string>
+    <string name="pref_chunking">Enable chunking</string>
 </resources>

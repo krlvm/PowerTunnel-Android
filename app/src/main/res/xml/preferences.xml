@@ -111,6 +111,10 @@
 
 	<PreferenceCategory android:title="@string/pref_category_dpi">
 		<SwitchPreference
+			android:title="@string/pref_chunking"
+			android:key="chunking"
+			android:defaultValue="true"/>
+		<SwitchPreference
 			android:title="@string/pref_full_chunking"
 			android:key="full_chunking"
 			android:defaultValue="false"/>
@@ -145,6 +149,10 @@
 		<SwitchPreference
 			android:title="@string/pref_send_payload"
 			android:key="send_payload"
+			android:defaultValue="false"/>
+		<SwitchPreference
+			android:title="@string/pref_sni"
+			android:key="sni"
 			android:defaultValue="false"/>
 		<SwitchPreference
 			android:title="@string/pref_apply_http_https"
