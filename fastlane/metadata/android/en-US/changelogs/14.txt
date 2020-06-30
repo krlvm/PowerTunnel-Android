@@ -1,0 +1,5 @@
+New features:
+- New HTTPS DPI circumvention method: SNI Spoiling
+
+Improvements:
+- Mix host header value is mixing only the last letter by default now. This behavior can be changed in the options.
