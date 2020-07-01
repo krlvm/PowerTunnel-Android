@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 import ru.krlvm.powertunnel.PowerTunnel;
-import ru.krlvm.powertunnel.android.exceptions.ProxyStartFailureException;
 import ru.krlvm.powertunnel.enums.SNITrick;
 import tun.utils.Util;
 
@@ -116,30 +115,29 @@ public class PTManager {
         try {
             startProxy(context);
             return null;
-        } catch (ProxyStartFailureException ex) {
+        } catch (Exception ex) {
+            //System.out.println("\n\n\n\nWHAT HAS FAILED? " + ex.getClass().getSimpleName() + " : " + ex.getMessage() + "\n\n\n\n");
             return ex;
         }
     }
 
-    public static void startProxy(Context context) throws ProxyStartFailureException {
-        if (!PowerTunnel.isRunning()) {
-            try {
-                PowerTunnel.bootstrap();
-            } catch (Exception ex) {
-                throw new ProxyStartFailureException(ex.getMessage(), ex);
-            }
-            if(!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cert_installed", false)) {
-                Intent intent = new Intent(PROMPT_CERT);
-                intent.setPackage(context.getPackageName());
-                context.sendBroadcast(intent);
-            }
+    public static void startProxy(Context context) throws Exception {
+        PowerTunnel.bootstrap();
+        if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cert_installed", false)) {
+            context.sendBroadcast(new Intent(MainActivity.SERVER_START_BROADCAST));
         }
     }
-    public static final String PROMPT_CERT = "PROMPT_CERT";
 
     public static void stopProxy() {
         if (PowerTunnel.isRunning()) {
             PowerTunnel.stop();
         }
+    }
+
+    public static void serverStartupFailureBroadcast(Context context, Exception cause) {
+        cause.printStackTrace();
+        Intent intent = new Intent(MainActivity.STARTUP_FAIL_BROADCAST);
+        intent.putExtra("cause", cause.getLocalizedMessage());
+        context.sendBroadcast(intent);
     }
 }

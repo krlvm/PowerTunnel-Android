@@ -79,7 +79,7 @@
     <string name="pref_proxy_port">Порт локального прокси-сервера</string>
     <string name="reset_connection_settings">Сбросить настройки прокси-сервера</string>
     <string name="reset_connection_settings_summary">Вернуться к адресу и порту по умолчанию</string>
-    <string name="startup_failed_proxy_message">Не удается запустить прокси-сервер, попробуйте сбросить конфигурацию прокси-сервера в настройках</string>
+    <string name="startup_failed_proxy_message">Не удается запустить прокси-сервер, попробуйте сбросить конфигурацию прокси-сервера в настройках: %1$s</string>
     <string name="pref_fix_conn_issues">Исправлять ошибки при соединении</string>
     <string name="pref_dns_port">Порт DNS</string>
     <string name="pref_apply_http_https">Применять обход HTTP для HTTPS</string>

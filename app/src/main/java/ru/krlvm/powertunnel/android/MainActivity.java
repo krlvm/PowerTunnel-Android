@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CERT = 2;
 
     public static final String STARTUP_FAIL_BROADCAST = "ru.krlvm.powertunnel.android.action.STARTUP_FAIL";
+    public static final String SERVER_START_BROADCAST = "ru.krlvm.powertunnel.android.action.SERVER_START";
 
     private ImageView logo;
     private TextView status;
@@ -71,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
             statusHandler.post(statusRunnable);
         }
     };
-
-    private BroadcastReceiver cBroadcastRecv = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,14 +106,30 @@ public class MainActivity extends AppCompatActivity {
         //Listen to startup failures
         IntentFilter filter = new IntentFilter();
         filter.addAction(STARTUP_FAIL_BROADCAST);
+        filter.addAction(SERVER_START_BROADCAST);
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(R.string.startup_failed_proxy)
-                        .setMessage(R.string.startup_failed_proxy_message)
-                        .show();
-                context.getString((R.string.startup_failed_proxy));
+                if(intent == null || intent.getAction() == null) {
+                    return;
+                }
+                switch (intent.getAction()) {
+                    case STARTUP_FAIL_BROADCAST: {
+                        System.out.println("myerrmsg:"+intent.getExtras().get("cause"));
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle(R.string.startup_failed_proxy)
+                                .setMessage(getString(R.string.startup_failed_proxy_message, intent.getStringExtra("cause")))
+                                .show();
+                        context.getString((R.string.startup_failed_proxy));
+                        break;
+                    }
+                    case SERVER_START_BROADCAST: {
+                        if(PowerTunnel.SNI_TRICK != null) {
+                            installCertificate();
+                        }
+                        break;
+                    }
+                }
             }
         }, filter);
 
@@ -175,17 +190,6 @@ public class MainActivity extends AppCompatActivity {
         statusHandler.post(statusRunnable);
         Intent intent = new Intent(this, Tun2HttpVpnService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-
-        cBroadcastRecv = new BroadcastReceiver(){
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if(PowerTunnel.SNI_TRICK != null) {
-                    installCertificate();
-                }
-            }
-        };
-        IntentFilter filter = new IntentFilter(PTManager.PROMPT_CERT);
-        registerReceiver(cBroadcastRecv, filter);
     }
 
     boolean isRunning() {
@@ -197,15 +201,20 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         statusHandler.removeCallbacks(statusRunnable);
         unbindService(serviceConnection);
-        if(cBroadcastRecv != null) {
-            unregisterReceiver(cBroadcastRecv);
-        }
     }
 
     private void configureProxyServer(SharedPreferences prefs) {
         PowerTunnel.SERVER_IP_ADDRESS = prefs.getString("proxy_ip", getString(R.string.proxy_ip));
-        PowerTunnel.SERVER_PORT = Integer.parseInt(prefs.getString("proxy_port",
-                getString(R.string.proxy_port)));
+        try {
+            PowerTunnel.SERVER_PORT = Integer.parseInt(prefs.getString("proxy_port",
+                    getString(R.string.proxy_port)));
+        } catch (NumberFormatException ex) {
+            String defPort = getString(R.string.proxy_port);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("proxy_port", defPort);
+            editor.apply();
+            PowerTunnel.SERVER_PORT = Integer.parseInt(defPort);
+        }
     }
 
     private void updateStatus() {

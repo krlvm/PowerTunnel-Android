@@ -57,7 +57,7 @@ public class ProxyModeService extends Service {
 
         Exception proxyFailure = PTManager.safeStartProxy(this);
         if(proxyFailure != null) {
-            sendBroadcast(new Intent(MainActivity.STARTUP_FAIL_BROADCAST));
+            PTManager.serverStartupFailureBroadcast(this, proxyFailure);
             stopForeground(true);
         } else {
             startForeground(FOREGROUND_ID, notification);
