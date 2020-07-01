@@ -1,0 +1,5 @@
+Improvements:
+- Better error handling
+
+Bugfixes:
+- SNI Spoiler supports Android 9 and higher now
