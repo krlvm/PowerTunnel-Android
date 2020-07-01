@@ -66,9 +66,9 @@ When there's some troubles with resolving using the choosen custom provider, res
 Just type its address in the settings. If the address starts with `https://` it will be recognized as a DoH provider. 
 
 ## Doesn't work
-Most likely your ISP blocked the website you need by IP address, so only encrypted tunnel (VPN/Tor) can help you.
+Try to disable chunking mode and enable SNI Spoil.
 
-Also, you can try enabling full chunking mode.
+Most likely your ISP blocked the website you need by IP address, so only encrypted tunnel (VPN/Tor) can help you.
 
 ## Contributing
 PowerTunnel is open-source software: you can help in the development process.
