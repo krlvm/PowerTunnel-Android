@@ -205,6 +205,8 @@
  */
 package org.littleshoot.proxy.mitm;
 
+import android.os.Build;
+
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1Sequence;
@@ -461,10 +463,19 @@ public final class CertificateHelper {
             X509v3CertificateBuilder certificateBuilder,
             PrivateKey signedWithPrivateKey) throws OperatorCreationException,
             CertificateException {
-        ContentSigner signer = new JcaContentSignerBuilder(SIGNATURE_ALGORITHM)
-                .setProvider(PROVIDER_NAME).build(signedWithPrivateKey);
-        return new JcaX509CertificateConverter().setProvider(
-                PROVIDER_NAME).getCertificate(certificateBuilder.build(signer));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ContentSigner signer = new JcaContentSignerBuilder(SIGNATURE_ALGORITHM)
+                    .build(signedWithPrivateKey);
+            return new JcaX509CertificateConverter()
+                    .getCertificate(certificateBuilder.build(signer));
+        } else {
+            ContentSigner signer = new JcaContentSignerBuilder(SIGNATURE_ALGORITHM)
+                    .setProvider(PROVIDER_NAME)
+                    .build(signedWithPrivateKey);
+            return new JcaX509CertificateConverter()
+                    .setProvider(PROVIDER_NAME)
+                    .getCertificate(certificateBuilder.build(signer));
+        }
     }
 
     public static TrustManager[] getTrustManagers(KeyStore keyStore)

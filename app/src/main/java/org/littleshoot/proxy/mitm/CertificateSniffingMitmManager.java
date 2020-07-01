@@ -239,6 +239,7 @@ public class CertificateSniffingMitmManager implements MitmManager {
             sslEngineSource = new BouncyCastleSslEngineSource(authority, true,
                     true);
         } catch (final Exception e) {
+            e.printStackTrace();
             throw new RootCertificateException(
                     "Errors during assembling root CA.", e);
         }
