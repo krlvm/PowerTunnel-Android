@@ -31,6 +31,9 @@ Since PowerTunnel for Android uses the same architecture as the PC version, the 
 ### How does it work?
 PowerTunnel for Android establishes a transparent proxy server on your phone and starts local VPN server, that forwards your traffic into the proxy server, where are DPI circumvention tricks applying.
 
+PowerTunnel never decrypts your traffic, all code is open-source.\
+You should install Root CA only in case you have [some specific options](https://github.com/krlvm/PowerTunnel/wiki/SNI-Tricks) enabled.
+
 ## How can I get it?
 You can compile a binary yourself or download prepared binary [here](https://github.com/krlvm/PowerTunnel-Android/releases).
 
@@ -85,7 +88,7 @@ Localization contributors:
 ## Dependencies
 * [TunProxy](https://github.com/raise-isayan/TunProxy) - VPN server and traffic interceptor
 * [LittleProxy](https://github.com/adamfisk/LittleProxy) - proxy server
-* [LittleProxy-MITM](https://github.com/ganskef/LittleProxy-mitm) - an extension for LittleProxy to work with SSL
+* [LittleProxy-MITM](https://github.com/ganskef/LittleProxy-mitm) - LittleProxy SSL extension
 * [dnsjava](https://github.com/dnsjava/dnsjava) - DNS library, DoH realization
 * [dnssecjava](https://github.com/ibauersachs/dnssecjava) - DNSSec realization for dnsjava
 * [DNSSEC4J](https://github.com/adamfisk/DNSSEC4J) - DNSSec realization for LittleProxy
