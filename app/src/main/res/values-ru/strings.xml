@@ -59,7 +59,7 @@
     <string name="specified_dns_provider">Указанный поставщик DNS</string>
 
     <string-array name="pref_theme">
-        <item>Автоматически (системная настройка)</item>
+        <item>Автоматически</item>
         <item>Включена</item>
         <item>Выключена</item>
         <item>В режиме энергосбережения</item>

@@ -45,16 +45,16 @@ public class ProxyFilter extends HttpFiltersAdapter {
         return null;
     }
 
-    @Override
-    public HttpResponse proxyToServerRequest(HttpObject httpObject) {
-        if (httpObject instanceof HttpRequest) {
-            HttpRequest request = (HttpRequest) httpObject;
-            if(request.headers().contains("Via")) {
-                request.headers().remove("Via");
-            }
-        }
-        return null;
-    }
+    //@Override
+    //public HttpResponse proxyToServerRequest(HttpObject httpObject) {
+    //    if (httpObject instanceof HttpRequest) {
+    //        HttpRequest request = (HttpRequest) httpObject;
+    //        if(request.headers().contains("Via")) {
+    //            request.headers().remove("Via");
+    //        }
+    //    }
+    //    return null;
+    //}
 
     /*@Override
     public HttpObject serverToProxyResponse(HttpObject httpObject) {

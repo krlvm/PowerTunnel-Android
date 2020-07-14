@@ -66,7 +66,7 @@
     </string-array>
 
     <string-array name="pref_theme">
-        <item>Auto (system preference)</item>
+        <item>Auto</item>
         <item>Enabled</item>
         <item>Disabled</item>
         <item>In Battery Saver mode</item>
