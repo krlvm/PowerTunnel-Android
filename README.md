@@ -58,7 +58,7 @@ Overriding DNS settings can led to connectivity problems on Android 10 and highe
 #### DNSSec mode
 DNSSec mode appears to validate DNS responses.
 
-DNSSec mode is experimental and not recommended to use. Note that it useless and not working when DoH mode is enabled (because DoH already validating DNS responses on server-side). When there's some troubles with resolving, resolving is going on with the system's DNS settings.
+DNSSec mode is experimental and not recommended to use. Note that it is useless and not working when DoH mode is enabled (because DoH already validating DNS responses on server-side). When there's some troubles with resolving, resolving is going on with the system's DNS settings.
 
 #### Custom DNS providers
 You can also choose one of custom DNS providers (without DoH). It doesn't work with some of Android versions.
