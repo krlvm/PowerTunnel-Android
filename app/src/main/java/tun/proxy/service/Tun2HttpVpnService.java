@@ -131,7 +131,6 @@ public class Tun2HttpVpnService extends VpnService {
 
 
     private Builder getBuilder() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Builder builder = new Builder();
         builder.setSession(getString(R.string.app_name));
 
