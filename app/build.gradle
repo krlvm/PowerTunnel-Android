@@ -59,7 +59,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-api'
         exclude group: 'dnsjava', module: 'dnsjava'
     }
-    implementation 'org.bouncycastle:bcpkix-jdk15on:1.66' //LittleProxy-MITM dependency
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.65' //LittleProxy-MITM dependency
     //implementation 'org.littleshoot:littleproxy:1.1.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
