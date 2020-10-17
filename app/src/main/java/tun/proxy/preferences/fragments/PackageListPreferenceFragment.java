@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ru.krlvm.powertunnel.android.PTManager;
-import ru.krlvm.powertunnel.android.PTManager.VPNMode;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.managers.PTManager;
+import ru.krlvm.powertunnel.android.managers.PTManager.VPNMode;
 import tun.proxy.preferences.SimplePreferenceActivity;
 
 public class PackageListPreferenceFragment extends PreferenceFragment

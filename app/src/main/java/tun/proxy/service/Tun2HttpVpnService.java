@@ -1,5 +1,6 @@
 package tun.proxy.service;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,12 +20,15 @@ import java.io.IOException;
 import java.util.Set;
 
 import ru.krlvm.powertunnel.PowerTunnel;
-import ru.krlvm.powertunnel.android.PTManager;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.managers.NotificationHelper;
+import ru.krlvm.powertunnel.android.managers.PTManager;
 
 public class Tun2HttpVpnService extends VpnService {
 
     private static final String TAG = "Tun2Http.Service";
+    private static final int FOREGROUND_ID = 2;
+    private static final String CHANNEL_ID = "PowerTunnelVPN";
 
     public static final String PREF_RUNNING = "pref_running";
     private static final String ACTION_START = "start";
@@ -47,6 +51,7 @@ public class Tun2HttpVpnService extends VpnService {
 
     @Override
     public void onCreate() {
+        NotificationHelper.prepareNotificationChannel(this, CHANNEL_ID);
         jni_init();
         super.onCreate();
     }
@@ -124,6 +129,13 @@ public class Tun2HttpVpnService extends VpnService {
             }
             startNative(vpn);
         }
+
+        Notification notification = NotificationHelper.createMainActivityNotification(this,
+                CHANNEL_ID, getString(R.string.app_name),
+                getString(R.string.notification_vpn_background)
+        );
+
+        startForeground(FOREGROUND_ID, notification);
     }
 
     private void stop() {

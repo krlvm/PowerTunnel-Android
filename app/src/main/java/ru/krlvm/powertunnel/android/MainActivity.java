@@ -191,7 +191,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         if(statusReceiver != null) {
-            unregisterReceiver(statusReceiver);
+            try {
+                unregisterReceiver(statusReceiver);
+            } catch (IllegalArgumentException ignore) {}
         }
         super.onStop();
     }
@@ -253,10 +255,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void installCertificate() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.app_name)
-                .setMessage(R.string.please_install_cert)
-                .show();
+        Toast.makeText(this, R.string.please_install_cert, Toast.LENGTH_LONG).show();
         Intent installIntent = KeyChain.createInstallIntent();
         StringBuilder cert = new StringBuilder();
         try {
@@ -318,14 +317,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case REQUEST_CERT: {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = prefs.edit();
                 if(resultCode == RESULT_OK) {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("cert_installed", true);
                     editor.apply();
                     Toast.makeText(this, R.string.cert_installed, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, R.string.cert_not_installed, Toast.LENGTH_LONG).show();
+                    editor.putBoolean("cert_installed", false);
+                    stopTunnel();
                 }
                 break;
             }

@@ -21,7 +21,7 @@ import java.util.Set;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
-import ru.krlvm.powertunnel.android.PTManager;
+import ru.krlvm.powertunnel.android.managers.PTManager;
 import ru.krlvm.powertunnel.android.resolver.AndroidDohResolver;
 import ru.krlvm.powertunnel.enums.SNITrick;
 import ru.krlvm.powertunnel.filter.ProxyFilter;
@@ -124,18 +124,15 @@ public class PowerTunnel {
                 DOH_ADDRESS = DOH_ADDRESS.substring(0, DOH_ADDRESS.length() - 1);
             }
             System.out.println("[*] DNS over HTTPS is enabled: '" + DOH_ADDRESS + "'");
-            bootstrap.withServerResolver(new HostResolver() {
-                @Override
-                public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
-                    try {
-                        //System.out.println("[DoH] Resolving: " + host);
-                        return new InetSocketAddress(AndroidDohResolver.resolve(host), port);
-                    } catch (Exception ex) {
-                        System.out.println(String.format("[x] DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
-                        ex.printStackTrace();
-                        //return new InetSocketAddress(InetAddress.getByName(host), port);
-                        throw new UnknownHostException(String.format("DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
-                    }
+            bootstrap.withServerResolver((host, port) -> {
+                try {
+                    //System.out.println("[DoH] Resolving: " + host);
+                    return new InetSocketAddress(AndroidDohResolver.resolve(host), port);
+                } catch (Exception ex) {
+                    System.out.println(String.format("[x] DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
+                    ex.printStackTrace();
+                    //return new InetSocketAddress(InetAddress.getByName(host), port);
+                    throw new UnknownHostException(String.format("DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
                 }
             });
         } else if(USE_DNS_SEC || PTManager.DNS_OVERRIDE) {

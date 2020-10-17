@@ -1,22 +1,17 @@
 package ru.krlvm.powertunnel.android.service;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 import androidx.preference.PreferenceManager;
 
-import ru.krlvm.powertunnel.android.MainActivity;
-import ru.krlvm.powertunnel.android.PTManager;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.managers.NotificationHelper;
+import ru.krlvm.powertunnel.android.managers.PTManager;
 
 public class ProxyModeService extends Service {
 
@@ -27,30 +22,15 @@ public class ProxyModeService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, getString(R.string.notification_channel_proxy),
-                    NotificationManager.IMPORTANCE_MIN);
-            channel.setDescription(getString(R.string.notification_channel_proxy));
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            if(notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
-            }
-        }
+        NotificationHelper.prepareNotificationChannel(this, CHANNEL_ID);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                notificationIntent, 0);
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle(getText(R.string.app_name))
-                .setContentText(getText(R.string.notification_proxy_background))
-                .setContentIntent(pendingIntent).build();
+        Notification notification = NotificationHelper.createMainActivityNotification(this,
+                CHANNEL_ID, getString(R.string.app_name),
+                getString(R.string.notification_proxy_background)
+        );
 
         Log.i(TAG, "Starting proxy server...");
         PTManager.configure(this, PreferenceManager.getDefaultSharedPreferences(this));

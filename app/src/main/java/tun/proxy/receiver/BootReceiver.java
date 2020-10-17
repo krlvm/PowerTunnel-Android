@@ -21,7 +21,7 @@ public class BootReceiver extends BroadcastReceiver {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if(!MainActivity.isVPN(prefs)) {
-            //We're in proxy mode
+            // We're in proxy mode
             return;
         }
         boolean isRunning = prefs.getBoolean(Tun2HttpVpnService.PREF_RUNNING, false);

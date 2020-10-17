@@ -1,4 +1,4 @@
-package ru.krlvm.powertunnel.android;
+package ru.krlvm.powertunnel.android.managers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import ru.krlvm.powertunnel.PowerTunnel;
+import ru.krlvm.powertunnel.android.MainActivity;
+import ru.krlvm.powertunnel.android.R;
 import ru.krlvm.powertunnel.enums.SNITrick;
 import tun.utils.Util;
 
@@ -27,7 +29,7 @@ public class PTManager {
             String newPassword = UUID.randomUUID().toString();
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("mitm_password", newPassword);
-            editor.commit();
+            editor.apply();
             PowerTunnel.MITM_PASSWORD = newPassword.toCharArray();
         } else {
             PowerTunnel.MITM_PASSWORD = prefs.getString("mitm_password", UUID.randomUUID().toString()).toCharArray();
@@ -52,7 +54,7 @@ public class PTManager {
         DNS_OVERRIDE = false;
         PowerTunnel.DOH_ADDRESS = null;
         if (prefs.getBoolean("override_dns", false) || DNS_SERVERS.isEmpty()) {
-            String provider = prefs.getString("dns_provider", "CLOUDFLARE");
+            String provider = prefs.getString("dns_provider", "GOOGLE_DOH");
             DNS_OVERRIDE = true;
             if(provider.equals("SPECIFIED")) {
                 String specifiedDnsProvider = prefs.getString("specified_dns_provider", "");
@@ -118,7 +120,6 @@ public class PTManager {
             startProxy(context);
             return null;
         } catch (Exception ex) {
-            //System.out.println("\n\n\n\nWHAT HAS FAILED? " + ex.getClass().getSimpleName() + " : " + ex.getMessage() + "\n\n\n\n");
             return ex;
         }
     }

@@ -18,9 +18,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import ru.krlvm.powertunnel.android.MainActivity;
-import ru.krlvm.powertunnel.android.PTManager;
-import ru.krlvm.powertunnel.android.PTManager.VPNMode;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.managers.PTManager;
+import ru.krlvm.powertunnel.android.managers.PTManager.VPNMode;
 import tun.proxy.preferences.fragments.PackageListPreferenceFragment;
 import tun.proxy.preferences.preference.EditTextSummaryPreference;
 
@@ -77,7 +77,7 @@ public class SettingsFragment extends PreferenceFragment
 
         updateProxyVpn(!prefs.getBoolean("proxy_mode", false));
 
-        updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "CLOUDFLARE"));
+        updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "GOOGLE_DOH"));
         updateVPNModeItem();
     }
 
