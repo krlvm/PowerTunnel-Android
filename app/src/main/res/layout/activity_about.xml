@@ -22,7 +22,7 @@
             android:layout_marginTop="42dp"
             android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
-            android:src="@drawable/ic_logo_not_running" />
+            android:src="@drawable/ic_logo_running" />
 
         <RelativeLayout
             android:layout_width="match_parent"
