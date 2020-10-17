@@ -1,7 +1,6 @@
 package ru.krlvm.powertunnel;
 
 import org.jitsi.dnssec.validator.ValidatingResolver;
-import org.littleshoot.proxy.HostResolver;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
 import org.littleshoot.proxy.HttpProxyServer;
@@ -139,23 +138,20 @@ public class PowerTunnel {
             System.out.println("[*] Enabled advanced resolver | DNSSec: " + USE_DNS_SEC + " / DNSOverride: " + PTManager.DNS_OVERRIDE);
             final Resolver resolver = getResolver();
             if(resolver != null) {
-                bootstrap.withServerResolver(new HostResolver() {
-                    @Override
-                    public InetSocketAddress resolve(String host, int port) throws UnknownHostException {
-                        try {
-                            Lookup lookup = new Lookup(host, Type.A);
-                            lookup.setResolver(resolver);
-                            Record[] records = lookup.run();
-                            if (lookup.getResult() == Lookup.SUCCESSFUL) {
-                                return new InetSocketAddress(((ARecord) records[0]).getAddress(), port);
-                            } else {
-                                throw new UnknownHostException(lookup.getErrorString());
-                            }
-                        } catch (Exception ex) {
-                            //System.out.println(String.format("[x] Failed to resolve '%s': %s", host, ex.getMessage()));
-                            //throw new UnknownHostException(String.format("Failed to resolve '%s': %s", host, ex.getMessage()));
-                            return new InetSocketAddress(InetAddress.getByName(host), port);
+                bootstrap.withServerResolver((host, port) -> {
+                    try {
+                        Lookup lookup = new Lookup(host, Type.A);
+                        lookup.setResolver(resolver);
+                        Record[] records = lookup.run();
+                        if (lookup.getResult() == Lookup.SUCCESSFUL) {
+                            return new InetSocketAddress(((ARecord) records[0]).getAddress(), port);
+                        } else {
+                            throw new UnknownHostException(lookup.getErrorString());
                         }
+                    } catch (Exception ex) {
+                        //System.out.println(String.format("[x] Failed to resolve '%s': %s", host, ex.getMessage()));
+                        //throw new UnknownHostException(String.format("Failed to resolve '%s': %s", host, ex.getMessage()));
+                        return new InetSocketAddress(InetAddress.getByName(host), port);
                     }
                 });
             }

@@ -15,9 +15,7 @@
             android:id="@+id/status_logo"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginStart="-1dp"
             android:layout_marginTop="42dp"
-            android:layout_marginEnd="1dp"
             android:layout_weight="0.1"
             android:src="@drawable/ic_logo_not_running" />
 

@@ -1,11 +1,11 @@
 package ru.krlvm.powertunnel.utilities;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import ru.krlvm.powertunnel.PowerTunnel;
-
-import java.util.Arrays;
-import java.util.LinkedList;
 
 /**
  * Utility with working with

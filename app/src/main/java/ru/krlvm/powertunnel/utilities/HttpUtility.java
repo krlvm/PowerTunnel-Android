@@ -1,12 +1,17 @@
 package ru.krlvm.powertunnel.utilities;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.handler.codec.http.*;
 import org.littleshoot.proxy.impl.ProxyUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpResponse;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.HttpVersion;
 
 /**
  * Utility for working with HTTP requests and responses
