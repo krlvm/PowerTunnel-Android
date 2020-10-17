@@ -49,7 +49,7 @@ public class ProxyModeService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        PTManager.stopProxy();
+        PTManager.stopProxy(this);
     }
 
     @Nullable

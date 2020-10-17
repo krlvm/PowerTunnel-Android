@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat;
 
 import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.receiver.ActionReceiver;
 
 public class NotificationHelper {
 
@@ -29,15 +30,18 @@ public class NotificationHelper {
 
     public static Notification createMainActivityNotification(Service service, String channelId, String title, String text) {
         Intent notificationIntent = new Intent(service, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(service, 0, notificationIntent, 0);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(service, 0,
-                notificationIntent, 0);
+        Intent stopIntent = new Intent(service, ActionReceiver.class);
+        stopIntent.setAction(ActionReceiver.ACTION_STOP_TUNNEL);
 
         return new NotificationCompat.Builder(service, channelId)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.notification_icon)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(title)
                 .setContentText(text)
-                .setContentIntent(pendingIntent).build();
+                .addAction(R.drawable.ic_stop_tunnel, service.getString(R.string.server_stop), PendingIntent.getBroadcast(service, 0, stopIntent, 0))
+                .setContentIntent(pendingIntent)
+                .build();
     }
 }

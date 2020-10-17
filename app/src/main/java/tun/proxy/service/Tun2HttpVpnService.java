@@ -139,7 +139,7 @@ public class Tun2HttpVpnService extends VpnService {
     }
 
     private void stop() {
-        PTManager.stopProxy();
+        PTManager.stopProxy(this);
         if (vpn != null) {
             stopNative(vpn);
             stopVPN(vpn);

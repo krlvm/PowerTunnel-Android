@@ -31,6 +31,7 @@ import java.util.Scanner;
 
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.activities.AboutActivity;
+import ru.krlvm.powertunnel.android.managers.PTManager;
 import ru.krlvm.powertunnel.android.service.ProxyModeService;
 import ru.krlvm.powertunnel.android.ui.NoUnderlineSpan;
 import ru.krlvm.powertunnel.android.updater.UpdateIntent;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String STARTUP_FAIL_BROADCAST = "ru.krlvm.powertunnel.android.action.STARTUP_FAIL";
     public static final String SERVER_START_BROADCAST = "ru.krlvm.powertunnel.android.action.SERVER_START";
+    public static final String SERVER_STOP_BROADCAST = "ru.krlvm.powertunnel.android.action.SERVER_STOP";
 
     private ImageView logo;
     private TextView status;
@@ -56,10 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Tun2HttpVpnService service;
     private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             Tun2HttpVpnService.ServiceBinder serviceBinder = (Tun2HttpVpnService.ServiceBinder) binder;
             service = serviceBinder.getService();
         }
+        @Override
         public void onServiceDisconnected(ComponentName className) {
             service = null;
         }
@@ -134,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayHelp(SharedPreferences prefs) {
-        ((TextView) findViewById(R.id.help)).setText(isVPN(prefs) ? getString(R.string.help) :
+        ((TextView) findViewById(R.id.help)).setText(PTManager.isVPN(prefs) ? getString(R.string.help) :
                 getString(R.string.help_proxy, (PowerTunnel.SERVER_IP_ADDRESS + ":" + PowerTunnel.SERVER_PORT)));
     }
 
@@ -230,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         final ProgressDialog dialog = progress(true);
         dialog.show();
         updateStatus();
-        final boolean vpn = isVPN(PreferenceManager.getDefaultSharedPreferences(this));
+        final boolean vpn = PTManager.isVPN(this);
         progressHandler.post(() -> {
             if(vpn) {
                 startVpn();
@@ -242,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startVpn() {
-        Intent i = VpnService.prepare(MainActivity.this);
+        Intent i = VpnService.prepare(this);
         if (i != null) {
             startActivityForResult(i, REQUEST_VPN);
         } else {
@@ -276,23 +280,10 @@ public class MainActivity extends AppCompatActivity {
         final ProgressDialog dialog = progress(false);
         dialog.show();
         updateStatus();
-        final boolean vpn = isVPN(PreferenceManager.getDefaultSharedPreferences(this));
         progressHandler.post(() -> {
-            if(vpn) {
-                stopVpn();
-            } else {
-                stopProxy();
-            }
+            PTManager.stopTunnel(this);
             dialog.dismiss();
         });
-    }
-
-    private void stopVpn() {
-        Tun2HttpVpnService.stop(MainActivity.this);
-    }
-
-    private void stopProxy() {
-        stopService(new Intent(this, ProxyModeService.class));
     }
 
     private ProgressDialog progress(boolean starting) {
@@ -307,7 +298,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
             case REQUEST_VPN: {
                 if (resultCode == RESULT_OK) {
@@ -360,9 +350,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-    }
-
-    public static boolean isVPN(SharedPreferences prefs) {
-        return !prefs.getBoolean("proxy_mode", false);
     }
 }

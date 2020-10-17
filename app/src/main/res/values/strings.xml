@@ -149,4 +149,5 @@
     <string name="pref_complete_mix_host_case">Complete host case mixing</string>
     <string name="sni_warning">Disable chunking for better effect</string>
     <string name="notification_vpn_background">PowerTunnel VPN is running</string>
+    <string name="stopping_powertunnel">Stopping PowerTunnel…</string>
 </resources>

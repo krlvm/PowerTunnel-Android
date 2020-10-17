@@ -3,6 +3,8 @@ package ru.krlvm.powertunnel.android.managers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.preference.PreferenceManager;
 
@@ -15,7 +17,9 @@ import java.util.UUID;
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.service.ProxyModeService;
 import ru.krlvm.powertunnel.enums.SNITrick;
+import tun.proxy.service.Tun2HttpVpnService;
 import tun.utils.Util;
 
 public class PTManager {
@@ -131,9 +135,10 @@ public class PTManager {
         }
     }
 
-    public static void stopProxy() {
+    public static void stopProxy(Context context) {
         if (PowerTunnel.isRunning()) {
             PowerTunnel.stop();
+            context.sendBroadcast(new Intent(MainActivity.SERVER_STOP_BROADCAST));
         }
     }
 
@@ -142,6 +147,51 @@ public class PTManager {
         Intent intent = new Intent(MainActivity.STARTUP_FAIL_BROADCAST);
         intent.putExtra("cause", cause.getLocalizedMessage());
         context.sendBroadcast(intent);
+    }
+
+
+    public static boolean isVPN(Context context) {
+        return isVPN(PreferenceManager.getDefaultSharedPreferences(context));
+    }
+    public static boolean isVPN(SharedPreferences prefs) {
+        return !prefs.getBoolean("proxy_mode", false);
+    }
+
+    public static void startTunnel(Context context) {
+        if(isVPN(context)) {
+            startVpn(context);
+        } else {
+            stopProxyService(context);
+        }
+    }
+
+    public static void startVpn(Context context) {
+        Tun2HttpVpnService.start(context);
+    }
+
+    public static void startProxyService(Context context) {
+        context.startService(new Intent(context, ProxyModeService.class));
+    }
+
+    public static void stopTunnel(Context context) {
+        if(isVPN(context)) {
+            stopVpn(context);
+        } else {
+            stopProxyService(context);
+        }
+    }
+
+    public static void stopVpn(Context context) {
+        Tun2HttpVpnService.stop(context);
+    }
+
+    public static void stopProxyService(Context context) {
+        context.stopService(new Intent(context, ProxyModeService.class));
+    }
+
+    public static void stopWithToast(Context context) {
+        Toast.makeText(context, R.string.stopping_powertunnel, Toast.LENGTH_LONG).show();
+        new Handler().postDelayed(() -> PTManager.stopTunnel(context), 5);
     }
 
 
