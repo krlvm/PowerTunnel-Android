@@ -34,7 +34,6 @@ public class AboutActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.about_description)).setText(R.string.description);
         ((TextView) findViewById(R.id.about_powertunnel)).setMovementMethod(LinkMovementMethod.getInstance());
         Button button = findViewById(R.id.updates_button);
-        button.setText(R.string.btn_check_for_updates);
         button.setOnClickListener(v -> {
             ProgressDialog progress = new ProgressDialog(AboutActivity.this);
             progress.setTitle(R.string.update_checking_title);

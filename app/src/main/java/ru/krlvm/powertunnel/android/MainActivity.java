@@ -260,12 +260,11 @@ public class MainActivity extends AppCompatActivity {
         Intent installIntent = KeyChain.createInstallIntent();
         StringBuilder cert = new StringBuilder();
         try {
-            File f = new File(DATA_DIR.getAbsolutePath() + "/powertunnel-root-ca.pem");
-            Scanner r = new Scanner(f);
-            while (r.hasNextLine()) {
-                cert.append(r.nextLine()).append("\n");
+            Scanner scanner = new Scanner(new File(DATA_DIR.getAbsolutePath() + "/powertunnel-root-ca.pem"));
+            while (scanner.hasNextLine()) {
+                cert.append(scanner.nextLine()).append("\n");
             }
-            r.close();
+            scanner.close();
         } catch (Exception ex) {
             return;
         }
