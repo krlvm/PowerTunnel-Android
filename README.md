@@ -2,8 +2,8 @@
 <img src="https://raw.githubusercontent.com/krlvm/PowerTunnel/master/images/logo.png" height="192px" width="192px" />
 <br><h1>PowerTunnel for Android</h1><br>
 Simple, scalable, cross-platform and effective solution against government censorship for Android
-
-<h3><b>Please, read <a href="https://gist.github.com/krlvm/76595f2fec7e23cf5e20f8ccfa43997a">important announcement</a></b></h3>
+<!-- That does not mean the battle is finished -->
+<!--<h3><b>Please, read <a href="https://gist.github.com/krlvm/76595f2fec7e23cf5e20f8ccfa43997a">important announcement</a></b></h3>-->
 
 <a href="https://t.me/powertunnel_dpi">Telegram channel</a>
 <br>
@@ -58,7 +58,7 @@ Overriding DNS settings can led to connectivity problems on Android 10 and highe
 #### DNSSec mode
 DNSSec mode appears to validate DNS responses.
 
-DNSSec mode is experimental and not recommended to use. Note that it useless and not working when DoH mode is enabled (because DoH already validating DNS responses on server-side). When there's some troubles with resolving, resolving is going on with the system's DNS settings.
+DNSSec mode is experimental and not recommended to use. Note that it is useless and not working when DoH mode is enabled (because DoH already validating DNS responses on server-side). When there's some troubles with resolving, resolving is going on with the system's DNS settings.
 
 #### Custom DNS providers
 You can also choose one of custom DNS providers (without DoH). It doesn't work with some of Android versions.
