@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -36,16 +35,13 @@ public class AboutActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.about_powertunnel)).setMovementMethod(LinkMovementMethod.getInstance());
         Button button = findViewById(R.id.updates_button);
         button.setText(R.string.btn_check_for_updates);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProgressDialog progress = new ProgressDialog(AboutActivity.this);
-                progress.setTitle(R.string.update_checking_title);
-                progress.setMessage(getString(R.string.update_checking, BuildConfig.VERSION_NAME));
-                progress.show();
+        button.setOnClickListener(v -> {
+            ProgressDialog progress = new ProgressDialog(AboutActivity.this);
+            progress.setTitle(R.string.update_checking_title);
+            progress.setMessage(getString(R.string.update_checking, BuildConfig.VERSION_NAME));
+            progress.show();
 
-                Updater.checkUpdates(new UpdateIntent(progress, AboutActivity.this));
-            }
+            Updater.checkUpdates(new UpdateIntent(progress, AboutActivity.this));
         });
     }
 

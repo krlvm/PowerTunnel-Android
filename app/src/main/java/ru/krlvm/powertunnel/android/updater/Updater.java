@@ -1,7 +1,6 @@
 package ru.krlvm.powertunnel.android.updater;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,7 +12,6 @@ import java.net.URL;
 
 import ru.krlvm.powertunnel.android.BuildConfig;
 import ru.krlvm.powertunnel.android.R;
-import tun.proxy.MyApplication;
 
 public class Updater {
 
@@ -67,24 +65,22 @@ public class Updater {
         }
         String messageString = null;
         if(message == R.string.update_available) {
-            messageString = MyApplication.getInstance().getString(R.string.update_available, pendingUpdate[1])
+            messageString = intent.context.getString(R.string.update_available, pendingUpdate[1])
                     + "\n" + pendingUpdate[2];
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(intent.context);
         builder.setTitle(title)
             .setCancelable(true)
             .setPositiveButton(ready ? R.string.download : R.string.ok,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                    (dialog, id) -> {
                         dialog.cancel();
                         if(ready) {
                             Intent browserIntent = new Intent(Intent.ACTION_VIEW,
                                     Uri.parse("https://github.com/krlvm/PowerTunnel-Android/releases/download/v" + pendingUpdate[1] + "/PowerTunnel.apk"));
                             browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            MyApplication.getInstance().startActivity(browserIntent);
+                            intent.context.startActivity(browserIntent);
                         }
-                    }
-                });
+                    });
         if(messageString != null) {
             builder.setMessage(messageString);
         } else {
@@ -98,12 +94,12 @@ public class Updater {
         new UpdateRequest().execute(intent);
     }
 
-    public static class UpdateRequest extends AsyncTask<UpdateIntent, String, String> {
+    public static class UpdateRequest extends AsyncTask<UpdateIntent, Void, Void> {
 
         private UpdateIntent intent;
 
         @Override
-        protected String doInBackground(UpdateIntent... intents) {
+        protected Void doInBackground(UpdateIntent... intents) {
             intent = intents[0];
             boolean result = true;
             int versionCode = -1;
@@ -133,11 +129,11 @@ public class Updater {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return "OK";
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(Void s) {
             super.onPostExecute(s);
             continueUpdating(intent);
         }

@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
-import android.os.PowerManager;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -22,29 +21,16 @@ import java.util.Set;
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.PTManager;
 import ru.krlvm.powertunnel.android.R;
-import tun.proxy.MyApplication;
 
 public class Tun2HttpVpnService extends VpnService {
-    public static final String PREF_RUNNING = "pref_running";
+
     private static final String TAG = "Tun2Http.Service";
+
+    public static final String PREF_RUNNING = "pref_running";
     private static final String ACTION_START = "start";
     private static final String ACTION_STOP = "stop";
-    private static volatile PowerManager.WakeLock wlInstance = null;
-
-    static {
-        System.loadLibrary("tun2http");
-    }
 
     private ParcelFileDescriptor vpn = null;
-
-    synchronized private static PowerManager.WakeLock getLock(Context context) {
-        if (wlInstance == null) {
-            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            wlInstance = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, context.getString(R.string.app_name) + " wakelock");
-            wlInstance.setReferenceCounted(true);
-        }
-        return wlInstance;
-    }
 
     public static void start(Context context) {
         Intent intent = new Intent(context, Tun2HttpVpnService.class);
@@ -58,15 +44,57 @@ public class Tun2HttpVpnService extends VpnService {
         context.startService(intent);
     }
 
-    private native void jni_init();
 
-    private native void jni_start(int tun, boolean fwd53, int rcode, String proxyIp, int proxyPort, boolean doh);
+    @Override
+    public void onCreate() {
+        jni_init();
+        super.onCreate();
+    }
 
-    private native void jni_stop(int tun);
+    @Override
+    public void onRevoke() {
+        Log.d(TAG, "Revoke");
+        stop();
+        vpn = null;
+        super.onRevoke();
+    }
 
-    private native int jni_get_mtu();
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "Destroy");
+        if (vpn != null) {
+            try {
+                stopNative(vpn);
+                stopVPN(vpn);
+                vpn = null;
+            } catch (Throwable ex) {
+                Log.e(TAG, "Destroy / Failed to stop VPN: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+        jni_done();
+        super.onDestroy();
+    }
 
-    private native void jni_done();
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null && intent.getAction() != null) {
+            switch (intent.getAction()) {
+                case ACTION_START: {
+                    start();
+                    break;
+                }
+                case ACTION_STOP: {
+                    stop();
+                    break;
+                }
+                default: {
+                    throw new IllegalArgumentException("Unknown action: " + intent.getAction());
+                }
+            }
+        }
+        return START_STICKY;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -108,16 +136,6 @@ public class Tun2HttpVpnService extends VpnService {
         stopForeground(true);
     }
 
-    @Override
-    public void onRevoke() {
-        Log.i(TAG, "Revoke");
-
-        stop();
-        vpn = null;
-
-        super.onRevoke();
-    }
-
     private ParcelFileDescriptor startVPN(Builder builder) throws SecurityException {
         try {
             return builder.establish();
@@ -140,39 +158,33 @@ public class Tun2HttpVpnService extends VpnService {
 
         builder.addRoute("0.0.0.0", 0);
         builder.addRoute("0:0:0:0:0:0:0:0", 0);
+
+        int mtu = jni_get_mtu();
+        Log.i(TAG, "MTU=" + mtu);
+        builder.setMtu(mtu);
         /* ----------------- */
 
         for (String dns : PTManager.DNS_SERVERS) {
             try {
                 builder.addDnsServer(dns);
-            } catch (IllegalArgumentException ignore) {
-                //bad address, most likely running on an old android version
-            }
+            } catch (IllegalArgumentException ignore) {}
         }
 
-        // MTU
-        int mtu = jni_get_mtu();
-        Log.i(TAG, "MTU=" + mtu);
-        builder.setMtu(mtu);
-
-        // Add list of allowed applications
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            MyApplication app = MyApplication.getInstance();
-            if (app.loadVPNMode() == MyApplication.VPNMode.DISALLOW) {
-                Set<String> disallow = app.loadVPNApplication(MyApplication.VPNMode.DISALLOW);
-                boolean disallowChanged = false;
-                for (String pkg : disallow) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            PTManager.VPNMode vpnMode = PTManager.getVPNConnectionMode(prefs);
+            Set<String> apps = PTManager.getVPNApplications(prefs, vpnMode);
+            boolean appsModified = false;
+
+            if (vpnMode == PTManager.VPNMode.DISALLOW) {
+                for (String pkg : apps) {
                     try {
                         builder.addDisallowedApplication(pkg);
                     } catch (PackageManager.NameNotFoundException ignore) {
                         //this package is deleted by user
-                        disallow.remove(pkg);
-                        disallowChanged = true;
+                        apps.remove(pkg);
+                        appsModified = true;
                     }
-                }
-                if (disallowChanged) {
-                    MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.DISALLOW, disallow);
-                    //these deleted packages are now removed from the registry
                 }
                 try {
                     builder.addDisallowedApplication(getPackageName());
@@ -180,9 +192,7 @@ public class Tun2HttpVpnService extends VpnService {
                     Log.d(TAG, "Unexpected error: PowerTunnel package cannot be found");
                 }
             } else {
-                Set<String> allow = app.loadVPNApplication(MyApplication.VPNMode.ALLOW);
-                boolean allowChanged = false;
-                for (String pkg : allow) {
+                for (String pkg : apps) {
                     if (pkg.equals(getPackageName())) {
                         continue;
                     }
@@ -190,14 +200,14 @@ public class Tun2HttpVpnService extends VpnService {
                         builder.addAllowedApplication(pkg);
                     } catch (PackageManager.NameNotFoundException ignore) {
                         //this package is deleted by user
-                        allow.remove(pkg);
-                        allowChanged = true;
+                        apps.remove(pkg);
+                        appsModified = true;
                     }
                 }
-                if (allowChanged) {
-                    MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.ALLOW, allow);
-                    //these deleted packages are now removed from the registry
-                }
+            }
+
+            if (appsModified) {
+                PTManager.storeVPNApplications(prefs, vpnMode, apps);
             }
         }
         return builder;
@@ -209,98 +219,36 @@ public class Tun2HttpVpnService extends VpnService {
         int proxyPort = PowerTunnel.SERVER_PORT;
         if (proxyPort != 0 && !TextUtils.isEmpty(proxyHost)) {
             jni_start(vpn.getFd(), false, 3, proxyHost, proxyPort, PowerTunnel.DOH_ADDRESS != null);
-
             prefs.edit().putBoolean(PREF_RUNNING, true).apply();
         }
     }
 
     private void stopNative(ParcelFileDescriptor vpn) {
+        Log.d(TAG, "Stop native");
         try {
             jni_stop(vpn.getFd());
-
         } catch (Throwable ex) {
             // File descriptor might be closed
-            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
+            Log.e(TAG, "Stop native / Error: " + ex.getMessage());
+            ex.printStackTrace();
             jni_stop(-1);
         }
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putBoolean(PREF_RUNNING, false).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(PREF_RUNNING, false).apply();
     }
 
     private void stopVPN(ParcelFileDescriptor pfd) {
-        Log.i(TAG, "Stopping");
+        Log.d(TAG, "Stop");
         try {
             pfd.close();
         } catch (IOException ex) {
-            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
+            Log.e(TAG, "Destroy / Failed to close PFD: " + ex.getMessage());
+            ex.printStackTrace();
         }
-    }
-
-    // Called from native code
-    private void nativeExit(String reason) {
-        Log.w(TAG, "Native exit reason=" + reason);
-        if (reason != null) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean("enabled", false).apply();
-        }
-    }
-
-    // Called from native code
-    private void nativeError(int error, String message) {
-        Log.w(TAG, "Native error " + error + ": " + message);
-    }
-
-    private boolean isSupported(int protocol) {
-        return (protocol == 1 /* ICMPv4 */ ||
-                protocol == 59 /* ICMPv6 */ ||
-                protocol == 6 /* TCP */ ||
-                protocol == 17 /* UDP */);
-    }
-
-    @Override
-    public void onCreate() {
-        jni_init();
-        super.onCreate();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "Received " + intent);
-        // Handle service restart
-        if (intent == null) {
-            return START_STICKY;
-        }
-
-        if (ACTION_START.equals(intent.getAction())) {
-            start();
-        }
-        if (ACTION_STOP.equals(intent.getAction())) {
-            stop();
-        }
-        return START_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.i(TAG, "Destroy");
-        try {
-            if (vpn != null) {
-                stopNative(vpn);
-                stopVPN(vpn);
-                vpn = null;
-            }
-        } catch (Throwable ex) {
-            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
-        }
-        jni_done();
-        super.onDestroy();
     }
 
     public class ServiceBinder extends Binder {
         @Override
-        public boolean onTransact(int code, @androidx.annotation.NonNull Parcel data, Parcel reply, int flags)
-                throws RemoteException {
+        public boolean onTransact(int code, @androidx.annotation.NonNull Parcel data, Parcel reply, int flags) throws RemoteException {
             if (code == IBinder.LAST_CALL_TRANSACTION) {
                 onRevoke();
                 return true;
@@ -311,5 +259,35 @@ public class Tun2HttpVpnService extends VpnService {
         public Tun2HttpVpnService getService() {
             return Tun2HttpVpnService.this;
         }
+    }
+
+
+    /* Native callbacks */
+    private void nativeExit(String reason) {
+        Log.w(TAG, "Native exit reason=" + reason);
+        if (reason != null) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.edit().putBoolean("enabled", false).apply();
+        }
+    }
+    private void nativeError(int error, String message) {
+        Log.w(TAG, "Native error " + error + ": " + message);
+    }
+    private boolean isSupported(int protocol) {
+        return (protocol == 1 /* ICMPv4 */ ||
+                protocol == 59 /* ICMPv6 */ ||
+                protocol == 6 /* TCP */ ||
+                protocol == 17 /* UDP */);
+    }
+
+    /* Native methods */
+    private native void jni_init();
+    private native void jni_start(int tun, boolean fwd53, int rcode, String proxyIp, int proxyPort, boolean doh);
+    private native void jni_stop(int tun);
+    private native int jni_get_mtu();
+    private native void jni_done();
+
+    static {
+        System.loadLibrary("tun2http");
     }
 }

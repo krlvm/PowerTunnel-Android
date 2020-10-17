@@ -16,7 +16,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
-            android:src="@mipmap/ic_disabled" />
+            android:src="@drawable/ic_logo_not_running" />
 
         <TextView
             android:id="@+id/main_name"
@@ -45,9 +45,11 @@
             android:layout_marginTop="46dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textAlignment="center"
+            android:justificationMode="inter_word"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            tools:text="@string/help" />
 
         <Button
             android:id="@+id/start_button"

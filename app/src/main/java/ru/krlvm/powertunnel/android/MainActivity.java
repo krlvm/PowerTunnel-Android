@@ -17,7 +17,6 @@ import android.security.KeyChain;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private BroadcastReceiver statusReceiver = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +88,11 @@ public class MainActivity extends AppCompatActivity {
         logo = findViewById(R.id.status_logo);
         status = findViewById(R.id.status);
         start = findViewById(R.id.start_button);
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isRunning()) {
-                    stopTunnel();
-                } else {
-                    startTunnel();
-                }
+        start.setOnClickListener(v -> {
+            if(isRunning()) {
+                stopTunnel();
+            } else {
+                startTunnel();
             }
         });
         displayHelp(prefs);
@@ -103,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
         NoUnderlineSpan.stripUnderlines(copyright);
         copyright.setMovementMethod(LinkMovementMethod.getInstance());
 
-        //Listen to startup failures
+        // Listen to startup failures
         IntentFilter filter = new IntentFilter();
         filter.addAction(STARTUP_FAIL_BROADCAST);
         filter.addAction(SERVER_START_BROADCAST);
-        registerReceiver(new BroadcastReceiver() {
+        registerReceiver(statusReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if(intent == null || intent.getAction() == null) {
@@ -115,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 switch (intent.getAction()) {
                     case STARTUP_FAIL_BROADCAST: {
-                        System.out.println("myerrmsg:"+intent.getExtras().get("cause"));
                         new AlertDialog.Builder(MainActivity.this)
                                 .setTitle(R.string.startup_failed_proxy)
                                 .setMessage(getString(R.string.startup_failed_proxy_message, intent.getStringExtra("cause")))
@@ -134,18 +131,6 @@ public class MainActivity extends AppCompatActivity {
         }, filter);
 
         Updater.checkUpdates(new UpdateIntent(null, MainActivity.this));
-
-        //TODO: remove this code by July, 2020
-        if(prefs.getString("dns_provider", "CLOUDFLARE").equals("SECDNS_DOH")) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("dns_provider", "CLOUDFLARE_DOH");
-            editor.apply();
-            editor.commit();
-            AlertDialog.Builder note = new AlertDialog.Builder(this)
-                    .setTitle(R.string.notification)
-                    .setMessage(R.string.secdns_discounted);
-            note.show();
-        }
     }
 
     private void displayHelp(SharedPreferences prefs) {
@@ -203,11 +188,18 @@ public class MainActivity extends AppCompatActivity {
         unbindService(serviceConnection);
     }
 
+    @Override
+    protected void onStop() {
+        if(statusReceiver != null) {
+            unregisterReceiver(statusReceiver);
+        }
+        super.onStop();
+    }
+
     private void configureProxyServer(SharedPreferences prefs) {
         PowerTunnel.SERVER_IP_ADDRESS = prefs.getString("proxy_ip", getString(R.string.proxy_ip));
         try {
-            PowerTunnel.SERVER_PORT = Integer.parseInt(prefs.getString("proxy_port",
-                    getString(R.string.proxy_port)));
+            PowerTunnel.SERVER_PORT = Integer.parseInt(prefs.getString("proxy_port", getString(R.string.proxy_port)));
         } catch (NumberFormatException ex) {
             String defPort = getString(R.string.proxy_port);
             SharedPreferences.Editor editor = prefs.edit();
@@ -222,11 +214,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (isRunning()) {
-            logo.setImageResource(R.mipmap.ic_enabled);
+            logo.setImageResource(R.drawable.ic_logo_running);
             status.setText(R.string.server_running);
             start.setText(R.string.server_stop);
         } else {
-            logo.setImageResource(R.mipmap.ic_disabled);
+            logo.setImageResource(R.drawable.ic_logo_not_running);
             status.setText(R.string.server_not_running);
             start.setText(R.string.server_start);
         }
@@ -237,16 +229,13 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
         updateStatus();
         final boolean vpn = isVPN(PreferenceManager.getDefaultSharedPreferences(this));
-        progressHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if(vpn) {
-                    startVpn();
-                } else {
-                    startProxy();
-                }
-                dialog.dismiss();
+        progressHandler.post(() -> {
+            if(vpn) {
+                startVpn();
+            } else {
+                startProxy();
             }
+            dialog.dismiss();
         });
     }
 
@@ -290,16 +279,13 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
         updateStatus();
         final boolean vpn = isVPN(PreferenceManager.getDefaultSharedPreferences(this));
-        progressHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if(vpn) {
-                    stopVpn();
-                } else {
-                    stopProxy();
-                }
-                dialog.dismiss();
+        progressHandler.post(() -> {
+            if(vpn) {
+                stopVpn();
+            } else {
+                stopProxy();
             }
+            dialog.dismiss();
         });
     }
 
@@ -337,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("cert_installed", true);
-                    editor.commit();
+                    editor.apply();
                     Toast.makeText(this, R.string.cert_installed, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, R.string.cert_not_installed, Toast.LENGTH_LONG).show();

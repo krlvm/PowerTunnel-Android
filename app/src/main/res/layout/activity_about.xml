@@ -17,7 +17,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
-            android:src="@mipmap/ic_enabled" />
+            android:src="@drawable/ic_logo_running" />
 
         <TextView
             android:id="@+id/textView"

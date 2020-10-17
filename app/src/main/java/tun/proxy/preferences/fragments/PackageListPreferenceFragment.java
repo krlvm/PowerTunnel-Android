@@ -2,6 +2,7 @@ package tun.proxy.preferences.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,26 +15,32 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
+import androidx.preference.PreferenceManager;
+
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ru.krlvm.powertunnel.android.PTManager;
+import ru.krlvm.powertunnel.android.PTManager.VPNMode;
 import ru.krlvm.powertunnel.android.R;
-import tun.proxy.MyApplication;
 import tun.proxy.preferences.SimplePreferenceActivity;
 
-public class PackageListPreferenceFragment extends PreferenceFragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
-    final private Map<String, Boolean> mAllPackageInfoMap = new HashMap<>();
+public class PackageListPreferenceFragment extends PreferenceFragment
+        implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
-    private MyApplication.VPNMode mode = MyApplication.VPNMode.DISALLOW;
-    private MyApplication.AppSortBy appSortBy = MyApplication.AppSortBy.APPNAME;
+    private final Map<String, Boolean> mAllPackageInfoMap = new HashMap<>();
+    private VPNMode mode;
+
+    private AppSortBy sortBy = AppSortBy.APPLICATION_NAME;
+    private String searchFilter = "";
+    private SearchView searchView;
     private PreferenceScreen mFilterPreferenceScreen;
 
-    public static PackageListPreferenceFragment newInstance(MyApplication.VPNMode mode) {
+    public static PackageListPreferenceFragment create(VPNMode mode) {
         final PackageListPreferenceFragment fragment = new PackageListPreferenceFragment();
         fragment.mode = mode;
         return fragment;
@@ -45,28 +52,25 @@ public class PackageListPreferenceFragment extends PreferenceFragment implements
         setHasOptionsMenu(true);
         mFilterPreferenceScreen = getPreferenceManager().createPreferenceScreen(getActivity());
         setPreferenceScreen(mFilterPreferenceScreen);
+        getActivity().setTitle(getString(mode.getDisplayName()));
     }
-
-    private String searchFilter = "";
-    private SearchView searchView;
 
     protected void filter(String filter) {
-        this.filter(filter, this.appSortBy);
+        filter(filter, this.sortBy);
     }
 
-    protected void filter(String filter, final MyApplication.AppSortBy sortBy) {
+    protected void filter(String filter, AppSortBy sortBy) {
         if (filter == null) {
             filter = searchFilter;
         } else {
             searchFilter = filter;
         }
-        this.appSortBy = sortBy;
+        this.sortBy = sortBy;
 
-        Set<String> selected = this.getAllSelectedPackageSet();
-        storeSelectedPackageSet(selected);
+        storeSelectedPackageSet(getAllSelectedPackageSet());
 
-        this.removeAllPreferenceScreen();
-        this.filterPackagesPreferences(filter, sortBy);
+        removeAllPreferenceScreen();
+        filterPackagesPreferences(filter, sortBy);
     }
 
     @Override
@@ -74,9 +78,7 @@ public class PackageListPreferenceFragment extends PreferenceFragment implements
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_search, menu);
 
-        final MenuItem menuItem = menu.findItem(R.id.menu_search_item);
-
-        this.searchView = (SearchView) menuItem.getActionView();
+        this.searchView = (SearchView) menu.findItem(R.id.menu_search_item).getActionView();
         this.searchView.setOnQueryTextListener(this);
         this.searchView.setOnCloseListener(this);
         this.searchView.setSubmitButtonEnabled(false);
@@ -92,77 +94,123 @@ public class PackageListPreferenceFragment extends PreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        Set<String> loadMap = MyApplication.getInstance().loadVPNApplication(this.mode);
+        Set<String> loadMap = PTManager.getVPNApplications(PreferenceManager.getDefaultSharedPreferences(getActivity()), mode);
         for (String pkgName : loadMap) {
-            this.mAllPackageInfoMap.put(pkgName, loadMap.contains(pkgName));
+            mAllPackageInfoMap.put(pkgName, loadMap.contains(pkgName));
         }
         filter(null);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                startActivity(new Intent(getActivity(), SimplePreferenceActivity.class));
+                return true;
+            }
+            case R.id.menu_sort_app_name: {
+                item.setChecked(!item.isChecked());
+                filter(null, AppSortBy.APPLICATION_NAME);
+                break;
+            }
+            case R.id.menu_sort_pkg_name: {
+                item.setChecked(!item.isChecked());
+                filter(null, AppSortBy.PACKAGE_NAME);
+                break;
+            }
+            case R.id.menu_clear_all_selected: {
+                clearAllSelectedPackageSet();
+                filter(searchFilter);
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        this.searchView.clearFocus();
+        if (!query.trim().isEmpty()) {
+            filter(query);
+        } else {
+            filter("");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    @Override
+    public boolean onClose() {
+        Set<String> selected = this.getAllSelectedPackageSet();
+        storeSelectedPackageSet(selected);
+        filter("");
+        return false;
     }
 
     private void removeAllPreferenceScreen() {
         mFilterPreferenceScreen.removeAll();
     }
 
-    private void filterPackagesPreferences(String filter, final MyApplication.AppSortBy sortBy) {
-        Context context = MyApplication.getInstance().getApplicationContext();
+    private void filterPackagesPreferences(String filter, AppSortBy sortBy) {
+        Context context = getActivity();
         final PackageManager pm = context.getPackageManager();
         List<PackageInfo> installedPackages = pm.getInstalledPackages(PackageManager.GET_META_DATA);
-        Collections.sort(installedPackages, new Comparator<PackageInfo>() {
-            @Override
-            public int compare(PackageInfo o1, PackageInfo o2) {
-                String t1 = "";
-                String t2 = "";
-                switch (sortBy) {
-                    case APPNAME: {
-                        t1 = o1.applicationInfo.loadLabel(pm).toString();
-                        t2 = o2.applicationInfo.loadLabel(pm).toString();
-                        break;
-                    }
-                    case PKGNAME: {
-                        t1 = o1.packageName;
-                        t2 = o2.packageName;
-                        break;
-                    }
+        Collections.sort(installedPackages, (o1, o2) -> {
+            String t1 = "";
+            String t2 = "";
+            switch (sortBy) {
+                case APPLICATION_NAME: {
+                    t1 = o1.applicationInfo.loadLabel(pm).toString();
+                    t2 = o2.applicationInfo.loadLabel(pm).toString();
+                    break;
                 }
-                return t1.compareTo(t2);
+                case PACKAGE_NAME: {
+                    t1 = o1.packageName;
+                    t2 = o2.packageName;
+                    break;
+                }
             }
+            return t1.compareTo(t2);
         });
 
         final Map<String, Boolean> installedPackageMap = new HashMap<>();
-        for (final PackageInfo pi : installedPackages) {
-            boolean checked = this.mAllPackageInfoMap.containsKey(pi.packageName) ?
-                    this.mAllPackageInfoMap.get(pi.packageName) : false;
-            installedPackageMap.put(pi.packageName, checked);
+        for (final PackageInfo pkgInfo : installedPackages) {
+            if(pkgInfo.packageName == null) continue;
+            Boolean b = mAllPackageInfoMap.get(pkgInfo.packageName);
+            boolean checked = b == null ? false : b;
+            installedPackageMap.put(pkgInfo.packageName, checked);
         }
         this.mAllPackageInfoMap.clear();
         this.mAllPackageInfoMap.putAll(installedPackageMap);
 
-        for (final PackageInfo pi : installedPackages) {
-            if (pi.packageName.equals(MyApplication.getInstance().getPackageName())) {
+        for (PackageInfo pkgInfo : installedPackages) {
+            if (pkgInfo.packageName.equals(getActivity().getPackageName())) {
                 continue;
             }
-            String t1 = pi.applicationInfo.loadLabel(pm).toString();
-            if (filter.trim().isEmpty() || t1.toLowerCase().contains(filter.toLowerCase())) {
-                final Preference preference = buildPackagePreferences(pm, pi);
+            String label = pkgInfo.applicationInfo.loadLabel(pm).toString();
+            if (filter.trim().isEmpty() || label.toLowerCase().contains(filter.toLowerCase())) {
+                final Preference preference = buildPackagePreferences(pm, pkgInfo);
                 this.mFilterPreferenceScreen.addPreference(preference);
             }
         }
     }
 
-    private Preference buildPackagePreferences(PackageManager pm, PackageInfo pi) {
+    private Preference buildPackagePreferences(PackageManager pm, PackageInfo pkgInfo) {
         final CheckBoxPreference prefCheck = new CheckBoxPreference(getActivity());
-        prefCheck.setIcon(pi.applicationInfo.loadIcon(pm));
-        prefCheck.setTitle(pi.applicationInfo.loadLabel(pm).toString());
-        prefCheck.setSummary(pi.packageName);
-        boolean checked = this.mAllPackageInfoMap.containsKey(pi.packageName) ?
-                mAllPackageInfoMap.get(pi.packageName) : false;
+        prefCheck.setIcon(pkgInfo.applicationInfo.loadIcon(pm));
+        prefCheck.setTitle(pkgInfo.applicationInfo.loadLabel(pm).toString());
+        prefCheck.setSummary(pkgInfo.packageName);
+
+        Boolean b = mAllPackageInfoMap.get(pkgInfo.packageName);
+        boolean checked = b == null ? false : b;
         prefCheck.setChecked(checked);
-        Preference.OnPreferenceClickListener click = new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                mAllPackageInfoMap.put(prefCheck.getSummary().toString(), prefCheck.isChecked());
-                return false;
-            }
+        Preference.OnPreferenceClickListener click = preference -> {
+            mAllPackageInfoMap.put(prefCheck.getSummary().toString(), prefCheck.isChecked());
+            return false;
         };
         prefCheck.setOnPreferenceClickListener(click);
         return prefCheck;
@@ -194,14 +242,6 @@ public class PackageListPreferenceFragment extends PreferenceFragment implements
         }
     }
 
-    private void clearAllSelectedPackageSet() {
-        for (Map.Entry<String, Boolean> value : this.mAllPackageInfoMap.entrySet()) {
-            if (value.getValue()) {
-                value.setValue(false);
-            }
-        }
-    }
-
     private Set<String> getAllSelectedPackageSet() {
         Set<String> selected = this.getFilterSelectedPackageSet();
         for (Map.Entry<String, Boolean> value : this.mAllPackageInfoMap.entrySet()) {
@@ -212,60 +252,22 @@ public class PackageListPreferenceFragment extends PreferenceFragment implements
         return selected;
     }
 
-    private void storeSelectedPackageSet(final Set<String> set) {
-        MyApplication.getInstance().storeVPNMode(this.mode);
-        MyApplication.getInstance().storeVPNApplication(this.mode, set);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home: {
-                startActivity(new Intent(getActivity(), SimplePreferenceActivity.class));
-                return true;
-            }
-            case R.id.menu_sort_app_name: {
-                item.setChecked(!item.isChecked());
-                filter(null, MyApplication.AppSortBy.APPNAME);
-                break;
-            }
-            case R.id.menu_sort_pkg_name: {
-                item.setChecked(!item.isChecked());
-                filter(null, MyApplication.AppSortBy.PKGNAME);
-                break;
-            }
-            case R.id.menu_clear_all_selected: {
-                clearAllSelectedPackageSet();
-                filter(searchFilter);
-                break;
+    private void clearAllSelectedPackageSet() {
+        for (Map.Entry<String, Boolean> value : this.mAllPackageInfoMap.entrySet()) {
+            if (value.getValue()) {
+                value.setValue(false);
             }
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        this.searchView.clearFocus();
-        if (!query.trim().isEmpty()) {
-            filter(query);
-            return true;
-        } else {
-            filter("");
-            return true;
-        }
+    private void storeSelectedPackageSet(Set<String> set) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        //PTManager.storeVPNMode(prefs, mode);
+        PTManager.storeVPNApplications(prefs, mode, set);
     }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
-    }
-
-    @Override
-    public boolean onClose() {
-        Set<String> selected = this.getAllSelectedPackageSet();
-        storeSelectedPackageSet(selected);
-        filter("");
-        return false;
+    public enum AppSortBy {
+        APPLICATION_NAME,
+        PACKAGE_NAME
     }
 }

@@ -83,7 +83,7 @@
     <string-array name="pref_allowed_application_name" />
     <string-array name="pref_allowed_application_value" />
 
-    <string name="pref_disallowed_application_list">Disallowed applications</string>
+    <string name="pref_disallowed_application_list">Excluded applications</string>
     <string name="description">Simple, scalable, cross-platform and effective solution against government censorship</string>
     <string name="stop_server_to_edit_settings">Stop PowerTunnel to edit the settings</string>
 

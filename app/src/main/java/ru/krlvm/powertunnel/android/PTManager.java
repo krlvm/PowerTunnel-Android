@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import ru.krlvm.powertunnel.PowerTunnel;
@@ -139,5 +141,48 @@ public class PTManager {
         Intent intent = new Intent(MainActivity.STARTUP_FAIL_BROADCAST);
         intent.putExtra("cause", cause.getLocalizedMessage());
         context.sendBroadcast(intent);
+    }
+
+
+    public static VPNMode getVPNConnectionMode(SharedPreferences prefs) {
+        return VPNMode.valueOf(prefs.getString("vpn_connection_mode", VPNMode.DISALLOW.name()));
+    }
+
+    public static Set<String> getVPNApplications(SharedPreferences prefs, VPNMode mode) {
+        return prefs.getStringSet(mode.getPreference(), new HashSet<>());
+    }
+
+    public static void storeVPNMode(SharedPreferences prefs, VPNMode mode) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("vpn_connection_mode", mode.name());
+        editor.apply();
+    }
+
+    public static void storeVPNApplications(SharedPreferences prefs, VPNMode mode, Set<String> apps) {
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet(mode.getPreference(), apps);
+        editor.apply();
+    }
+
+    public enum VPNMode {
+
+        DISALLOW(R.string.pref_header_disallowed_application_list, "vpn_disallowed_application"),
+        ALLOW(R.string.pref_header_allowed_application_list, "vpn_allowed_application");
+
+        private int displayName;
+        private String preference;
+
+        VPNMode(int displayName, String preference) {
+            this.displayName = displayName;
+            this.preference = preference;
+        }
+
+        public int getDisplayName() {
+            return displayName;
+        }
+
+        public String getPreference() {
+            return preference;
+        }
     }
 }

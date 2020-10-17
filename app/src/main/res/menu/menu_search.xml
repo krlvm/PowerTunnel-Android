@@ -13,7 +13,6 @@
         android:id="@+id/menu_sort_group"
         android:checkableBehavior="single"
         android:enabled="true"
-        android:menuCategory="container"
         android:orderInCategory="2"
         android:visible="true">
         <item
@@ -32,6 +31,6 @@
     <item
         android:id="@+id/menu_clear_all_selected"
         android:title="@string/clear_selection"
-        android:orderInCategory="99"
+        android:orderInCategory="5"
         app:showAsAction="never" />
 </menu>
