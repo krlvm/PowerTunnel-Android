@@ -142,10 +142,12 @@ public class SettingsFragment extends PreferenceFragment
     public boolean onPreferenceClick(Preference preference) {
         switch (preference.getKey()) {
             case VPN_DISALLOWED_APPLICATION_LIST: {
+                Toast.makeText(getActivity(), R.string.status_please_wait, Toast.LENGTH_LONG).show();
                 transitionFragment(PackageListPreferenceFragment.create(VPNMode.DISALLOW));
                 break;
             }
             case VPN_ALLOWED_APPLICATION_LIST: {
+                Toast.makeText(getActivity(), R.string.status_please_wait, Toast.LENGTH_LONG).show();
                 transitionFragment(PackageListPreferenceFragment.create(VPNMode.ALLOW));
                 break;
             }
