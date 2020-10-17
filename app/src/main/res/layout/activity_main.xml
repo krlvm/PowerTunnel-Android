@@ -15,12 +15,10 @@
             android:id="@+id/status_logo"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_weight="0.1"
             android:layout_marginStart="-1dp"
-            android:layout_marginLeft="-1dp"
             android:layout_marginTop="42dp"
             android:layout_marginEnd="1dp"
-            android:layout_marginRight="1dp"
+            android:layout_weight="0.1"
             android:src="@drawable/ic_logo_not_running" />
 
         <RelativeLayout
@@ -37,11 +35,7 @@
                 android:id="@+id/main_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginTop="16dp"
                 android:gravity="center_horizontal"
                 android:text="@string/app_name"
@@ -56,31 +50,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/main_name"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginRight="0dp"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColor"
-                android:textAlignment="center"
-                tools:text="@string/server_not_running"
-                android:gravity="center_horizontal" />
+                tools:text="@string/server_not_running" />
 
             <TextView
                 android:id="@+id/help"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/status"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginTop="40dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center_horizontal"
@@ -101,25 +83,17 @@
                 android:textSize="16sp"
                 tools:text="@string/server_start" />
 
-            <TextView
-                android:id="@+id/main_copyright"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginBottom="24dp"
-                android:gravity="center_horizontal"
-                android:text="@string/main_copyright"
-                android:textAlignment="center" />
-
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/main_copyright"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center_horizontal"
+            android:text="@string/main_copyright"
+            android:textAlignment="center" />
 
     </LinearLayout>
 

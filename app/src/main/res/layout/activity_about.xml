@@ -113,32 +113,26 @@
                 android:textColorLink="@color/colorAccent"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/about_version"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/about_copyright"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="6dp"
-                android:gravity="center_horizontal"
-                android:textAlignment="center"
-                android:textColor="@color/textColor"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/about_copyright"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="24dp"
-                android:textAlignment="center"
-                android:text="(c) krlvm, 2019-2020"
-                android:gravity="center_horizontal" />
-
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/about_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/about_copyright"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center_horizontal"
+            android:text="(c) krlvm, 2019-2020"
+            android:textAlignment="center" />
 
     </LinearLayout>
 
