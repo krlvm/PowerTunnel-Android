@@ -1,0 +1,11 @@
+New features:
+- You can start PowerTunnel using quick settings tile now. This feature requires Android 7 and higher.
+
+Improvements:
+- Added notification that can be used to stop PowerTunnel
+- Improved performance and memory usage
+- Improved user interface
+
+Bugfixes:
+- Fixed an issue with certificate installer
+- Fixed an issue when the PowerTunnel logo was showing in low resolution
