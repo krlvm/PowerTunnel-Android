@@ -55,6 +55,7 @@ public class SettingsFragment extends PreferenceFragment
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         setHasOptionsMenu(true);
+        updateTitle();
 
         prefPackage = (ListPreference) this.findPreference(VPN_CONNECTION_MODE);
         prefDisallow = (PreferenceScreen) findPreference(VPN_DISALLOWED_APPLICATION_LIST);
@@ -96,7 +97,12 @@ public class SettingsFragment extends PreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
+        updateTitle();
         updateVPNModeItem();
+    }
+
+    private void updateTitle() {
+        getActivity().setTitle(R.string.title_activity_settings);
     }
 
     private void updateVPNModeItem() {
