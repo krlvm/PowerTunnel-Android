@@ -125,7 +125,10 @@ public class Tun2HttpVpnService extends VpnService {
         if (vpn == null) {
             vpn = startVPN(getBuilder());
             if (vpn == null) {
-                throw new IllegalStateException(getString((R.string.startup_failed_vpn)));
+                String cause = getString(R.string.startup_failed_vpn);
+                PTManager.serverStartupFailureBroadcast(this, cause);
+                stop();
+                return;
             }
             startNative(vpn);
         }

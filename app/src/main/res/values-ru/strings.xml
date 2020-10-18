@@ -96,4 +96,5 @@
     <string name="sni_warning">Отключите фрагментацию для лучшего эффекта</string>
     <string name="notification_vpn_background">PowerTunnel VPN активен</string>
     <string name="stopping_powertunnel">Остановка PowerTunnel…</string>
+    <string name="qs_startup_failed">Ошибка при запуске PowerTunnel</string>
 </resources>

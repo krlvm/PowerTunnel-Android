@@ -21,7 +21,7 @@ public class ActionReceiver extends BroadcastReceiver {
                 break;
             }
             case ACTION_STOP_TUNNEL: {
-                PTManager.stopWithToast(context);
+                PTManager.stopTunnel(context);
                 break;
             }
         }

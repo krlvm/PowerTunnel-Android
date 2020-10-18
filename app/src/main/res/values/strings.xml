@@ -150,4 +150,5 @@
     <string name="sni_warning">Disable chunking for better effect</string>
     <string name="notification_vpn_background">PowerTunnel VPN is running</string>
     <string name="stopping_powertunnel">Stopping PowerTunnel…</string>
+    <string name="qs_startup_failed">Failed to start PowerTunnel. Please launch PowerTunnel from the app if this is your first time using Quick Tile.</string>
 </resources>

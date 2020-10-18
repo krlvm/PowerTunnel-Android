@@ -1,4 +1,4 @@
-package ru.krlvm.powertunnel.android.service;
+package ru.krlvm.powertunnel.android.services;
 
 import android.app.Notification;
 import android.app.Service;

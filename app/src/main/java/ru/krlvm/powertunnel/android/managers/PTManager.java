@@ -17,7 +17,7 @@ import java.util.UUID;
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
-import ru.krlvm.powertunnel.android.service.ProxyModeService;
+import ru.krlvm.powertunnel.android.services.ProxyModeService;
 import ru.krlvm.powertunnel.enums.SNITrick;
 import tun.proxy.service.Tun2HttpVpnService;
 import tun.utils.Util;
@@ -144,8 +144,12 @@ public class PTManager {
 
     public static void serverStartupFailureBroadcast(Context context, Exception cause) {
         cause.printStackTrace();
+        serverStartupFailureBroadcast(context, cause.getLocalizedMessage());
+    }
+
+    public static void serverStartupFailureBroadcast(Context context, String cause) {
         Intent intent = new Intent(MainActivity.STARTUP_FAIL_BROADCAST);
-        intent.putExtra("cause", cause.getLocalizedMessage());
+        intent.putExtra("cause", cause);
         context.sendBroadcast(intent);
     }
 

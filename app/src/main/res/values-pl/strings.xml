@@ -117,4 +117,5 @@
     <string name="sni_warning">Wyłącz dzielenie, aby uzyskać lepszy efekt</string>
     <string name="notification_vpn_background">PowerTunnel VPN jest uruchomiony</string>
     <string name="stopping_powertunnel">Wyłączanie PowerTunnel…</string>
+    <string name="qs_startup_failed">Nie udało się uruchomić PowerTunnel</string>
 </resources>

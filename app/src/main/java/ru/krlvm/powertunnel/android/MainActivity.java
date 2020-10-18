@@ -32,7 +32,7 @@ import java.util.Scanner;
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.activities.AboutActivity;
 import ru.krlvm.powertunnel.android.managers.PTManager;
-import ru.krlvm.powertunnel.android.service.ProxyModeService;
+import ru.krlvm.powertunnel.android.services.ProxyModeService;
 import ru.krlvm.powertunnel.android.ui.NoUnderlineSpan;
 import ru.krlvm.powertunnel.android.updater.UpdateIntent;
 import ru.krlvm.powertunnel.android.updater.Updater;
