@@ -84,7 +84,9 @@ public class QuickTileService extends TileService {
     private void openActivityOnError(String cause) {
         pendingAction = false;
         Toast.makeText(this, getString(R.string.qs_startup_failed, cause), Toast.LENGTH_LONG).show();
-        startActivity(new Intent(this, MainActivity.class));
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void registerReceiver() {

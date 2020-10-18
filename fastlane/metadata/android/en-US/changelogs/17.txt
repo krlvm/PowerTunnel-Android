@@ -1,0 +1,5 @@
+We have resolved a bug where we were offering an outdated version for download.
+
+Bugfixes:
+- Fixed an issue when using Quick Tile led to crash
+- Fixed some user interface bugs
