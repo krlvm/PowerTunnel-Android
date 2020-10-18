@@ -23,7 +23,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"
+            android:layout_weight="1"
             android:layout_marginLeft="42dp"
             android:layout_marginTop="14dp"
             android:layout_marginRight="42dp"
@@ -81,25 +81,33 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/about_version"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:gravity="center_horizontal"
-            android:textAlignment="center"
-            android:textColor="@color/textColor"
-            android:textStyle="bold"
-            tools:text="@string/about_version"/>
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/about_copyright"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:gravity="center_horizontal"
-            android:text="(c) krlvm, 2019-2020"
-            android:textAlignment="center" />
+            <TextView
+                android:id="@+id/about_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                tools:text="@string/about_version"/>
+
+            <TextView
+                android:id="@+id/about_copyright"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center_horizontal"
+                android:text="(c) krlvm, 2019-2020"
+                android:textAlignment="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
