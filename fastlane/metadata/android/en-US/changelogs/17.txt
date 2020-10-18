@@ -1,0 +1,3 @@
+Bugfixes:
+- Fixed an issue when using Quick Tile led to crash
+- Fixed some user interface bugs
