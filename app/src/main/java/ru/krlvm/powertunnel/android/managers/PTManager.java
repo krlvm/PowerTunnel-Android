@@ -165,7 +165,7 @@ public class PTManager {
         if(isVPN(context)) {
             startVpn(context);
         } else {
-            stopProxyService(context);
+            startProxyService(context);
         }
     }
 
