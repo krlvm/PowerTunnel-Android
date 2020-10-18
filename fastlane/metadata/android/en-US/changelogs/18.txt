@@ -1,0 +1,5 @@
+Improvements:
+- Now you can switch to PowerTunnel VPN directly from Quick Settings without needing to open the app
+
+Bugfixes:
+- Fixed an issue when PowerTunnel didn't start from Quick Tile if it is in proxy mode
