@@ -3,6 +3,7 @@ package ru.krlvm.powertunnel.android.managers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.VpnService;
 import android.os.Handler;
 import android.widget.Toast;
 
@@ -163,6 +164,7 @@ public class PTManager {
 
     public static void startTunnel(Context context) {
         if(isVPN(context)) {
+            VpnService.prepare(context);
             startVpn(context);
         } else {
             startProxyService(context);
