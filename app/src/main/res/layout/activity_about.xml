@@ -15,21 +15,17 @@
         <ImageView
             android:id="@+id/status_logo"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_weight="0.1"
-            android:layout_marginStart="-1dp"
-            android:layout_marginLeft="-1dp"
+            android:layout_height="0dp"
             android:layout_marginTop="42dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginRight="1dp"
+            android:layout_weight="5"
             android:src="@drawable/ic_logo_running" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:layout_marginTop="12dp"
+            android:layout_weight="0.8"
             android:layout_marginLeft="42dp"
+            android:layout_marginTop="14dp"
             android:layout_marginRight="42dp"
             android:orientation="vertical">
 
@@ -72,12 +68,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/updates_button"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center_horizontal"
-                android:justificationMode="inter_word"
                 android:linksClickable="true"
                 android:scrollbars="vertical"
                 android:text="@string/about_powertunnel"
@@ -95,7 +89,8 @@
             android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColor="@color/textColor"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="@string/about_version"/>
 
         <TextView
             android:id="@+id/about_copyright"

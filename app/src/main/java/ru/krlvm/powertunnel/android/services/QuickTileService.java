@@ -61,7 +61,8 @@ public class QuickTileService extends TileService {
             }
         } catch (Exception ex) {
             // in the most cases, we just receiving broadcast with startup fail
-            openActivityOnError();
+            openActivityOnError(ex.getLocalizedMessage());
+            ex.printStackTrace();
         }
         setState(!running ? Tile.STATE_INACTIVE : Tile.STATE_ACTIVE);
     }
@@ -80,9 +81,9 @@ public class QuickTileService extends TileService {
         tile.updateTile();
     }
 
-    private void openActivityOnError() {
+    private void openActivityOnError(String cause) {
         pendingAction = false;
-        Toast.makeText(this, R.string.qs_startup_failed, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.qs_startup_failed, cause), Toast.LENGTH_LONG).show();
         startActivity(new Intent(this, MainActivity.class));
     }
 
@@ -103,7 +104,7 @@ public class QuickTileService extends TileService {
                 return;
             }
             if(intent.getAction().equals(MainActivity.STARTUP_FAIL_BROADCAST)) {
-                openActivityOnError();
+                openActivityOnError(intent.getExtras().getString("cause"));
                 return;
             }
             pendingAction = false;
