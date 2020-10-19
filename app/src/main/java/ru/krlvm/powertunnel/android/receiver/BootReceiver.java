@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import ru.krlvm.powertunnel.android.managers.PTManager;
+import ru.krlvm.powertunnel.android.services.ProxyModeService;
 import tun.proxy.service.Tun2HttpVpnService;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -18,7 +19,7 @@ public class BootReceiver extends BroadcastReceiver {
     private static final String LOG_TAG = "PowerTunnel.Boot";
 
     @Override
-    public void onReceive(final Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (action == null) return;
         if (!action.equals(Intent.ACTION_BOOT_COMPLETED) && !action.equals(Intent.ACTION_REBOOT) && !action.equals("android.intent.action.QUICKBOOT_POWERON")) {
@@ -41,12 +42,8 @@ public class BootReceiver extends BroadcastReceiver {
                 Log.e(LOG_TAG, "VPN is not prepared");
             }
         } else {
-            Log.i(LOG_TAG, "Starting proxy...");
-            Exception ex = PTManager.safeStartProxy(context);
-            if (ex != null) {
-                Log.e(LOG_TAG, "Failed to start proxy: " + ex.getMessage());
-                ex.printStackTrace();
-            }
+            Log.i(LOG_TAG, "Starting proxy mode service...");
+            context.startService(new Intent(context, ProxyModeService.class));
         }
     }
 }
