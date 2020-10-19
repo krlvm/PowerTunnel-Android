@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.VpnService;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -43,7 +44,12 @@ public class BootReceiver extends BroadcastReceiver {
             }
         } else {
             Log.i(LOG_TAG, "Starting proxy mode service...");
-            context.startService(new Intent(context, ProxyModeService.class));
+            Intent proxy = new Intent(context, ProxyModeService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(proxy);
+            } else {
+                context.startService(proxy);
+            }
         }
     }
 }
