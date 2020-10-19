@@ -13,25 +13,39 @@ import tun.proxy.service.Tun2HttpVpnService;
 
 public class BootReceiver extends BroadcastReceiver {
 
+    public static final String PREF_RUNNING = "pref_running";
+
+    private static final String LOG_TAG = "PowerTunnel.Boot";
+
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (intent != null && !Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+        String action = intent.getAction();
+        if (action == null) return;
+        if (!action.equals(Intent.ACTION_BOOT_COMPLETED) && !action.equals(Intent.ACTION_REBOOT) && !action.equals("android.intent.action.QUICKBOOT_POWERON")) {
             return;
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if(!PTManager.isVPN(prefs)) {
-            // We're in proxy mode
+        boolean isRunning = prefs.getBoolean(PREF_RUNNING, false);
+        if (!isRunning) {
+            Log.i(LOG_TAG, "We don't have to start the app on boot");
             return;
         }
-        boolean isRunning = prefs.getBoolean(Tun2HttpVpnService.PREF_RUNNING, false);
-        if (isRunning) {
+
+        if (PTManager.isVPN(prefs)) {
             Intent prepare = VpnService.prepare(context);
+            Log.i(LOG_TAG, "Starting VPN...");
             if (prepare == null) {
-                Log.d("Tun2Http.Boot", "Starting vpn");
                 Tun2HttpVpnService.start(context);
             } else {
-                Log.d("Tun2Http.Boot", "Not prepared");
+                Log.e(LOG_TAG, "VPN is not prepared");
+            }
+        } else {
+            Log.i(LOG_TAG, "Starting proxy...");
+            Exception ex = PTManager.safeStartProxy(context);
+            if (ex != null) {
+                Log.e(LOG_TAG, "Failed to start proxy: " + ex.getMessage());
+                ex.printStackTrace();
             }
         }
     }

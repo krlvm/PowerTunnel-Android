@@ -18,6 +18,7 @@ import java.util.UUID;
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.receiver.BootReceiver;
 import ru.krlvm.powertunnel.android.services.ProxyModeService;
 import ru.krlvm.powertunnel.enums.SNITrick;
 import tun.proxy.service.Tun2HttpVpnService;
@@ -120,6 +121,10 @@ public class PTManager {
         } catch (NumberFormatException ex) {}
     }
 
+    public static void setRunningPref(Context context, boolean isRunning) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(BootReceiver.PREF_RUNNING, isRunning).apply();
+    }
+
     public static Exception safeStartProxy(Context context) {
         try {
             startProxy(context);
@@ -131,6 +136,7 @@ public class PTManager {
 
     public static void startProxy(Context context) throws Exception {
         PowerTunnel.bootstrap();
+        setRunningPref(context, true);
         if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cert_installed", false)) {
             context.sendBroadcast(new Intent(MainActivity.SERVER_START_BROADCAST));
         }
@@ -139,6 +145,7 @@ public class PTManager {
     public static void stopProxy(Context context) {
         if (PowerTunnel.isRunning()) {
             PowerTunnel.stop();
+            setRunningPref(context, false);
             context.sendBroadcast(new Intent(MainActivity.SERVER_STOP_BROADCAST));
         }
     }

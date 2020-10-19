@@ -30,7 +30,6 @@ public class Tun2HttpVpnService extends VpnService {
     private static final int FOREGROUND_ID = 2;
     private static final String CHANNEL_ID = "PowerTunnelVPN";
 
-    public static final String PREF_RUNNING = "pref_running";
     private static final String ACTION_START = "start";
     private static final String ACTION_STOP = "stop";
 
@@ -229,12 +228,11 @@ public class Tun2HttpVpnService extends VpnService {
     }
 
     private void startNative(ParcelFileDescriptor vpn) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String proxyHost = PowerTunnel.SERVER_IP_ADDRESS;
         int proxyPort = PowerTunnel.SERVER_PORT;
         if (proxyPort != 0 && !TextUtils.isEmpty(proxyHost)) {
             jni_start(vpn.getFd(), false, 3, proxyHost, proxyPort, PowerTunnel.DOH_ADDRESS != null);
-            prefs.edit().putBoolean(PREF_RUNNING, true).apply();
+            PTManager.setRunningPref(this, true);
         }
     }
 
@@ -248,7 +246,7 @@ public class Tun2HttpVpnService extends VpnService {
             ex.printStackTrace();
             jni_stop(-1);
         }
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(PREF_RUNNING, false).apply();
+        PTManager.setRunningPref(this, false);
     }
 
     private void stopVPN(ParcelFileDescriptor pfd) {
