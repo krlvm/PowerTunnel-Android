@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import ru.krlvm.powertunnel.PowerTunnel;
+import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
 import ru.krlvm.powertunnel.android.managers.NotificationHelper;
 import ru.krlvm.powertunnel.android.managers.PTManager;
@@ -122,10 +123,25 @@ public class Tun2HttpVpnService extends VpnService {
 
         Log.i(TAG, "Waiting for VPN server to start...");
         if (vpn == null) {
-            vpn = startVPN(getBuilder());
+            boolean firmwareBug = false;
+            try {
+                vpn = getBuilder().establish();
+            } catch (Throwable ex) {
+                if(ex instanceof SecurityException) {
+                    // Samsung broke VPN API on multi-user configuration with Android 10 August 2020 patch for some devices
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && (Build.MODEL != null && Build.MODEL.toLowerCase().startsWith("sm-"))) {
+                        firmwareBug = true;
+                    }
+                }
+                Log.e(TAG, "Failed to establish VPN: " + ex.getMessage() + "\n" + Log.getStackTraceString(ex));
+            }
             if (vpn == null) {
-                String cause = getString(R.string.startup_failed_vpn);
-                PTManager.serverStartupFailureBroadcast(this, cause);
+                if(firmwareBug) {
+                    sendBroadcast(new Intent(MainActivity.SAMSUNG_FIRMWARE_ERROR_BROADCAST));
+                } else {
+                    String cause = getString(R.string.startup_failed_vpn);
+                    PTManager.serverStartupFailureBroadcast(this, cause);
+                }
                 stop();
                 return;
             }
@@ -148,17 +164,6 @@ public class Tun2HttpVpnService extends VpnService {
             vpn = null;
         }
         stopForeground(true);
-    }
-
-    private ParcelFileDescriptor startVPN(Builder builder) throws SecurityException {
-        try {
-            return builder.establish();
-        } catch (SecurityException ex) {
-            throw ex;
-        } catch (Throwable ex) {
-            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
-            return null;
-        }
     }
 
 

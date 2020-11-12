@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String STARTUP_FAIL_BROADCAST = "ru.krlvm.powertunnel.android.action.STARTUP_FAIL";
     public static final String SERVER_START_BROADCAST = "ru.krlvm.powertunnel.android.action.SERVER_START";
     public static final String SERVER_STOP_BROADCAST = "ru.krlvm.powertunnel.android.action.SERVER_STOP";
+    public static final String SAMSUNG_FIRMWARE_ERROR_BROADCAST = "ru.krlvm.powertunnel.android.action.SAMSUNG_FIRMWARE_ERROR_BROADCAST";
 
     private ImageView logo;
     private TextView status;
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(STARTUP_FAIL_BROADCAST);
         filter.addAction(SERVER_START_BROADCAST);
+        filter.addAction(SAMSUNG_FIRMWARE_ERROR_BROADCAST);
         registerReceiver(statusReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -121,13 +124,25 @@ public class MainActivity extends AppCompatActivity {
                                 .setTitle(R.string.startup_failed_proxy)
                                 .setMessage(getString(R.string.startup_failed_proxy_message, intent.getStringExtra("cause")))
                                 .show();
-                        context.getString((R.string.startup_failed_proxy));
                         break;
                     }
                     case SERVER_START_BROADCAST: {
                         if(PowerTunnel.SNI_TRICK != null) {
                             installCertificate();
                         }
+                        break;
+                    }
+                    case SAMSUNG_FIRMWARE_ERROR_BROADCAST: {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle(R.string.startup_failed_proxy)
+                                .setMessage(getString(R.string.samsung_firmware_bug))
+                                .setPositiveButton(R.string.read_more, (dialog, which) -> {
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                                            Uri.parse("https://github.com/krlvm/PowerTunnel-Android/wiki/Troubleshooting-VPN-on-Samsung-devices"));
+                                    browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(browserIntent);
+                                })
+                                .show();
                         break;
                     }
                 }

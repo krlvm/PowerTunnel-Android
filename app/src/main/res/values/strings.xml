@@ -151,4 +151,6 @@
     <string name="notification_vpn_background">PowerTunnel VPN is running</string>
     <string name="stopping_powertunnel">Stopping PowerTunnel…</string>
     <string name="qs_startup_failed">Failed to start PowerTunnel. Please launch PowerTunnel from the app if this is your first time using Quick Tile: %s</string>
+    <string name="samsung_firmware_bug">Samsung introduced a bug in August 2020 software update that preventing us from starting VPN service, you have can solve this problem manually.</string>
+    <string name="read_more">Read more</string>
 </resources>

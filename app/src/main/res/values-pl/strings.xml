@@ -118,4 +118,6 @@
     <string name="notification_vpn_background">PowerTunnel VPN jest uruchomiony</string>
     <string name="stopping_powertunnel">Wyłączanie PowerTunnel…</string>
     <string name="qs_startup_failed">Nie udało się uruchomić PowerTunnel. Uruchom PowerTunnel z aplikacji, jeśli używasz tej ikony po raz pierwszy: %s</string>
+    <string name="samsung_firmware_bug">Samsung wprowadził błąd w aktualizacji oprogramowania z sierpnia 2020 roku, który uniemożliwił nam uruchomienie usługi VPN, możesz rozwiązać ten problem ręcznie.</string>
+    <string name="read_more">Więcej szczegółów</string>
 </resources>

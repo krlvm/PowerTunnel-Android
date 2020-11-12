@@ -97,4 +97,6 @@
     <string name="notification_vpn_background">PowerTunnel VPN активен</string>
     <string name="stopping_powertunnel">Остановка PowerTunnel…</string>
     <string name="qs_startup_failed">Не удалось запустить PowerTunnel. Запустите PowerTunnel из приложения, если вы впервые используете этот значок: %s</string>
+    <string name="samsung_firmware_bug">Начиная с обновления ПО Samsung за август 2020 года в системе присутствует ошибка, из-за которой невозможно запустить VPN сервис, вы должены решить эту проблему вручную.</string>
+    <string name="read_more">Подробнее</string>
 </resources>
