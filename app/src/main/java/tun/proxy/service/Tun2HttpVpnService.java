@@ -224,6 +224,12 @@ public class Tun2HttpVpnService extends VpnService {
                 PTManager.storeVPNApplications(prefs, vpnMode, apps);
             }
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // inherit the underlying network metered setting
+            builder.setMetered(false);
+        }
+
         return builder;
     }
 
