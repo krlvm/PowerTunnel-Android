@@ -1,0 +1,5 @@
+Improvements:
+- Added support for proxy auto start on device boot
+
+Bugfixes:
+- Resolved an issue with Samsung firmware bug
