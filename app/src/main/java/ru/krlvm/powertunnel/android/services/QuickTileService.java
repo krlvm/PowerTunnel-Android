@@ -106,7 +106,7 @@ public class QuickTileService extends TileService {
                 return;
             }
             if(intent.getAction().equals(MainActivity.STARTUP_FAIL_BROADCAST)) {
-                openActivityOnError(intent.getExtras().getString("cause"));
+                openActivityOnError(intent.getExtras() == null ? "unknown" : intent.getExtras().getString("cause"));
                 return;
             }
             pendingAction = false;
