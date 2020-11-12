@@ -1,6 +1,7 @@
 package tun.proxy.service;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -123,10 +124,12 @@ public class Tun2HttpVpnService extends VpnService {
 
         Log.i(TAG, "Waiting for VPN server to start...");
         if (vpn == null) {
+            String error = null;
             boolean firmwareBug = false;
             try {
                 vpn = getBuilder().establish();
             } catch (Throwable ex) {
+                error = ex.getMessage();
                 if(ex instanceof SecurityException) {
                     // Samsung broke VPN API on multi-user configuration with Android 10 August 2020 patch for some devices
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && (Build.MODEL != null && Build.MODEL.toLowerCase().startsWith("sm-"))) {
@@ -139,7 +142,7 @@ public class Tun2HttpVpnService extends VpnService {
                 if(firmwareBug) {
                     sendBroadcast(new Intent(MainActivity.SAMSUNG_FIRMWARE_ERROR_BROADCAST));
                 } else {
-                    String cause = getString(R.string.startup_failed_vpn);
+                    String cause = getString(R.string.startup_failed_vpn, error);
                     PTManager.serverStartupFailureBroadcast(this, cause);
                 }
                 stop();
@@ -170,6 +173,7 @@ public class Tun2HttpVpnService extends VpnService {
     private Builder getBuilder() {
         Builder builder = new Builder();
         builder.setSession(getString(R.string.app_name));
+        builder.setConfigureIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0));
 
         /* NATIVE VPN CONFIGURATION */
         builder.addAddress("10.1.10.1", 32);

@@ -152,7 +152,7 @@ public class PTManager {
 
     public static void serverStartupFailureBroadcast(Context context, Exception cause) {
         cause.printStackTrace();
-        serverStartupFailureBroadcast(context, cause.getLocalizedMessage());
+        serverStartupFailureBroadcast(context, cause.getMessage());
     }
 
     public static void serverStartupFailureBroadcast(Context context, String cause) {

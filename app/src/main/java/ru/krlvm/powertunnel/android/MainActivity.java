@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (intent.getAction()) {
                     case STARTUP_FAIL_BROADCAST: {
                         new AlertDialog.Builder(MainActivity.this)
-                                .setTitle(R.string.startup_failed_proxy)
+                                .setTitle(R.string.failed_to_start_powertunnel)
                                 .setMessage(getString(R.string.startup_failed_proxy_message, intent.getStringExtra("cause")))
                                 .show();
                         break;
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case SAMSUNG_FIRMWARE_ERROR_BROADCAST: {
                         new AlertDialog.Builder(MainActivity.this)
-                                .setTitle(R.string.startup_failed_proxy)
+                                .setTitle(R.string.failed_to_start_powertunnel)
                                 .setMessage(getString(R.string.samsung_firmware_bug))
                                 .setPositiveButton(R.string.read_more, (dialog, which) -> {
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW,
