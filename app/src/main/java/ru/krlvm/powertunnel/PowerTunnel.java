@@ -51,6 +51,7 @@ public class PowerTunnel {
 
     private static HttpProxyServer SERVER;
     private static boolean RUNNING = false;
+    public static boolean STATUS_TRANSITION = false;
     public static String SERVER_IP_ADDRESS = "127.0.0.1";
     public static int SERVER_PORT = 8085;
 
@@ -86,6 +87,7 @@ public class PowerTunnel {
      * PowerTunnel bootstrap
      */
     public static void bootstrap() throws Exception {
+        if(STATUS_TRANSITION) return;
         System.out.println("[*] Base PowerTunnel/LibertyTunnel version is " + BASE_VERSION);
         //Load data
         //GOVERNMENT_BLACKLIST.add("*");
@@ -101,7 +103,13 @@ public class PowerTunnel {
         }
 
         //Start server
-        startServer();
+
+        STATUS_TRANSITION = true;
+        try {
+            startServer();
+        } finally {
+            STATUS_TRANSITION = false;
+        }
     }
 
     /**
@@ -134,10 +142,10 @@ public class PowerTunnel {
                     throw new UnknownHostException(String.format("DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
                 }
             });
-        } else if(USE_DNS_SEC || PTManager.DNS_OVERRIDE) {
+        } else if (USE_DNS_SEC || PTManager.DNS_OVERRIDE) {
             System.out.println("[*] Enabled advanced resolver | DNSSec: " + USE_DNS_SEC + " / DNSOverride: " + PTManager.DNS_OVERRIDE);
             final Resolver resolver = getResolver();
-            if(resolver != null) {
+            if (resolver != null) {
                 bootstrap.withServerResolver((host, port) -> {
                     try {
                         Lookup lookup = new Lookup(host, Type.A);
@@ -196,16 +204,22 @@ public class PowerTunnel {
         System.out.println();
         System.out.println("[.] Stopping server...");
         SERVER.stop();
+        RUNNING = false;
         System.out.println("[.] Server stopped");
         System.out.println();
-        RUNNING = false;
     }
 
     /**
      * Save data and goodbye
      */
     public static void stop() {
-        stopServer();
+        if(STATUS_TRANSITION) return;
+        STATUS_TRANSITION = true;
+        try {
+            stopServer();
+        } finally {
+            STATUS_TRANSITION = false;
+        }
         //GOVERNMENT_BLACKLIST.clear();
         //ISP_STUB_LIST.clear();
     }
