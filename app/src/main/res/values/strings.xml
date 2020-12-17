@@ -85,7 +85,7 @@
 
     <string name="pref_disallowed_application_list">Excluded applications</string>
     <string name="description">Simple, scalable, cross-platform and effective solution against government censorship</string>
-    <string name="stop_server_to_edit_settings">Stop PowerTunnel to edit the settings</string>
+    <string name="stop_server_to_edit_settings">PowerTunnel is already running, click again to edit settings, after saving the settings PowerTunnel will be restarted</string>
 
     <string-array name="pref_disallowed_application_name" />
     <string-array name="pref_disallowed_application_value" />
@@ -154,4 +154,5 @@
     <string name="qs_startup_failed">Failed to start PowerTunnel. Please launch PowerTunnel from the app if this is your first time using Quick Tile: %s</string>
     <string name="samsung_firmware_bug">Samsung introduced a bug in August 2020 software update that preventing us from starting VPN service, you have can solve this problem manually.</string>
     <string name="read_more">Read more</string>
+    <string name="restarting_proxy">Restarting proxy server…</string>
 </resources>

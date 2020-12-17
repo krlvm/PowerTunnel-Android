@@ -47,7 +47,7 @@
 
     <string name="pref_disallowed_application_list">Niedozwolone aplikacje</string>
     <string name="description">Proste, skalowalne, między-platformowe i efektywne rozwiązanie przeciwko cenzurze ze strony rządu</string>
-    <string name="stop_server_to_edit_settings">Zatrzymaj PowerTunnel by edytować ustawienia</string>
+    <string name="stop_server_to_edit_settings">PowerTunnel już działa, kliknij ponownie, aby edytować ustawienia, po zapisaniu ustawień PowerTunnel zostanie uruchomiony ponownie</string>
 
     <string-array name="pref_disallowed_application_name" />
     <string-array name="pref_disallowed_application_value" />
@@ -121,4 +121,5 @@
     <string name="samsung_firmware_bug">Samsung wprowadził błąd w aktualizacji oprogramowania z sierpnia 2020 roku, który uniemożliwił nam uruchomienie usługi VPN, możesz rozwiązać ten problem ręcznie.</string>
     <string name="read_more">Więcej szczegółów</string>
     <string name="failed_to_start_powertunnel">Nie udało się uruchomić PowerTunnel</string>
+    <string name="restarting_proxy">Restartuję serwer proxy…</string>
 </resources>

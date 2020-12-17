@@ -25,7 +25,7 @@
     <string name="pref_allowed_application_list">Разрешенные приложения</string>
     <string name="pref_disallowed_application_list">Исключенные приложения</string>
     <string name="description">Простой, масштабируемый, быстрый и эффективный способ обхода блокировок</string>
-    <string name="stop_server_to_edit_settings">Остановите PowerTunnel для изменения настроек</string>
+    <string name="stop_server_to_edit_settings">PowerTunnel уже запущен, нажмите еще раз, чтобы изменить настройки, после сохранения настроек PowerTunnel будет перезапущен.</string>
     <string-array name="pref_vpn_connection_name">
         <item>Исключить указанные приложения</item>
         <item>Только разрешенные приложения</item>
@@ -100,4 +100,5 @@
     <string name="samsung_firmware_bug">Начиная с обновления ПО Samsung за август 2020 года в системе присутствует ошибка, из-за которой невозможно запустить VPN сервис, вы должены решить эту проблему вручную.</string>
     <string name="read_more">Подробнее</string>
     <string name="failed_to_start_powertunnel">Ошибка при запуске PowerTunnel</string>
+    <string name="restarting_proxy">Прокси-сервер перезапускается…</string>
 </resources>

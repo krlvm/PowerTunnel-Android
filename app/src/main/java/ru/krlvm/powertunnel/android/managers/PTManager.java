@@ -125,12 +125,13 @@ public class PTManager {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(BootReceiver.PREF_RUNNING, isRunning).apply();
     }
 
-    public static Exception safeStartProxy(Context context) {
+    public static boolean safeStartProxy(Context context) {
         try {
             startProxy(context);
-            return null;
+            return true;
         } catch (Exception ex) {
-            return ex;
+            serverStartupFailureBroadcast(context, ex);
+            return false;
         }
     }
 

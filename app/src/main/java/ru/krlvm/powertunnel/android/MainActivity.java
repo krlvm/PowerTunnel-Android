@@ -185,14 +185,20 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean _settingsOpenAnyway = false;
+    private static boolean _settingsRestartServer = false;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_activity_settings: {
-                if(isRunning()) {
-                    Toast.makeText(this, R.string.stop_server_to_edit_settings, Toast.LENGTH_SHORT).show();
-                    break;
+                if(!_settingsOpenAnyway) {
+                    if (isRunning()) {
+                        Toast.makeText(this, R.string.stop_server_to_edit_settings, Toast.LENGTH_SHORT).show();
+                        _settingsOpenAnyway = true;
+                        break;
+                    }
                 }
+                _settingsRestartServer = true;
                 Intent intent = new Intent(this, SimplePreferenceActivity.class);
                 startActivity(intent);
                 break;
@@ -216,6 +222,17 @@ public class MainActivity extends AppCompatActivity {
         statusHandler.post(statusRunnable);
         Intent intent = new Intent(this, Tun2HttpVpnService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+
+        boolean restart = _settingsRestartServer && isRunning();
+        if(restart) {
+            Toast.makeText(this, R.string.restarting_proxy, Toast.LENGTH_LONG).show();
+            progressHandler.postDelayed(() -> {
+                PTManager.stopProxy(this);
+                PTManager.configure(this, PreferenceManager.getDefaultSharedPreferences(this));
+                PTManager.safeStartProxy(this);
+            }, 500L);
+        }
+        _settingsRestartServer = false;
     }
 
     boolean isRunning() {

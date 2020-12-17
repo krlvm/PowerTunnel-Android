@@ -115,9 +115,7 @@ public class Tun2HttpVpnService extends VpnService {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         PTManager.configure(this, prefs);
 
-        Exception proxyFailure = PTManager.safeStartProxy(this);
-        if(proxyFailure != null) {
-            PTManager.serverStartupFailureBroadcast(this, proxyFailure);
+        if(!PTManager.safeStartProxy(this)) {
             stop();
             return;
         }
