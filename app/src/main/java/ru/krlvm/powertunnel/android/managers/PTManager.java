@@ -137,9 +137,7 @@ public class PTManager {
     public static void startProxy(Context context) throws Exception {
         PowerTunnel.bootstrap();
         setRunningPref(context, true);
-        if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cert_installed", false)) {
-            context.sendBroadcast(new Intent(MainActivity.SERVER_START_BROADCAST));
-        }
+        context.sendBroadcast(new Intent(MainActivity.SERVER_START_BROADCAST));
     }
 
     public static void stopProxy(Context context) {

@@ -143,12 +143,12 @@
     <string name="pref_dot_after_host">Add a dot after host</string>
     <string name="pref_mix_host_header_case">Mix host header case</string>
     <string name="pref_sni">Spoil SNI (experimental)</string>
-    <string name="cert_installed">Certificate successfully installed</string>
-    <string name="cert_not_installed">Certificate not installed, SNI tricks will not work</string>
+    <string name="cert_installed">Certificate has been successfully installed</string>
+    <string name="cert_not_installed">Certificate is not installed, SNI tricks will not work</string>
     <string name="please_install_cert">You need to install PowerTunnel Root CA to use SNI tricks</string>
     <string name="pref_chunking">Enable chunking</string>
     <string name="pref_complete_mix_host_case">Complete host case mixing</string>
-    <string name="sni_warning">Disable chunking for better effect</string>
+    <string name="sni_warning">Disable chunking for a better effect</string>
     <string name="notification_vpn_background">PowerTunnel VPN is running</string>
     <string name="stopping_powertunnel">Stopping PowerTunnel…</string>
     <string name="qs_startup_failed">Failed to start PowerTunnel. Please launch PowerTunnel from the app if this is your first time using Quick Tile: %s</string>

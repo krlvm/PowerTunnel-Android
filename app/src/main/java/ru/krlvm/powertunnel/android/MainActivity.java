@@ -28,6 +28,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
 import java.io.File;
+import java.security.KeyStore;
+import java.security.cert.X509Certificate;
+import java.util.Enumeration;
 import java.util.Scanner;
 
 import ru.krlvm.powertunnel.PowerTunnel;
@@ -128,7 +131,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case SERVER_START_BROADCAST: {
                         if(PowerTunnel.SNI_TRICK != null) {
-                            installCertificate();
+                            boolean certificateInstalled = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cert_installed", false);
+                            try
+                            {
+                                KeyStore ks = KeyStore.getInstance("AndroidCAStore");
+                                if (ks != null) {
+                                    ks.load(null, null);
+                                    Enumeration<String> aliases = ks.aliases();
+                                    while (aliases.hasMoreElements()) {
+                                        String alias = (String) aliases.nextElement();
+                                        X509Certificate cert = (X509Certificate) ks.getCertificate(alias);
+                                        if (cert.getIssuerDN().getName().contains("PowerTunnel")) {
+                                            certificateInstalled = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            } catch (Exception ignore) {}
+                            if(!certificateInstalled) {
+                                installCertificate();
+                            }
                         }
                         break;
                     }
