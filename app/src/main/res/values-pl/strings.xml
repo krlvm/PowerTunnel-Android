@@ -11,8 +11,8 @@
     <string name="server_stop">Wyłącz</string>
 
     <!-- Progress messages -->
-    <string name="starting_server">Włączanie…</string>
-    <string name="stopping_server">Wyłączanie…</string>
+    <string name="starting_server">Włączanie</string>
+    <string name="stopping_server">Wyłączanie</string>
     <string name="status_please_wait">Proszę czekać…</string>
     <string name="startup_failed_vpn">Włączanie usługi VPN nie powiodło się: %s</string>
 

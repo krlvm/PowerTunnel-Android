@@ -13,8 +13,8 @@
     <string name="server_stop">Stop</string>
 
     <!-- Progress messages -->
-    <string name="starting_server">Starting…</string>
-    <string name="stopping_server">Stopping…</string>
+    <string name="starting_server">Starting</string>
+    <string name="stopping_server">Stopping</string>
     <string name="status_please_wait">Please, wait…</string>
     <string name="startup_failed_vpn">Failed to start VPN service: %s</string>
 
