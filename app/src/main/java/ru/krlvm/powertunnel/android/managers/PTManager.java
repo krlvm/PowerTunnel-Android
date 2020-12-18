@@ -95,12 +95,12 @@ public class PTManager {
                 }
             } else {
                 switch (provider.replace("_DOH", "")) {
-                    case "CLOUDFLARE": {
-                        PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
-                        break;
-                    }
                     case "GOOGLE": {
                         PowerTunnel.DOH_ADDRESS = "https://dns.google/dns-query";
+                        break;
+                    }
+                    case "CLOUDFLARE": {
+                        PowerTunnel.DOH_ADDRESS = "https://cloudflare-dns.com/dns-query";
                         break;
                     }
                     case "ADGUARD": {
@@ -116,9 +116,12 @@ public class PTManager {
             }
         }
         String dnsPortVal = prefs.getString("dns_port", "");
-        try {
-            PowerTunnel.DNS_PORT = Integer.parseInt(dnsPortVal);
-        } catch (NumberFormatException ex) {}
+        if(!dnsPortVal.isEmpty()) {
+            try {
+                PowerTunnel.DNS_PORT = Integer.parseInt(dnsPortVal);
+            } catch (NumberFormatException ex) {
+            }
+        }
     }
 
     public static void setRunningPref(Context context, boolean isRunning) {

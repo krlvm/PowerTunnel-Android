@@ -47,19 +47,19 @@
     </string-array>
 
     <string-array name="pref_dns_provider_name" translatable="false">
-        <item>Cloudflare</item>
-        <item>Cloudflare (DoH)</item>
         <item>Google</item>
         <item>Google (DoH)</item>
+        <item>Cloudflare</item>
+        <item>Cloudflare (DoH)</item>
         <item>AdGuard</item>
         <item>AdGuard (DoH)</item>
         <item>@string/specified_dns_provider</item>
     </string-array>
     <string-array name="pref_dns_provider_value" translatable="false">
-        <item>CLOUDFLARE</item>
-        <item>CLOUDFLARE_DOH</item>
         <item>GOOGLE</item>
         <item>GOOGLE_DOH</item>
+        <item>CLOUDFLARE</item>
+        <item>CLOUDFLARE_DOH</item>
         <item>ADGUARD</item>
         <item>ADGUARD_DOH</item>
         <item>SPECIFIED</item>
