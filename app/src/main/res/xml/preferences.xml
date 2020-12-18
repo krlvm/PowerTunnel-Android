@@ -154,6 +154,12 @@
 			app:useSimpleSummaryProvider="true" />
 
 		<SwitchPreference
+			android:title="@string/pref_allow_insecure_doh"
+			android:key="allow_insecure_doh"
+			android:summary="@string/pref_allow_insecure_doh_desc"
+			android:defaultValue="false"/>
+
+		<SwitchPreference
 			android:title="@string/pref_use_dns_sec"
 			android:key="use_dns_sec"
 			android:defaultValue="false"/>

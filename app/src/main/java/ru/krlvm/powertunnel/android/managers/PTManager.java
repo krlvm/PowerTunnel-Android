@@ -76,7 +76,8 @@ public class PTManager {
             if(provider.equals("SPECIFIED")) {
                 String specifiedDnsProvider = prefs.getString("specified_dns_provider", "");
                 if(!specifiedDnsProvider.trim().isEmpty()) {
-                    if(specifiedDnsProvider.startsWith("https://")) {
+                    if(specifiedDnsProvider.startsWith("https://") ||
+                            (specifiedDnsProvider.startsWith("http://") && prefs.getBoolean("allow_insecure_doh", false))) {
                         PowerTunnel.DOH_ADDRESS = specifiedDnsProvider;
                     } else {
                         DNS_SERVERS.clear();

@@ -165,4 +165,6 @@
     <string name="pref_upstream_proxy_auth">Upstream proxy server requires authorization</string>
     <string name="pref_upstream_username">Upstream proxy server username</string>
     <string name="pref_upstream_password">Upstream proxy server password</string>
+    <string name="pref_allow_insecure_doh">Allow insecure DoH request</string>
+    <string name="pref_allow_insecure_doh_desc">Allow DoH request made over plain HTTP</string>
 </resources>

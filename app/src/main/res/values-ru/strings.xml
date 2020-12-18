@@ -111,4 +111,6 @@
     <string name="pref_upstream_proxy_auth">На внешем прокси-сервере требуется авторизация</string>
     <string name="pref_upstream_username">Имя пользователя внешнего прокси-сервера</string>
     <string name="pref_upstream_password">Пароль внешнего прокси-сервера</string>
+    <string name="pref_allow_insecure_doh">Разрешить небезопансые запросы DoH</string>
+    <string name="pref_allow_insecure_doh_desc">Разрешить выполнять запросы DoH по HTTP</string>
 </resources>
