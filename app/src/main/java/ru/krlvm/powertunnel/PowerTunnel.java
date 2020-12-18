@@ -1,7 +1,6 @@
 package ru.krlvm.powertunnel;
 
 import org.jitsi.dnssec.validator.ValidatingResolver;
-import org.littleshoot.proxy.ChainedProxyManager;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
 import org.littleshoot.proxy.HttpProxyServer;
@@ -21,11 +20,11 @@ import java.util.Set;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
-import ru.krlvm.powertunnel.adapters.UpstreamChainedProxyAdapter;
 import ru.krlvm.powertunnel.android.managers.PTManager;
 import ru.krlvm.powertunnel.android.resolver.AndroidDohResolver;
 import ru.krlvm.powertunnel.enums.SNITrick;
 import ru.krlvm.powertunnel.filter.ProxyFilter;
+import ru.krlvm.powertunnel.managers.UpstreamProxyChainedProxyManager;
 import ru.krlvm.powertunnel.utilities.MITMUtility;
 import ru.krlvm.powertunnel.utilities.URLUtility;
 
@@ -181,14 +180,7 @@ public class PowerTunnel {
         }
 
         if(UPSTREAM_PROXY_IP != null) {
-            ChainedProxyManager manager;
-            if(UPSTREAM_PROXY_CACHE) {
-                final UpstreamChainedProxyAdapter adapter = new UpstreamChainedProxyAdapter();
-                manager = (httpRequest, queue) -> queue.add(adapter);
-            } else {
-                manager = (httpRequest, queue) -> queue.add(new UpstreamChainedProxyAdapter());
-            }
-            bootstrap.withName("Downstream").withChainProxyManager(manager);
+            bootstrap.withName("Downstream").withChainProxyManager(new UpstreamProxyChainedProxyManager());
         }
 
         SERVER = bootstrap.start();
@@ -215,6 +207,10 @@ public class PowerTunnel {
             resolver = new ValidatingResolver(resolver);
         }
         return resolver;
+    }
+
+    public static InetSocketAddress resolveUpstreamProxyAddress() throws UnknownHostException {
+        return new InetSocketAddress(InetAddress.getByName(PowerTunnel.UPSTREAM_PROXY_IP), PowerTunnel.UPSTREAM_PROXY_PORT);
     }
 
     /**
