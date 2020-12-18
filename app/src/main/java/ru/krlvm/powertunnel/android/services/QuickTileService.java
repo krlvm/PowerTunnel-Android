@@ -1,5 +1,8 @@
 package ru.krlvm.powertunnel.android.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +13,14 @@ import android.service.quicksettings.TileService;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
+import ru.krlvm.powertunnel.android.managers.NotificationHelper;
 import ru.krlvm.powertunnel.android.managers.PTManager;
+import ru.krlvm.powertunnel.android.updater.Updater;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class QuickTileService extends TileService {
@@ -58,6 +64,7 @@ public class QuickTileService extends TileService {
                 PTManager.stopTunnel(this);
             } else {
                 PTManager.startTunnel(this);
+                checkUpdates();
             }
         } catch (Exception ex) {
             // in the most cases, we just receiving broadcast with startup fail
@@ -112,5 +119,26 @@ public class QuickTileService extends TileService {
             pendingAction = false;
             updateState(intent.getAction().equals(MainActivity.SERVER_START_BROADCAST));
         }
+    }
+
+    private void checkUpdates() {
+        Updater.checkUpdates((info) -> {
+            if(info == null || !info.isReady()) return;
+            PendingIntent intent = PendingIntent.getActivity(this, 0, Updater.getDownloadIntent(this, info), Intent.FLAG_ACTIVITY_NEW_TASK);
+            NotificationHelper.prepareNotificationChannel(this, Updater.NOTIFICATION_CHANNEL);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Updater.NOTIFICATION_CHANNEL)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setContentTitle(getString(R.string.update_available_title))
+                    .setContentText(getString(R.string.update_available, info.getVersion()))
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setContentIntent(intent)
+                    .addAction(R.drawable.ic_download, getString(R.string.download), intent)
+                    .setAutoCancel(true);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if(notificationManager != null) {
+                notificationManager.notify(2, builder.build());
+            }
+        });
     }
 }

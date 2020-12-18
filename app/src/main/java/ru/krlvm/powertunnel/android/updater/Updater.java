@@ -1,141 +1,126 @@
 package ru.krlvm.powertunnel.android.updater;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import ru.krlvm.powertunnel.android.BuildConfig;
 import ru.krlvm.powertunnel.android.R;
 
 public class Updater {
 
-    private static String[] pendingUpdate;
+    public  static final String NOTIFICATION_CHANNEL = "Update Notifier";
+    private static final String LOG_TAG = "Updater";
+    private static final String UPDATE_URL = "https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/new_version.txt";
+    private static final String COMMON_CHANGELOG_URL = "https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/CHANGELOG";
+    private static final String CHANGELOG_URL = "https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/fastlane/metadata/android/en-US/changelogs/%s.txt";
+    private static final String DOWNLOAD_URL = "https://github.com/krlvm/PowerTunnel-Android/releases/download/v%s/PowerTunnel.apk";
 
-    private static String load() throws IOException {
-        URL url = new URL("https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/new_version.txt");
-        LineNumberReader reader = new LineNumberReader(new InputStreamReader(url.openStream()));
-        String string = reader.readLine();
-        reader.close();
-        return string;
+    public static void checkUpdates(UpdateHandler handler) {
+        new UpdateTask().execute(handler);
     }
 
-    private static String getChangelog(int version) throws IOException {
-        URL url = new URL("https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/fastlane/metadata/android/en-US/changelogs/" + version + ".txt");
-        StringBuilder builder = new StringBuilder();
-        LineNumberReader reader = new LineNumberReader(new InputStreamReader(url.openStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            builder.append('\n').append(line);
-        }
-        reader.close();
-        return builder.toString();
+    public static void showUpdateDialog(Context context, UpdateInfo info) {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.update_available_title)
+                .setMessage(context.getString(R.string.update_available, info.getVersion()) + "\n\n" + info.getChangelog())
+                .setPositiveButton(R.string.download, (dialog, id) -> {
+                    dialog.cancel();
+                    initiateDownload(context, info);
+                }).show();
+    }
+    public static void initiateDownload(Context context, UpdateInfo info) {
+        context.startActivity(getDownloadIntent(context, info));
+    }
+    public static Intent getDownloadIntent(Context context, UpdateInfo info) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Updater.getDownloadUrl(info)));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
     }
 
-    private static void continueUpdating(UpdateIntent intent) {
-        if(intent.dialog != null) {
-            if(intent.dialog.isShowing()) {
-                intent.dialog.dismiss();
-            } else {
-                return;
-            }
-        }
-        int currentVerCode = BuildConfig.VERSION_CODE;
-        boolean updatesFound = false;
-
-        int title = R.string.no_updates_title;
-        int message = R.string.no_updates;
-        if(pendingUpdate == null) {
-            title = R.string.update_error_title;
-            message = R.string.update_error;
-        }
-        final boolean ready = pendingUpdate != null && currentVerCode < Integer.parseInt(pendingUpdate[0]);
-        if(ready) {
-            title = R.string.update_available_title;
-            message = R.string.update_available;
-            updatesFound = true;
-        }
-        if(intent.dialog == null && !updatesFound) {
-            return;
-        }
-        String messageString = null;
-        if(message == R.string.update_available) {
-            messageString = intent.context.getString(R.string.update_available, pendingUpdate[1])
-                    + "\n" + pendingUpdate[2];
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(intent.context);
-        builder.setTitle(title)
-            .setCancelable(true)
-            .setPositiveButton(ready ? R.string.download : R.string.ok,
-                    (dialog, id) -> {
-                        dialog.cancel();
-                        if(ready) {
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("https://github.com/krlvm/PowerTunnel-Android/releases/download/v" + pendingUpdate[1] + "/PowerTunnel.apk"));
-                            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.context.startActivity(browserIntent);
-                        }
-                    });
-        if(messageString != null) {
-            builder.setMessage(messageString);
-        } else {
-            builder.setMessage(message);
-        }
-        AlertDialog alert = builder.create();
-        alert.show();
+    public static String getDownloadUrl(UpdateInfo info) {
+        return String.format(DOWNLOAD_URL, info.getVersion());
     }
 
-    public static void checkUpdates(UpdateIntent intent) {
-        new UpdateRequest().execute(intent);
-    }
-
-    public static class UpdateRequest extends AsyncTask<UpdateIntent, Void, Void> {
-
-        private UpdateIntent intent;
-
-        @Override
-        protected Void doInBackground(UpdateIntent... intents) {
-            intent = intents[0];
-            boolean result = true;
-            int versionCode = -1;
+    private static UpdateInfo parseUpdateInfo(String raw) {
+        String[] data = raw.split(";");
+        if(data.length == 3) {
             try {
-                String response = load();
-                String[] data = response.split(";");
-                if (data.length != 3) {
-                    result = false;
-                } else {
-                    try {
-                        int minApiVersion = Integer.parseInt(data[2]);
-                        if(android.os.Build.VERSION.SDK_INT >= minApiVersion) {
-                            versionCode = Integer.parseInt(data[0]);
-                        } else {
-                            result = false;
-                        }
-                    } catch (NumberFormatException ex) {
-                        result = false;
-                    }
-                }
-                if(result) {
-                    pendingUpdate = new String[3];
-                    pendingUpdate[0] = data[0];
-                    pendingUpdate[1] = data[1];
-                    pendingUpdate[2] = getChangelog(versionCode);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                return new UpdateInfo(
+                        Integer.parseInt(data[0]),
+                        data[1],
+                        Integer.parseInt(data[2])
+                );
+            } catch (NumberFormatException ignore) {}
+        }
+
+        Log.d(LOG_TAG, "Failed to parse update info, data length: " + data.length);
+        return null;
+    }
+
+    static class UpdateTask extends AsyncTask<UpdateHandler, Void, UpdateInfo> {
+
+        private UpdateHandler handler;
+
+        @Override
+        protected UpdateInfo doInBackground(UpdateHandler... handlers) {
+            this.handler = handlers[0];
+            UpdateInfo info = null;
+
+            try {
+                info = parseUpdateInfo(fetch(UPDATE_URL));
+            } catch (Exception ex) {
+                Log.d(LOG_TAG, "Failed to check for updates: " + ex.getMessage(), ex);
             }
-            return null;
+
+            if(info != null) {
+                try {
+                    info.setChangelog(fetch(
+                            info.calculateObsolescence() > 1 ?
+                                    COMMON_CHANGELOG_URL :
+                                    String.format(CHANGELOG_URL, info.getVersionCode())
+                            )
+                    );
+                } catch (Exception ex) {
+                    Log.d(LOG_TAG, String.format("Failed to load changelog for version '%s' (obs=%s): %s", info.getVersionCode(), info.calculateObsolescence(), ex.getMessage()), ex);
+                }
+            }
+
+            return info;
         }
 
         @Override
-        protected void onPostExecute(Void s) {
-            super.onPostExecute(s);
-            continueUpdating(intent);
+        protected void onPostExecute(UpdateInfo info) {
+            this.handler.handle(info);
+            this.handler = null;
+        }
+    }
+
+    private static String fetch(String address) throws IOException {
+        LineNumberReader reader = null;
+        try {
+            URL url = new URL(address);
+            reader = new LineNumberReader(new InputStreamReader(url.openStream()));
+
+            List<String> lines = new ArrayList<>();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+
+            return TextUtils.join("\n", lines);
+        } finally {
+            if(reader != null) reader.close();
         }
     }
 }

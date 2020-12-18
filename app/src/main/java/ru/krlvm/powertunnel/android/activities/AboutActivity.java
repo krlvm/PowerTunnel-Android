@@ -1,5 +1,6 @@
 package ru.krlvm.powertunnel.android.activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import ru.krlvm.powertunnel.android.BuildConfig;
 import ru.krlvm.powertunnel.android.MainActivity;
 import ru.krlvm.powertunnel.android.R;
 import ru.krlvm.powertunnel.android.ui.NoUnderlineSpan;
-import ru.krlvm.powertunnel.android.updater.UpdateIntent;
 import ru.krlvm.powertunnel.android.updater.Updater;
 
 public class AboutActivity extends AppCompatActivity {
@@ -40,7 +40,26 @@ public class AboutActivity extends AppCompatActivity {
             progress.setMessage(getString(R.string.update_checking, BuildConfig.VERSION_NAME));
             progress.show();
 
-            Updater.checkUpdates(new UpdateIntent(progress, AboutActivity.this));
+            Updater.checkUpdates((info) -> {
+                progress.dismiss();
+                if(info != null && info.isReady()) {
+                    Updater.showUpdateDialog(this, info);
+                    return;
+                }
+                int title, message;
+                if(info == null) {
+                    title = R.string.update_error_title;
+                    message = R.string.update_error;
+                } else {
+                    title = R.string.no_updates_title;
+                    message = R.string.no_updates;
+                }
+                new AlertDialog.Builder(this)
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setCancelable(true)
+                        .show();
+            });
         });
     }
 

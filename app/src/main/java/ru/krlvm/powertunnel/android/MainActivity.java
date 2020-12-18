@@ -38,7 +38,6 @@ import ru.krlvm.powertunnel.android.activities.AboutActivity;
 import ru.krlvm.powertunnel.android.managers.PTManager;
 import ru.krlvm.powertunnel.android.services.ProxyModeService;
 import ru.krlvm.powertunnel.android.ui.NoUnderlineSpan;
-import ru.krlvm.powertunnel.android.updater.UpdateIntent;
 import ru.krlvm.powertunnel.android.updater.Updater;
 import tun.proxy.preferences.SimplePreferenceActivity;
 import tun.proxy.service.Tun2HttpVpnService;
@@ -171,7 +170,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }, filter);
 
-        Updater.checkUpdates(new UpdateIntent(null, MainActivity.this));
+        Updater.checkUpdates((info) -> {
+            if(info != null && info.isReady()) {
+                Updater.showUpdateDialog(this, info);
+            }
+        });
     }
 
     private void displayHelp(SharedPreferences prefs) {

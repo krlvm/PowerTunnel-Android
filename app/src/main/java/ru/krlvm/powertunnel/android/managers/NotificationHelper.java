@@ -21,7 +21,7 @@ public class NotificationHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId, context.getString(R.string.app_name),
                     NotificationManager.IMPORTANCE_LOW);
-            android.app.NotificationManager notificationManager = context.getSystemService(android.app.NotificationManager.class);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             if(notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
             }
