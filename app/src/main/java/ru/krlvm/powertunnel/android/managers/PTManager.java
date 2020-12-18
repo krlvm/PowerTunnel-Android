@@ -57,7 +57,7 @@ public class PTManager {
         }
         PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
         if(prefs.getBoolean("upstream_proxy", false)) {
-            PowerTunnel.UPSTREAM_PROXY_CACHE = prefs.getBoolean("upstream_cache", false);
+            PowerTunnel.UPSTREAM_PROXY_CACHE = prefs.getBoolean("upstream_cache", true);
             PowerTunnel.UPSTREAM_PROXY_IP = prefs.getString("upstream_ip", null);
             PowerTunnel.UPSTREAM_PROXY_PORT = Integer.parseInt(prefs.getString("upstream_port", "-1"));
             PowerTunnel.UPSTREAM_PROXY_USERNAME = prefs.getString("upstream_username", null);

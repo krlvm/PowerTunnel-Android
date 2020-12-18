@@ -84,7 +84,7 @@ public class PowerTunnel {
     private static final Set<String> GOVERNMENT_BLACKLIST = null; //= new HashSet<>();
     private static final Set<String> ISP_STUB_LIST        = null; //= new HashSet<>();
 
-    public static boolean UPSTREAM_PROXY_CACHE = false;
+    public static boolean UPSTREAM_PROXY_CACHE = true;
     public static String UPSTREAM_PROXY_IP = null;
     public static int UPSTREAM_PROXY_PORT = -1;
     public static String UPSTREAM_PROXY_USERNAME = null;

@@ -74,7 +74,7 @@
 			android:title="@string/pref_upstream_cache"
 			android:summary="@string/pref_upstream_cache_desc"
 			android:key="upstream_cache"
-			android:defaultValue="false"/>
+			android:defaultValue="true"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_category_vpn">

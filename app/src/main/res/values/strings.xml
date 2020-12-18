@@ -161,5 +161,5 @@
     <string name="pref_upstream_port">Upstream proxy port</string>
     <string name="pref_upstream_title">Upstream proxy</string>
     <string name="pref_upstream_cache">Cache upstream proxy address</string>
-    <string name="pref_upstream_cache_desc">Improves performance</string>
+    <string name="pref_upstream_cache_desc">Don\'t resolves upstream proxy address on each request, improves performance</string>
 </resources>

@@ -107,5 +107,5 @@
     <string name="pref_upstream_port">Порт внешнего прокси-сервера</string>
     <string name="pref_upstream_title">Внешний прокси-сервер</string>
     <string name="pref_upstream_cache">Кешировать адрес внешнего прокси-сервера</string>
-    <string name="pref_upstream_cache_desc">Увеличивает производительность</string>
+    <string name="pref_upstream_cache_desc">Не выполняет поиск адреса внешнего прокси-сервера при каждом запросе, увеличивает производительность</string>
 </resources>
