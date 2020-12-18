@@ -73,10 +73,13 @@ public class SettingsFragment extends PreferenceFragment
         clearAllSelection.setOnPreferenceClickListener(this);
         findPreference(RESET_CONNECTION_SETTINGS).setOnPreferenceClickListener(this);
         findPreference("theme").setOnPreferenceChangeListener(this);
-        findPreference("proxy_mode").setOnPreferenceChangeListener(this);
         findPreference("sni").setOnPreferenceChangeListener(this);
 
+        findPreference("proxy_mode").setOnPreferenceChangeListener(this);
+        findPreference("upstream_proxy").setOnPreferenceChangeListener(this);
+
         updateProxyVpn(!prefs.getBoolean("proxy_mode", false));
+        updateUpstreamProxy(prefs.getBoolean("upstream_proxy", false));
 
         updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "GOOGLE_DOH"));
         updateVPNModeItem();
@@ -128,6 +131,12 @@ public class SettingsFragment extends PreferenceFragment
         prefDisallow.setEnabled(vpnMode);
         clearAllSelection.setEnabled(vpnMode);
         updateVPNModeItem(vpnMode);
+    }
+
+    private void updateUpstreamProxy(boolean enabled) {
+        findPreference("upstream_ip").setEnabled(enabled);
+        findPreference("upstream_port").setEnabled(enabled);
+        findPreference("upstream_cache").setEnabled(enabled);
     }
 
     private void updateSpecDnsStatus(String provider) {
@@ -182,6 +191,7 @@ public class SettingsFragment extends PreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        System.out.println("CHANGED: " + preference.getKey());
         switch (preference.getKey()) {
             case "theme": {
                 MainActivity.applyTheme(((String) newValue));
@@ -193,6 +203,10 @@ public class SettingsFragment extends PreferenceFragment
                     Toast.makeText(context, R.string.proxy_mode_warning, Toast.LENGTH_LONG).show();
                 }
                 updateProxyVpn(vpnMode);
+                break;
+            }
+            case "upstream_proxy": {
+                updateUpstreamProxy(((boolean) newValue));
                 break;
             }
             case "sni": {

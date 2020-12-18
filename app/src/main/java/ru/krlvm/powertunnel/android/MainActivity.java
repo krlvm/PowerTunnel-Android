@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private Button start;
     private Handler statusHandler = new Handler();
     private Handler progressHandler = new Handler();
+    private static final long PROGRESS_DELAY = 500L;
 
     private Tun2HttpVpnService service;
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -292,14 +293,14 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
         updateStatus();
         final boolean vpn = PTManager.isVPN(this);
-        progressHandler.post(() -> {
+        progressHandler.postDelayed(() -> {
             if(vpn) {
                 startVpn();
             } else {
                 startProxy();
             }
             dialog.dismiss();
-        });
+        }, PROGRESS_DELAY);
     }
 
     private void startVpn() {
@@ -337,10 +338,10 @@ public class MainActivity extends AppCompatActivity {
         final ProgressDialog dialog = progress(false);
         dialog.show();
         updateStatus();
-        progressHandler.post(() -> {
+        progressHandler.postDelayed(() -> {
             PTManager.stopTunnel(this);
             dialog.dismiss();
-        });
+        }, PROGRESS_DELAY);
     }
 
     private ProgressDialog progress(boolean starting) {

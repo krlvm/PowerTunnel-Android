@@ -1,6 +1,7 @@
 package ru.krlvm.powertunnel;
 
 import org.jitsi.dnssec.validator.ValidatingResolver;
+import org.littleshoot.proxy.ChainedProxyManager;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
 import org.littleshoot.proxy.HttpProxyServer;
@@ -20,6 +21,7 @@ import java.util.Set;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
+import ru.krlvm.powertunnel.adapters.UpstreamChainedProxyAdapter;
 import ru.krlvm.powertunnel.android.managers.PTManager;
 import ru.krlvm.powertunnel.android.resolver.AndroidDohResolver;
 import ru.krlvm.powertunnel.enums.SNITrick;
@@ -82,6 +84,12 @@ public class PowerTunnel {
 
     private static final Set<String> GOVERNMENT_BLACKLIST = null; //= new HashSet<>();
     private static final Set<String> ISP_STUB_LIST        = null; //= new HashSet<>();
+
+    public static boolean UPSTREAM_PROXY_CACHE = false;
+    public static String UPSTREAM_PROXY_IP = null;
+    public static int UPSTREAM_PROXY_PORT = -1;
+    public static String UPSTREAM_PROXY_USERNAME = null;
+    public static String UPSTREAM_PROXY_PASSWORD = null;
 
     /**
      * PowerTunnel bootstrap
@@ -171,6 +179,18 @@ public class PowerTunnel {
                 throw new Exception("Failed to initialize MITM Manager for SNI tricks: " + ex.getMessage(), ex);
             }
         }
+
+        if(UPSTREAM_PROXY_IP != null) {
+            ChainedProxyManager manager;
+            if(UPSTREAM_PROXY_CACHE) {
+                final UpstreamChainedProxyAdapter adapter = new UpstreamChainedProxyAdapter();
+                manager = (httpRequest, queue) -> queue.add(adapter);
+            } else {
+                manager = (httpRequest, queue) -> queue.add(new UpstreamChainedProxyAdapter());
+            }
+            bootstrap.withName("Downstream").withChainProxyManager(manager);
+        }
+
         SERVER = bootstrap.start();
         RUNNING = true;
         System.out.println("[.] Server started");

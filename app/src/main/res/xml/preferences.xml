@@ -46,6 +46,36 @@
 			android:defaultValue="false"/>
 	</PreferenceCategory>
 
+	<PreferenceCategory android:title="@string/pref_upstream_title">
+		<SwitchPreference
+			android:title="@string/pref_upstream_proxy"
+			android:summary="@string/pref_upstream_proxy_desc"
+			android:key="upstream_proxy"
+			android:defaultValue="false"/>
+
+		<tun.proxy.preferences.preference.EditTextSummaryPreference
+			android:key="upstream_ip"
+			android:title="@string/pref_upstream_ip"
+			android:defaultValue=""
+			android:summary="%s"
+			app:useSimpleSummaryProvider="true" />
+
+		<tun.proxy.preferences.preference.EditTextSummaryPreference
+			android:key="upstream_port"
+			android:title="@string/pref_upstream_port"
+			android:defaultValue=""
+			android:summary="%s"
+			android:inputType="numberDecimal"
+			android:maxLength="4"
+			app:useSimpleSummaryProvider="true" />
+
+		<SwitchPreference
+			android:title="@string/pref_upstream_cache"
+			android:summary="@string/pref_upstream_cache_desc"
+			android:key="upstream_cache"
+			android:defaultValue="false"/>
+	</PreferenceCategory>
+
 	<PreferenceCategory android:title="@string/pref_category_vpn">
 		<ListPreference
 			android:key="vpn_connection_mode"

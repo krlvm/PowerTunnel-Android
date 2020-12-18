@@ -117,8 +117,8 @@
     <string name="dns_fetch_error">Failed to fetch the DNS servers list</string>
     <string name="error">Error</string>
     <string name="download">Download</string>
-    <string name="specify_dns_provider">Specify DNS provider</string>
-    <string name="specified_dns_provider">Specified DNS provider</string>
+    <string name="specify_dns_provider">Custom DNS provider</string>
+    <string name="specified_dns_provider">Custom DNS provider</string>
     <string name="pref_theme_title">Dark theme</string>
     <string name="pref_category_appearance">Appearance</string>
     <string name="secdns_discounted">SecureDNS DNS provider has been discounted since April 30, 2020. Your DNS provider was automatically changed to CloudFlare DoH to avoid connectivity issues.</string>
@@ -130,7 +130,7 @@
     <string name="proxy_mode_warning">Now you have to set applications proxy manually. If you have problems, switch back to VPN mode disabling proxy mode.</string>
     <string name="notification_channel_proxy">PowerTunnel Proxy</string>
     <string name="pref_category_vpn">VPN settings</string>
-    <string name="pref_proxy_ip">Local proxy server address</string>
+    <string name="pref_proxy_ip">Local proxy server IP address</string>
     <string name="pref_proxy_port">Local proxy server port</string>
     <string name="reset_connection_settings">Reset proxy settings</string>
     <string name="reset_connection_settings_summary">Return to default address and port</string>
@@ -155,4 +155,11 @@
     <string name="samsung_firmware_bug">Samsung introduced a bug in August 2020 software update that preventing us from starting VPN service, you have can solve this problem manually.</string>
     <string name="read_more">Read more</string>
     <string name="restarting_proxy">Restarting proxy server…</string>
+    <string name="pref_upstream_proxy">Connect via upstream proxy</string>
+    <string name="pref_upstream_proxy_desc">Use upstream proxy to connect to the Internet</string>
+    <string name="pref_upstream_ip">Upstream proxy IP address</string>
+    <string name="pref_upstream_port">Upstream proxy port</string>
+    <string name="pref_upstream_title">Upstream proxy</string>
+    <string name="pref_upstream_cache">Cache upstream proxy address</string>
+    <string name="pref_upstream_cache_desc">Improves performance</string>
 </resources>

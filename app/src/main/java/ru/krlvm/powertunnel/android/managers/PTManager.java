@@ -56,6 +56,16 @@ public class PTManager {
             PowerTunnel.DEFAULT_CHUNK_SIZE = 2;
         }
         PowerTunnel.PAYLOAD_LENGTH = prefs.getBoolean("send_payload", false) ? 21 : 0;
+        if(prefs.getBoolean("upstream_proxy", false)) {
+            PowerTunnel.UPSTREAM_PROXY_CACHE = prefs.getBoolean("upstream_cache", false);
+            PowerTunnel.UPSTREAM_PROXY_IP = prefs.getString("upstream_ip", null);
+            PowerTunnel.UPSTREAM_PROXY_PORT = Integer.parseInt(prefs.getString("upstream_port", "-1"));
+            PowerTunnel.UPSTREAM_PROXY_USERNAME = prefs.getString("upstream_username", null);
+            PowerTunnel.UPSTREAM_PROXY_PASSWORD = prefs.getString("upstream_password", null);
+        } else {
+            PowerTunnel.UPSTREAM_PROXY_IP = null;
+            PowerTunnel.UPSTREAM_PROXY_USERNAME = null;
+        }
         DNS_SERVERS = Util.getDefaultDNS(context);
         DNS_OVERRIDE = false;
         PowerTunnel.DOH_ADDRESS = null;
