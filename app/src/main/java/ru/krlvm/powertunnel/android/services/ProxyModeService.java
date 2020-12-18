@@ -17,7 +17,7 @@ public class ProxyModeService extends Service {
 
     private static final String TAG = "PTProxyMode.Service";
     private static final String CHANNEL_ID = "PowerTunnelProxy";
-    private static final int FOREGROUND_ID = 1;
+    private static final int FOREGROUND_ID = NotificationHelper.ChannelIds.PROXY;
 
     @Override
     public void onCreate() {

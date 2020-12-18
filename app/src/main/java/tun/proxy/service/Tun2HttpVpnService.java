@@ -29,7 +29,7 @@ import ru.krlvm.powertunnel.android.managers.PTManager;
 public class Tun2HttpVpnService extends VpnService {
 
     private static final String TAG = "Tun2Http.Service";
-    private static final int FOREGROUND_ID = 2;
+    private static final int FOREGROUND_ID = NotificationHelper.ChannelIds.VPN;
     private static final String CHANNEL_ID = "PowerTunnelVPN";
 
     private static final String ACTION_START = "start";

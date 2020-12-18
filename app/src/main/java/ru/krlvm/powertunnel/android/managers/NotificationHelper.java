@@ -17,6 +17,12 @@ import ru.krlvm.powertunnel.android.receiver.ActionReceiver;
 
 public class NotificationHelper {
 
+    public static class ChannelIds {
+        public static final int PROXY    = 1;
+        public static final int VPN      = 2;
+        public static final int UPDATE   = 3;
+    }
+
     public static void prepareNotificationChannel(Context context, String channelId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId, context.getString(R.string.app_name),

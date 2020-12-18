@@ -124,7 +124,7 @@ public class QuickTileService extends TileService {
     private void checkUpdates() {
         Updater.checkUpdates((info) -> {
             if(info == null || !info.isReady()) return;
-            PendingIntent intent = PendingIntent.getActivity(this, 0, Updater.getDownloadIntent(this, info), Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent intent = PendingIntent.getActivity(this, 0, Updater.getDownloadIntent(this, info), 0);
             NotificationHelper.prepareNotificationChannel(this, Updater.NOTIFICATION_CHANNEL);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Updater.NOTIFICATION_CHANNEL)
                     .setDefaults(Notification.DEFAULT_ALL)
@@ -137,7 +137,7 @@ public class QuickTileService extends TileService {
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             if(notificationManager != null) {
-                notificationManager.notify(2, builder.build());
+                notificationManager.notify(NotificationHelper.ChannelIds.UPDATE, builder.build());
             }
         });
     }
