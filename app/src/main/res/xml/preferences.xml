@@ -75,6 +75,25 @@
 			android:summary="@string/pref_upstream_cache_desc"
 			android:key="upstream_cache"
 			android:defaultValue="true"/>
+
+		<SwitchPreference
+			android:title="@string/pref_upstream_proxy_auth"
+			android:key="upstream_auth"
+			android:defaultValue="false"/>
+
+		<tun.proxy.preferences.preference.EditTextSummaryPreference
+			android:key="upstream_username"
+			android:title="@string/pref_upstream_username"
+			android:defaultValue=""
+			android:summary="%s"
+			app:useSimpleSummaryProvider="true" />
+
+		<tun.proxy.preferences.preference.EditTextSummaryPreference
+			android:key="upstream_password"
+			android:title="@string/pref_upstream_password"
+			android:defaultValue=""
+			android:summary="%s"
+			app:useSimpleSummaryProvider="true" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_category_vpn">

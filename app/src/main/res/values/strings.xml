@@ -159,7 +159,10 @@
     <string name="pref_upstream_proxy_desc">Use upstream proxy to connect to the Internet</string>
     <string name="pref_upstream_ip">Upstream proxy IP address</string>
     <string name="pref_upstream_port">Upstream proxy port</string>
-    <string name="pref_upstream_title">Upstream proxy</string>
+    <string name="pref_upstream_title">Upstream proxy server</string>
     <string name="pref_upstream_cache">Cache upstream proxy address</string>
     <string name="pref_upstream_cache_desc">Don\'t resolves upstream proxy address on each request, improves performance</string>
+    <string name="pref_upstream_proxy_auth">Upstream proxy server requires authorization</string>
+    <string name="pref_upstream_username">Upstream proxy server username</string>
+    <string name="pref_upstream_password">Upstream proxy server password</string>
 </resources>

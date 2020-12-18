@@ -65,6 +65,7 @@ public class PTManager {
         } else {
             PowerTunnel.UPSTREAM_PROXY_IP = null;
             PowerTunnel.UPSTREAM_PROXY_USERNAME = null;
+            PowerTunnel.UPSTREAM_PROXY_AUTH_CODE = null;
         }
         DNS_SERVERS = Util.getDefaultDNS(context);
         DNS_OVERRIDE = false;

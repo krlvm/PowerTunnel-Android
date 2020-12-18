@@ -25,6 +25,7 @@ import ru.krlvm.powertunnel.android.resolver.AndroidDohResolver;
 import ru.krlvm.powertunnel.enums.SNITrick;
 import ru.krlvm.powertunnel.filter.ProxyFilter;
 import ru.krlvm.powertunnel.managers.UpstreamProxyChainedProxyManager;
+import ru.krlvm.powertunnel.utilities.HttpUtility;
 import ru.krlvm.powertunnel.utilities.MITMUtility;
 import ru.krlvm.powertunnel.utilities.URLUtility;
 
@@ -89,6 +90,7 @@ public class PowerTunnel {
     public static int UPSTREAM_PROXY_PORT = -1;
     public static String UPSTREAM_PROXY_USERNAME = null;
     public static String UPSTREAM_PROXY_PASSWORD = null;
+    public static String UPSTREAM_PROXY_AUTH_CODE = null;
 
     /**
      * PowerTunnel bootstrap
@@ -180,6 +182,9 @@ public class PowerTunnel {
         }
 
         if(UPSTREAM_PROXY_IP != null) {
+            if(UPSTREAM_PROXY_USERNAME != null) {
+                UPSTREAM_PROXY_AUTH_CODE = HttpUtility.generateAuthCode(UPSTREAM_PROXY_USERNAME, UPSTREAM_PROXY_PASSWORD);
+            }
             bootstrap.withName("Downstream").withChainProxyManager(new UpstreamProxyChainedProxyManager());
         }
 

@@ -77,9 +77,11 @@ public class SettingsFragment extends PreferenceFragment
 
         findPreference("proxy_mode").setOnPreferenceChangeListener(this);
         findPreference("upstream_proxy").setOnPreferenceChangeListener(this);
+        findPreference("upstream_auth").setOnPreferenceChangeListener(this);
 
         updateProxyVpn(!prefs.getBoolean("proxy_mode", false));
         updateUpstreamProxy(prefs.getBoolean("upstream_proxy", false));
+        updateUpstreamProxyAuth(prefs.getBoolean("upstream_auth", false));
 
         updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "GOOGLE_DOH"));
         updateVPNModeItem();
@@ -137,6 +139,13 @@ public class SettingsFragment extends PreferenceFragment
         findPreference("upstream_ip").setEnabled(enabled);
         findPreference("upstream_port").setEnabled(enabled);
         findPreference("upstream_cache").setEnabled(enabled);
+        findPreference("upstream_auth").setEnabled(enabled);
+        updateUpstreamProxyAuth(enabled);
+    }
+
+    private void updateUpstreamProxyAuth(boolean enabled) {
+        findPreference("upstream_username").setEnabled(enabled);
+        findPreference("upstream_password").setEnabled(enabled);
     }
 
     private void updateSpecDnsStatus(String provider) {
@@ -207,6 +216,10 @@ public class SettingsFragment extends PreferenceFragment
             }
             case "upstream_proxy": {
                 updateUpstreamProxy(((boolean) newValue));
+                break;
+            }
+            case "upstream_auth": {
+                updateUpstreamProxyAuth(((boolean) newValue));
                 break;
             }
             case "sni": {

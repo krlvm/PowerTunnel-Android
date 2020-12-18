@@ -1,5 +1,7 @@
 package ru.krlvm.powertunnel.utilities;
 
+import android.util.Base64;
+
 import org.littleshoot.proxy.impl.ProxyUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -71,5 +73,15 @@ public class HttpUtility {
      */
     public static String formatHost(String host) {
         return host.replace(":443", "").replace("www.", "");
+    }
+
+    /**
+     * Generates upstream proxy auth code
+     */
+    public static String generateAuthCode(String username, String password) {
+        String credential = username + ":" + password;
+        byte[] data;
+        data = credential.getBytes(StandardCharsets.UTF_8);
+        return Base64.encodeToString(data, Base64.DEFAULT).trim();
     }
 }
