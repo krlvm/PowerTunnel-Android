@@ -61,7 +61,7 @@
     <string name="startup_failed_proxy">Uruchamianie serwera proxy nie powiodło się</string>
     <string name="pref_chunk_size">Domyślny rozmiar fragmentów</string>
     <string name="clear_selection">Wyczyść zaznaczenie</string>
-    <string name="about_version">Wersja %1$s\n&lt;br>&lt;a href="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/LICENSE">Licencja MIT&lt;/a></string>
+    <string name="about_version">Wersja %1$s\n&lt;br></string>
     <string name="btn_check_for_updates">Sprawdź dostępność aktualizacji</string>
     <string name="title_activity_about">O aplikacji</string>
     <string name="no_updates">Używasz najnowszej wersji PowerTunnel</string>

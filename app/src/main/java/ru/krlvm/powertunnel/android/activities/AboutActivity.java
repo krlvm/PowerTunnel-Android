@@ -24,7 +24,9 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         TextView version = findViewById(R.id.about_version);
-        String versionText = getString(R.string.about_version, BuildConfig.VERSION_NAME);
+        String versionText = getString(R.string.about_version, BuildConfig.VERSION_NAME)
+                + "<a href=\"https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/LICENSE\">MIT License</a><br>";
+                //+ "<a href=\"https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/\">GitHub Repository</a><br>";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             version.setText(NoUnderlineSpan.stripUnderlines(Html.fromHtml(versionText, Html.FROM_HTML_MODE_COMPACT)));
         } else {
