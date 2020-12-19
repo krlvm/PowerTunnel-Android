@@ -164,6 +164,7 @@ public class PTManager {
         PowerTunnel.bootstrap();
         setRunningPref(context, true);
         context.sendBroadcast(new Intent(MainActivity.SERVER_START_BROADCAST));
+        System.out.println("BC sent");
     }
 
     public static void stopProxy(Context context) {

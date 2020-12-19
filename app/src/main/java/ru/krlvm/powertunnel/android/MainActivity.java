@@ -131,9 +131,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case SERVER_START_BROADCAST: {
                         if(PowerTunnel.SNI_TRICK != null) {
-                            boolean certificateInstalled = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cert_installed", false);
-                            try
-                            {
+                            boolean certificateInstalled = false;
+                            try {
                                 KeyStore ks = KeyStore.getInstance("AndroidCAStore");
                                 if (ks != null) {
                                     ks.load(null, null);
@@ -148,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             } catch (Exception ignore) {}
+                            certificateInstalled = certificateInstalled &&
+                                    PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cert_installed", false);
                             if(!certificateInstalled) {
                                 installCertificate();
                             }
@@ -257,11 +258,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        if(statusReceiver != null) {
-            try {
-                unregisterReceiver(statusReceiver);
-            } catch (IllegalArgumentException ignore) {}
-        }
+        //if(statusReceiver != null) {
+        //    try {
+        //        unregisterReceiver(statusReceiver);
+        //    } catch (IllegalArgumentException ignore) {}
+        //}
         super.onStop();
     }
 
