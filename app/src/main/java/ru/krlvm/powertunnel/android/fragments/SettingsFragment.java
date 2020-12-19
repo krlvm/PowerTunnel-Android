@@ -140,7 +140,7 @@ public class SettingsFragment extends PreferenceFragment
         findPreference("upstream_port").setEnabled(enabled);
         findPreference("upstream_cache").setEnabled(enabled);
         findPreference("upstream_auth").setEnabled(enabled);
-        updateUpstreamProxyAuth(enabled);
+        updateUpstreamProxyAuth(enabled && prefs.getBoolean("upstream_auth", false));
     }
 
     private void updateUpstreamProxyAuth(boolean enabled) {

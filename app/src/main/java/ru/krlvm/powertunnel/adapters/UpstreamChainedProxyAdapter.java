@@ -12,6 +12,7 @@ import ru.krlvm.powertunnel.PowerTunnel;
 public class UpstreamChainedProxyAdapter extends ChainedProxyAdapter {
 
     private InetSocketAddress address;
+    private String auth = null;
 
     public UpstreamChainedProxyAdapter() {
         this(null);
@@ -19,6 +20,9 @@ public class UpstreamChainedProxyAdapter extends ChainedProxyAdapter {
 
     public UpstreamChainedProxyAdapter(InetSocketAddress address) {
         this.address = address;
+        if(PowerTunnel.UPSTREAM_PROXY_AUTH_CODE != null) {
+            this.auth = "Basic " + PowerTunnel.UPSTREAM_PROXY_AUTH_CODE;
+        }
     }
 
     @Override
@@ -34,8 +38,8 @@ public class UpstreamChainedProxyAdapter extends ChainedProxyAdapter {
 
     @Override
     public void filterRequest(HttpObject httpObject) {
-        if (httpObject instanceof HttpRequest && PowerTunnel.UPSTREAM_PROXY_AUTH_CODE != null) {
-            ((HttpRequest) httpObject).headers().add("Proxy-Authorization", "Basic " + PowerTunnel.UPSTREAM_PROXY_AUTH_CODE);
+        if (httpObject instanceof HttpRequest && auth != null) {
+            ((HttpRequest) httpObject).headers().add("Proxy-Authorization", auth);
         }
     }
 }

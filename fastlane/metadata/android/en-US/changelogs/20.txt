@@ -1,0 +1,14 @@
+New features:
+- Added support for Erase and Fake SNI tricks
+- Upstream proxy support
+- Support for insecure local network DoH requests
+
+Improvements:
+- Now it's possible to edit settings without stopping the proxy server
+- Improved Update Notifier
+- Improved usability
+- Improved responsiveness
+
+Bugfixes:
+- Fixed an issue when certificate installer wasn't showing
+- Fixed crashes and improved support of old Android versions

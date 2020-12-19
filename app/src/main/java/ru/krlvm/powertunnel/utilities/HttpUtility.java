@@ -86,8 +86,7 @@ public class HttpUtility {
      */
     public static String generateAuthCode(String username, String password) {
         String credential = username + ":" + password;
-        byte[] data;
-        data = credential.getBytes(Charset.forName("UTF-8" + ""));
+        byte[] data = credential.getBytes(Charset.forName("UTF-8" + ""));
         return Base64.encodeToString(data, Base64.DEFAULT).trim();
     }
 }
