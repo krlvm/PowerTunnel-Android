@@ -35,7 +35,7 @@
     <string name="pref_category_dns">Разрешение доменных имен</string>
     <string name="pref_use_dns_sec">Использовать DNSSec (экспериментальная настройка)</string>
     <string name="pref_full_chunking">Режим полной фрагментации пакетов</string>
-    <string name="pref_mix_host_case">Изменять регистр адреса соединения</string>
+    <string name="pref_mix_host_case">Изменять регистр адреса</string>
     <string name="pref_send_payload">Отправлять дополнительные 21КБ данных</string>
     <string name="startup_failed_proxy">Ошибка при запуске прокси-сервера</string>
     <string name="pref_chunk_size">Размер фрагмента</string>
@@ -64,6 +64,14 @@
         <item>Выключена</item>
         <item>В режиме энергосбережения</item>
     </string-array>
+
+    <string-array name="pref_sni">
+        <item>Отключена</item>
+        <item>Портить SNI</item>
+        <item>Фейковый SNI</item>
+        <item>Очищать SNI</item>
+    </string-array>
+
     <string name="pref_theme_title">Темная тема</string>
     <string name="pref_category_appearance">Внешний вид</string>
     <string name="secdns_discounted">Поставщик DNS SecureDNS прекратил работу по состоянию на 30 апреля 2020 года. Ваш поставщик DNS был автоматически заменен на CloudFlare DoH чтобы избежать проблем с подключением.</string>
@@ -85,14 +93,14 @@
     <string name="pref_apply_http_https">Применять обход HTTP для HTTPS</string>
     <string name="pref_break_get">Перенос перед GET</string>
     <string name="space_after_get">Пробел после GET</string>
-    <string name="pref_mix_host_header_case">Изменять регистр заголовка адреса соединения</string>
-    <string name="pref_dot_after_host">Точка после адреса соединения</string>
+    <string name="pref_mix_host_header_case">Изменять регистр заголовка адреса</string>
+    <string name="pref_dot_after_host">Точка после адреса</string>
     <string name="pref_sni">Модифицировать SNI (экспериментальная настройка)</string>
     <string name="cert_installed">Сертификат успешно установлен</string>
     <string name="cert_not_installed">Сертификат не установлен, обход через SNI не будет работать</string>
     <string name="please_install_cert">Вам нужно установить корневой сертификат PowerTunnel для использования обхода через SNI</string>
     <string name="pref_chunking">Фрагментация пакетов</string>
-    <string name="pref_complete_mix_host_case">Полное изменение регистра адреса соединения</string>
+    <string name="pref_complete_mix_host_case">Полное изменение регистра адреса</string>
     <string name="sni_warning">Отключите фрагментацию для лучшего эффекта</string>
     <string name="notification_vpn_background">PowerTunnel VPN активен</string>
     <string name="stopping_powertunnel">Остановка PowerTunnel…</string>
@@ -108,9 +116,10 @@
     <string name="pref_upstream_title">Внешний прокси-сервер</string>
     <string name="pref_upstream_cache">Кешировать адрес внешнего прокси-сервера</string>
     <string name="pref_upstream_cache_desc">Не выполняет поиск адреса внешнего прокси-сервера при каждом запросе, увеличивает производительность</string>
-    <string name="pref_upstream_proxy_auth">На внешем прокси-сервере требуется авторизация</string>
+    <string name="pref_upstream_proxy_auth">Авторизовываться на внешнем прокси-сервере</string>
     <string name="pref_upstream_username">Имя пользователя внешнего прокси-сервера</string>
     <string name="pref_upstream_password">Пароль внешнего прокси-сервера</string>
     <string name="pref_allow_insecure_doh">Разрешить небезопансые запросы DoH</string>
     <string name="pref_allow_insecure_doh_desc">Разрешить выполнять запросы DoH по HTTP</string>
+    <string name="pref_sni_fake_host">Фейковое имя адреса SNI</string>
 </resources>

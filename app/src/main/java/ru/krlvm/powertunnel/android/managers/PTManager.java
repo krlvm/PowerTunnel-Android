@@ -30,15 +30,25 @@ public class PTManager {
     public static boolean DNS_OVERRIDE = false;
 
     public static void configure(Context context, SharedPreferences prefs) {
-        PowerTunnel.SNI_TRICK = prefs.getBoolean("sni", false) ? SNITrick.SPOIL : null;
-        if(!prefs.contains("mitm_password")) {
-            String newPassword = UUID.randomUUID().toString();
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("mitm_password", newPassword);
-            editor.apply();
-            PowerTunnel.MITM_PASSWORD = newPassword.toCharArray();
+        String sniTrick = prefs.getString("sni_trick", "DISABLED");
+        if(!sniTrick.equals("DISABLED")) {
+            PowerTunnel.SNI_TRICK = SNITrick.valueOf(sniTrick);
+            if(PowerTunnel.SNI_TRICK == SNITrick.FAKE) {
+                PowerTunnel.SNI_TRICK_FAKE_HOST = prefs.getString("sni_fake_host", "example.com");
+            }
+            if(!prefs.contains("mitm_password")) {
+                String newPassword = UUID.randomUUID().toString();
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("mitm_password", newPassword);
+                editor.apply();
+                PowerTunnel.MITM_PASSWORD = newPassword.toCharArray();
+            } else {
+                PowerTunnel.MITM_PASSWORD = prefs.getString("mitm_password", UUID.randomUUID().toString()).toCharArray();
+            }
         } else {
-            PowerTunnel.MITM_PASSWORD = prefs.getString("mitm_password", UUID.randomUUID().toString()).toCharArray();
+            PowerTunnel.SNI_TRICK = null;
+            PowerTunnel.SNI_TRICK_FAKE_HOST = null;
+            PowerTunnel.MITM_PASSWORD = null;
         }
         PowerTunnel.DOT_AFTER_HOST_HEADER = prefs.getBoolean("dot_after_host", true);
         PowerTunnel.MIX_HOST_HEADER_CASE = prefs.getBoolean("mix_host_header_case", true);

@@ -66,6 +66,7 @@ public class PowerTunnel {
     public static int PAYLOAD_LENGTH = 0; //21 recommended
 
     public static SNITrick SNI_TRICK = null;
+    public static String SNI_TRICK_FAKE_HOST;
     public static char[] MITM_PASSWORD = null;
 
     public static boolean LINE_BREAK_BEFORE_GET = false;

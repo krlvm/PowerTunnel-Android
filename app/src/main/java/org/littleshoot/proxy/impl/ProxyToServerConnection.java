@@ -315,7 +315,7 @@ public class ProxyToServerConnection extends org.littleshoot.proxy.impl.ProxyCon
      * when retrying a connection without SNI to work around Java's SNI handling issue (see
      * {@link #connectionFailed(Throwable)}).
      */
-    private volatile boolean disableSni = PowerTunnel.SNI_TRICK == SNITrick.ERASE;//false;
+    private volatile boolean disableSni = PowerTunnel.SNI_TRICK == SNITrick.ERASE;
 
     /**
      * While we're in the process of connecting, it's possible that we'll
@@ -797,8 +797,14 @@ public class ProxyToServerConnection extends org.littleshoot.proxy.impl.ProxyCon
                     connectionFlow.then(serverConnection.EncryptChannel(proxyServer.getMitmManager()
                             .serverSslEngine()));
                 } else {
+                    String ptHost;
+                    if(PowerTunnel.SNI_TRICK == SNITrick.SPOIL) {
+                        ptHost = parsedHostAndPort.getHost() + ".";
+                    } else {
+                        ptHost = PowerTunnel.SNI_TRICK_FAKE_HOST;
+                    }
                     connectionFlow.then(serverConnection.EncryptChannel(proxyServer.getMitmManager()
-                            .serverSslEngine(parsedHostAndPort.getHost() + ".", parsedHostAndPort.getPort())));
+                            .serverSslEngine(ptHost, parsedHostAndPort.getPort())));
                 }
 
             	connectionFlow

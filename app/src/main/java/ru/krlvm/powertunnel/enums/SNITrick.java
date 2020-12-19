@@ -3,7 +3,8 @@ package ru.krlvm.powertunnel.enums;
 public enum SNITrick {
 
     ERASE,
-    SPOIL;
+    SPOIL,
+    FAKE;
 
     public static SNITrick fromID(int id) {
         switch (id) {
@@ -12,6 +13,9 @@ public enum SNITrick {
             }
             case 2: {
                 return ERASE;
+            }
+            case 3: {
+                return FAKE;
             }
             default: {
                 return null;

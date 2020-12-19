@@ -147,7 +147,6 @@
 		<tun.proxy.preferences.preference.EditTextSummaryPreference
 			android:key="dns_port"
 			android:title="@string/pref_dns_port"
-			android:defaultValue=""
 			android:summary="%s"
 			android:inputType="numberDecimal"
 			android:maxLength="4"
@@ -211,12 +210,21 @@
 			android:key="send_payload"
 			android:defaultValue="false"/>
 		<SwitchPreference
-			android:title="@string/pref_sni"
-			android:key="sni"
-			android:defaultValue="false"/>
-		<SwitchPreference
 			android:title="@string/pref_apply_http_https"
 			android:key="apply_http_https"
 			android:defaultValue="false"/>
+		<ListPreference
+			android:key="sni_trick"
+			android:title="@string/pref_sni_trick"
+			android:defaultValue="DISABLED"
+			android:entries="@array/pref_sni"
+			android:entryValues="@array/pref_sni_values"
+			android:summary="%s"/>
+		<tun.proxy.preferences.preference.EditTextSummaryPreference
+			android:key="sni_fake_host"
+			android:title="@string/pref_sni_fake_host"
+			android:summary="%s"
+			android:defaultValue="example.com"
+			app:useSimpleSummaryProvider="true" />
 	</PreferenceCategory>
 </PreferenceScreen>

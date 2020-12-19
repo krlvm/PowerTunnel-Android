@@ -73,7 +73,7 @@ public class SettingsFragment extends PreferenceFragment
         clearAllSelection.setOnPreferenceClickListener(this);
         findPreference(RESET_CONNECTION_SETTINGS).setOnPreferenceClickListener(this);
         findPreference("theme").setOnPreferenceChangeListener(this);
-        findPreference("sni").setOnPreferenceChangeListener(this);
+        findPreference("sni_trick").setOnPreferenceChangeListener(this);
 
         findPreference("proxy_mode").setOnPreferenceChangeListener(this);
         findPreference("upstream_proxy").setOnPreferenceChangeListener(this);
@@ -82,7 +82,7 @@ public class SettingsFragment extends PreferenceFragment
         updateProxyVpn(!prefs.getBoolean("proxy_mode", false));
         updateUpstreamProxy(prefs.getBoolean("upstream_proxy", false));
         updateUpstreamProxyAuth(prefs.getBoolean("upstream_auth", false));
-
+        updateFakeSniStatus(prefs.getString("sni_trick", "DISABLED"));
         updateSpecDnsStatus(prefs.getString(DNS_PROVIDER, "GOOGLE_DOH"));
         updateVPNModeItem();
     }
@@ -148,6 +148,10 @@ public class SettingsFragment extends PreferenceFragment
         findPreference("upstream_password").setEnabled(enabled);
     }
 
+    private void updateFakeSniStatus(String sniTrick) {
+        findPreference("sni_fake_host").setEnabled(sniTrick.equals("FAKE"));
+    }
+
     private void updateSpecDnsStatus(String provider) {
         prefSpecDns.setEnabled(provider.equals("SPECIFIED"));
     }
@@ -200,7 +204,6 @@ public class SettingsFragment extends PreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        System.out.println("CHANGED: " + preference.getKey());
         switch (preference.getKey()) {
             case "theme": {
                 MainActivity.applyTheme(((String) newValue));
@@ -222,10 +225,11 @@ public class SettingsFragment extends PreferenceFragment
                 updateUpstreamProxyAuth(((boolean) newValue));
                 break;
             }
-            case "sni": {
-                if(((boolean) newValue) && context != null) {
+            case "sni_trick": {
+                if(!newValue.equals("DISABLED") && context != null && prefs.getBoolean("chunking", true)) {
                     Toast.makeText(context, R.string.sni_warning, Toast.LENGTH_LONG).show();
                 }
+                updateFakeSniStatus(newValue.toString());
                 break;
             }
             case DNS_PROVIDER: {

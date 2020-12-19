@@ -176,6 +176,11 @@ public class MainActivity extends AppCompatActivity {
                 Updater.showUpdateDialog(this, info);
             }
         });
+
+        // v1.9 compatibility
+        if(prefs.getBoolean("sni", false)) {
+            prefs.edit().putString("sni_trick", "SPOIL").apply();
+        }
     }
 
     private void displayHelp(SharedPreferences prefs) {
