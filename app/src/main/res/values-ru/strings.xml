@@ -115,12 +115,12 @@
     <string name="pref_upstream_port">Порт внешнего прокси-сервера</string>
     <string name="pref_upstream_title">Внешний прокси-сервер</string>
     <string name="pref_upstream_cache">Кешировать адрес внешнего прокси-сервера</string>
-    <string name="pref_upstream_cache_desc">Не выполняет поиск адреса внешнего прокси-сервера при каждом запросе, увеличивает производительность</string>
+    <string name="pref_upstream_cache_desc">Не выполняет разрешение адреса внешнего прокси-сервера при каждом запросе, увеличивает производительность</string>
     <string name="pref_upstream_proxy_auth">Авторизовываться на внешнем прокси-сервере</string>
     <string name="pref_upstream_username">Имя пользователя внешнего прокси-сервера</string>
     <string name="pref_upstream_password">Пароль внешнего прокси-сервера</string>
     <string name="pref_allow_insecure_doh">Разрешить небезопансые запросы DoH</string>
     <string name="pref_allow_insecure_doh_desc">Разрешить выполнять запросы DoH по HTTP</string>
-    <string name="pref_sni_fake_host">Фейковое имя адреса SNI</string>
+    <string name="pref_sni_fake_host">Фейковый адрес SNI</string>
     <string name="pref_sni_trick">Модификация SNI</string>
 </resources>
