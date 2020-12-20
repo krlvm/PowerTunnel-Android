@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                                     ks.load(null, null);
                                     Enumeration<String> aliases = ks.aliases();
                                     while (aliases.hasMoreElements()) {
-                                        String alias = (String) aliases.nextElement();
+                                        String alias = aliases.nextElement();
                                         X509Certificate cert = (X509Certificate) ks.getCertificate(alias);
                                         if (cert.getIssuerDN().getName().contains("PowerTunnel")) {
                                             certificateInstalled = true;
@@ -180,7 +180,10 @@ public class MainActivity extends AppCompatActivity {
 
         // v1.9 compatibility
         if(prefs.getBoolean("sni", false)) {
-            prefs.edit().putString("sni_trick", "SPOIL").apply();
+            prefs.edit()
+                    .putString("sni_trick", "SPOIL")
+                    .remove("sni")
+                    .apply();
         }
     }
 
