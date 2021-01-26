@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:gravity="center_horizontal"
-                android:text="(c) krlvm, 2019-2020"
+                android:text="(c) krlvm, 2019-2021"
                 android:textAlignment="center" />
 
         </LinearLayout>
