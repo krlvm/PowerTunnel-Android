@@ -44,6 +44,7 @@ public class NotificationHelper {
         return new NotificationCompat.Builder(service, channelId)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_notification)
+                .setShowWhen(false)
                 .setContentTitle(title)
                 .setContentText(text)
                 .addAction(R.drawable.ic_stop_tunnel, service.getString(R.string.server_stop), PendingIntent.getBroadcast(service, 0, stopIntent, 0))
