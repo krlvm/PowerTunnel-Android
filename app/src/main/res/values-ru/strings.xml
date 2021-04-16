@@ -123,4 +123,9 @@
     <string name="pref_allow_insecure_doh_desc">Разрешить выполнять запросы DoH по HTTP</string>
     <string name="pref_sni_fake_host">Фейковый адрес SNI</string>
     <string name="pref_sni_trick">Модификация SNI</string>
+    <string name="cert_extracted">Сертификат был извлечен</string>
+    <string name="cert_manual_install_11">Вам необходимо вручную установить сертификат на Android 11 и выше</string>
+    <string name="extract_certificate_q">Извлечь сертификат?</string>
+    <string name="cert_you_can_install_manually">Вы можете установить сертификат вручную</string>
+    <string name="cert_extract_btn">Извлечь</string>
 </resources>

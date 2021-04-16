@@ -27,7 +27,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
 import java.util.Enumeration;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_VPN = 1;
     private static final int REQUEST_CERT = 2;
+    private static final int REQUEST_CERT_SAVE = 3;
 
     public static final String STARTUP_FAIL_BROADCAST = "ru.krlvm.powertunnel.android.action.STARTUP_FAIL";
     public static final String SERVER_START_BROADCAST = "ru.krlvm.powertunnel.android.action.SERVER_START";
@@ -57,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageView logo;
     private TextView status;
     private Button start;
-    private Handler statusHandler = new Handler();
-    private Handler progressHandler = new Handler();
+    private final Handler statusHandler = new Handler();
+    private final Handler progressHandler = new Handler();
     private static final long PROGRESS_DELAY = 500L;
 
     private Tun2HttpVpnService service;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
             Tun2HttpVpnService.ServiceBinder serviceBinder = (Tun2HttpVpnService.ServiceBinder) binder;
@@ -80,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
             statusHandler.post(statusRunnable);
         }
     };
-
-    private BroadcastReceiver statusReceiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction(STARTUP_FAIL_BROADCAST);
         filter.addAction(SERVER_START_BROADCAST);
         filter.addAction(SAMSUNG_FIRMWARE_ERROR_BROADCAST);
-        registerReceiver(statusReceiver = new BroadcastReceiver() {
+        registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if(intent == null || intent.getAction() == null) {
@@ -327,10 +331,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void installCertificate() {
         Toast.makeText(this, R.string.please_install_cert, Toast.LENGTH_LONG).show();
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            Toast.makeText(this, R.string.cert_manual_install_11, Toast.LENGTH_LONG).show();
+            extractCertificate();
+            return;
+        }
         Intent installIntent = KeyChain.createInstallIntent();
         StringBuilder cert = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(new File(DATA_DIR.getAbsolutePath() + "/powertunnel-root-ca.pem"));
+            Scanner scanner = new Scanner(getCertificate());
             while (scanner.hasNextLine()) {
                 cert.append(scanner.nextLine()).append("\n");
             }
@@ -341,6 +350,18 @@ public class MainActivity extends AppCompatActivity {
         installIntent.putExtra(KeyChain.EXTRA_CERTIFICATE, cert.toString().getBytes());
         installIntent.putExtra(KeyChain.EXTRA_NAME, "PowerTunnel Root CA");
         startActivityForResult(installIntent, REQUEST_CERT);
+    }
+
+    private void extractCertificate() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/x-pem-file");
+        intent.putExtra(Intent.EXTRA_TITLE, "PowerTunnel-CA.pem");
+        startActivityForResult(intent, REQUEST_CERT_SAVE);
+    }
+
+    public static File getCertificate() {
+        return new File(DATA_DIR.getAbsolutePath() + "/powertunnel-root-ca.pem");
     }
 
     private void stopTunnel() {
@@ -378,12 +399,37 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = prefs.edit();
                 if(resultCode == RESULT_OK) {
                     editor.putBoolean("cert_installed", true);
-                    editor.apply();
                     Toast.makeText(this, R.string.cert_installed, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, R.string.cert_not_installed, Toast.LENGTH_LONG).show();
                     editor.putBoolean("cert_installed", false);
-                    stopTunnel();
+                    new AlertDialog.Builder(this)
+                            .setTitle(R.string.extract_certificate_q)
+                            .setMessage(R.string.cert_you_can_install_manually)
+                            .setPositiveButton(R.string.cert_extract_btn, (dialog, which) -> extractCertificate())
+                            .show();
+                    //stopTunnel();
+                }
+                editor.apply();
+                break;
+            }
+            case REQUEST_CERT_SAVE: {
+                if(resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    try {
+                        InputStream in = new BufferedInputStream(new FileInputStream(getCertificate()));
+                        OutputStream out = this.getContentResolver().openOutputStream(uri);
+                        byte[] buffer = new byte[1024];
+                        int len;
+                        while ((len = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, len);
+                            out.flush();
+                        }
+                        out.close();
+                        Toast.makeText(this, R.string.cert_extracted, Toast.LENGTH_SHORT).show();
+                    } catch(IOException e) {
+                        Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             }

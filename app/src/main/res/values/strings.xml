@@ -182,4 +182,9 @@
     <string name="pref_allow_insecure_doh_desc">Allow DoH request made over plain HTTP</string>
     <string name="pref_sni_trick">SNI Trick</string>
     <string name="pref_sni_fake_host">Fake SNI Host</string>
+    <string name="cert_extracted">Certificate has been extracted</string>
+    <string name="cert_manual_install_11">You need to manually install the certificate on Android 11 and higher</string>
+    <string name="extract_certificate_q">Extract certificate?</string>
+    <string name="cert_you_can_install_manually">You can install the certificate manually</string>
+    <string name="cert_extract_btn">Extract</string>
 </resources>
