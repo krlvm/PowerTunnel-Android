@@ -48,7 +48,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.preference:preference:1.1.1'
@@ -59,8 +59,8 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-api'
         exclude group: 'dnsjava', module: 'dnsjava'
     }
-    implementation 'org.bouncycastle:bcpkix-jdk15on:1.65' //LittleProxy-MITM dependency
-    //implementation 'org.littleshoot:littleproxy:1.1.2'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.65' // LittleProxy-MITM dependency
+    implementation 'org.littleshoot:littleproxy:1.1.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
