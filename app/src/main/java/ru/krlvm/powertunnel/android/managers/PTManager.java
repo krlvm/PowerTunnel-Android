@@ -110,8 +110,8 @@ public class PTManager {
                         break;
                     }
                     case "ADGUARD": {
-                        DNS_SERVERS.add("176.103.130.130");
-                        DNS_SERVERS.add("176.103.130.131");
+                        DNS_SERVERS.add("94.140.14.14");
+                        DNS_SERVERS.add("94.140.15.15");
                         break;
                     }
                 }
@@ -258,8 +258,8 @@ public class PTManager {
         DISALLOW(R.string.pref_header_disallowed_application_list, "vpn_disallowed_application"),
         ALLOW(R.string.pref_header_allowed_application_list, "vpn_allowed_application");
 
-        private int displayName;
-        private String preference;
+        private final int displayName;
+        private final String preference;
 
         VPNMode(int displayName, String preference) {
             this.displayName = displayName;
