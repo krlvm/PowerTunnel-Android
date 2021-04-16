@@ -1,0 +1,5 @@
+Improvements:
+- Optional Root CA installation for SNI Tricks
+
+Bugfixes:
+- Fixed Root CA installation on Android 11 and higher. You need to install it manually due to new security policies.
