@@ -203,6 +203,8 @@
 ******************************************************************************/
 package org.littleshoot.proxy.impl;
 
+import android.util.Log;
+
 import org.littleshoot.proxy.HttpFilters;
 
 import javax.net.ssl.SSLEngine;
@@ -1083,6 +1085,6 @@ abstract class ProxyConnection<I extends HttpObject> extends
     }
 
     static {
-        System.out.println("Internals | " + ProxyConnection.class.getSimpleName() + " is patched");
+        Log.d(PowerTunnel.NAME + ".Internals", ProxyConnection.class.getSimpleName() + " is patched");
     }
 }

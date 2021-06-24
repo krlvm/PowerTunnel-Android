@@ -1,5 +1,7 @@
 package ru.krlvm.powertunnel.adapters;
 
+import android.util.Log;
+
 import org.littleshoot.proxy.ChainedProxyAdapter;
 
 import java.net.InetSocketAddress;
@@ -11,7 +13,9 @@ import ru.krlvm.powertunnel.PowerTunnel;
 
 public class UpstreamChainedProxyAdapter extends ChainedProxyAdapter {
 
-    private InetSocketAddress address;
+    private static final String TAG = PowerTunnel.NAME + ".UpAdapter";
+
+    private final InetSocketAddress address;
     private String auth = null;
 
     public UpstreamChainedProxyAdapter() {
@@ -30,8 +34,7 @@ public class UpstreamChainedProxyAdapter extends ChainedProxyAdapter {
         try {
             return address != null ? address : PowerTunnel.resolveUpstreamProxyAddress();
         } catch (UnknownHostException ex) {
-            System.out.println("[x] Failed to resolve upstream proxy address: " + ex.getMessage());
-            ex.printStackTrace();
+            Log.e(TAG, "Failed to resolve upstream proxy address: " + ex.getMessage(), ex);
             return null;
         }
     }

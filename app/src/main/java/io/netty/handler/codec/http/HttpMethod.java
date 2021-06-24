@@ -15,11 +15,14 @@
  */
 package io.netty.handler.codec.http;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
+import ru.krlvm.powertunnel.PowerTunnel;
 
 /**
  * The request getMethod of HTTP or its derived protocols, such as
@@ -204,6 +207,6 @@ public class HttpMethod implements Comparable<HttpMethod> {
     }
 
     static {
-        System.out.println("Internals | " + HttpMethod.class.getSimpleName() + " is patched");
+        Log.d(PowerTunnel.NAME + ".Internals", HttpMethod.class.getSimpleName() + " is patched");
     }
 }

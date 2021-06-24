@@ -1,5 +1,7 @@
 package ru.krlvm.powertunnel.managers;
 
+import android.util.Log;
+
 import org.littleshoot.proxy.ChainedProxy;
 import org.littleshoot.proxy.ChainedProxyManager;
 
@@ -12,6 +14,8 @@ import ru.krlvm.powertunnel.adapters.UpstreamChainedProxyAdapter;
 
 public class UpstreamProxyChainedProxyManager implements ChainedProxyManager {
 
+    private static final String TAG = PowerTunnel.NAME + ".UpMan";
+
     private UpstreamChainedProxyAdapter adapter = null;
 
     public UpstreamProxyChainedProxyManager() {
@@ -19,7 +23,7 @@ public class UpstreamProxyChainedProxyManager implements ChainedProxyManager {
             try {
                 adapter = new UpstreamChainedProxyAdapter(PowerTunnel.resolveUpstreamProxyAddress());
             } catch (UnknownHostException ex) {
-                System.out.println("[x] Failed to cache upstream proxy address: " + ex.getMessage());
+                Log.e(TAG, "Failed to cache upstream proxy address - resolution failed: " + ex.getMessage(), ex);
                 ex.printStackTrace();
             }
         }

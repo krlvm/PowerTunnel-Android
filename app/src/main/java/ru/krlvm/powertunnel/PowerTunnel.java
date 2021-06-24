@@ -1,5 +1,7 @@
 package ru.krlvm.powertunnel;
 
+import android.util.Log;
+
 import org.jitsi.dnssec.validator.ValidatingResolver;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
@@ -98,12 +100,11 @@ public class PowerTunnel {
      */
     public static void bootstrap() throws Exception {
         if(STATUS_TRANSITION) return;
-        System.out.println("[*] Base PowerTunnel/LibertyTunnel version is " + BASE_VERSION);
+        Log.i(NAME, "Base PowerTunnel/LibertyTunnel version is " + BASE_VERSION);
         //Load data
         //GOVERNMENT_BLACKLIST.add("*");
         //ISP_STUB_LIST.add("");
-        //System.out.println("[i] Loaded '" + GOVERNMENT_BLACKLIST.size() + "' government blocked sites");
-        System.out.println();
+        //Log.i(NAME, "[i] Loaded '" + GOVERNMENT_BLACKLIST.size() + "' government blocked sites");
 
         //Fill payload cache
         ProxyFilter.PAYLOAD.clear();
@@ -126,7 +127,7 @@ public class PowerTunnel {
      * Starts LittleProxy server
      */
     private static void startServer() throws Exception {
-        System.out.println("[.] Starting LittleProxy server on " + SERVER_IP_ADDRESS + ":" + SERVER_PORT);
+        Log.i(NAME, "Starting LittleProxy server on " + SERVER_IP_ADDRESS + ":" + SERVER_PORT);
         HttpProxyServerBootstrap bootstrap = DefaultHttpProxyServer.bootstrap().withFiltersSource(new HttpFiltersSourceAdapter() {
             @Override
             public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
@@ -140,20 +141,20 @@ public class PowerTunnel {
             if (DOH_ADDRESS.endsWith("/")) {
                 DOH_ADDRESS = DOH_ADDRESS.substring(0, DOH_ADDRESS.length() - 1);
             }
-            System.out.println("[*] DNS over HTTPS is enabled: '" + DOH_ADDRESS + "'");
+            Log.i(NAME, "DNS over HTTPS is enabled: '" + DOH_ADDRESS + "'");
             bootstrap.withServerResolver((host, port) -> {
                 try {
-                    //System.out.println("[DoH] Resolving: " + host);
+                    //Log.d(NAME, "[DoH] Resolving: " + host);
                     return new InetSocketAddress(AndroidDohResolver.resolve(host), port);
                 } catch (Exception ex) {
-                    System.out.println(String.format("[x] DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
-                    ex.printStackTrace();
+                    Log.e(NAME, String.format("DoH: Failed to resolve '%s': %s", host, ex.getMessage()), ex);
+                    //ex.printStackTrace();
                     //return new InetSocketAddress(InetAddress.getByName(host), port);
                     throw new UnknownHostException(String.format("DoH: Failed to resolve '%s': %s", host, ex.getMessage()));
                 }
             });
         } else if (USE_DNS_SEC || PTManager.DNS_OVERRIDE) {
-            System.out.println("[*] Enabled advanced resolver | DNSSec: " + USE_DNS_SEC + " / DNSOverride: " + PTManager.DNS_OVERRIDE);
+            Log.i(NAME, "Enabled advanced resolver | DNSSec: " + USE_DNS_SEC + " / DNSOverride: " + PTManager.DNS_OVERRIDE);
             final Resolver resolver = getResolver();
             if (resolver != null) {
                 bootstrap.withServerResolver((host, port) -> {
@@ -167,7 +168,7 @@ public class PowerTunnel {
                             throw new UnknownHostException(lookup.getErrorString());
                         }
                     } catch (Exception ex) {
-                        //System.out.println(String.format("[x] Failed to resolve '%s': %s", host, ex.getMessage()));
+                        //Log.i(NAME, String.format("Failed to resolve '%s': %s", host, ex.getMessage()));
                         //throw new UnknownHostException(String.format("Failed to resolve '%s': %s", host, ex.getMessage()));
                         return new InetSocketAddress(InetAddress.getByName(host), port);
                     }
@@ -191,25 +192,24 @@ public class PowerTunnel {
 
         SERVER = bootstrap.start();
         RUNNING = true;
-        System.out.println("[.] Server started");
-        System.out.println();
+        Log.i(NAME, "Server started");
     }
 
     private static Resolver getResolver() throws UnknownHostException {
         try {
             Class.forName("java.time.Duration"); //one of dnsjava Java 8 imports
         } catch (ClassNotFoundException ex) {
-            System.out.println("[x] DNS is not compatible with this version of Android");
+            Log.i(NAME, "DNS is not compatible with this version of Android");
             return null;
         }
         String primaryDnsServer = PTManager.DNS_SERVERS.get(0);
         Resolver resolver = new SimpleResolver(primaryDnsServer);
         if(DNS_PORT != -1) {
-            System.out.println("[*] Custom DNS port: " + DNS_PORT);
+            Log.i(NAME, "Custom DNS port: " + DNS_PORT);
             resolver.setPort(DNS_PORT);
         }
         if(USE_DNS_SEC) {
-            System.out.println("[*] DNSSec is enabled");
+            Log.i(NAME, "DNSSec is enabled");
             resolver = new ValidatingResolver(resolver);
         }
         return resolver;
@@ -223,12 +223,10 @@ public class PowerTunnel {
      * Stops LittleProxy server
      */
     public static void stopServer() {
-        System.out.println();
-        System.out.println("[.] Stopping server...");
+        Log.i(NAME, "Stopping server...");
         SERVER.stop();
         RUNNING = false;
-        System.out.println("[.] Server stopped");
-        System.out.println();
+        Log.i(NAME, "Server stopped");
     }
 
     /**
