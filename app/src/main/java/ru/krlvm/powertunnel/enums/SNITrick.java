@@ -2,25 +2,13 @@ package ru.krlvm.powertunnel.enums;
 
 public enum SNITrick {
 
-    ERASE,
     SPOIL,
+    ERASE,
     FAKE;
 
     public static SNITrick fromID(int id) {
-        switch (id) {
-            case 1: {
-                return SPOIL;
-            }
-            case 2: {
-                return ERASE;
-            }
-            case 3: {
-                return FAKE;
-            }
-            default: {
-                return null;
-            }
-        }
+        assert id-1 > 0 && id <= values().length;
+        return values()[id-1];
     }
 
     public static final String SUPPORT_REFERENCE = "https://github.com/krlvm/PowerTunnel/wiki/SNI-Tricks";
