@@ -37,6 +37,8 @@ You should install Root CA only in case you have [some specific options](https:/
 ## How can I get it?
 You can compile a binary yourself or download prepared binary [here](https://github.com/krlvm/PowerTunnel-Android/releases).
 
+It's also available through a [F-Droid](https://f-droid.org/) client via the [IzzyOnDroid repo](https://apt.izzysoft.de/fdroid/). Details of PowerTunnel in IzzyOnDroid repo can be found [here](https://apt.izzysoft.de/fdroid/index/apk/ru.krlvm.powertunnel.android), it serves the same apk as the one you can find in the release section, it just helps to keep the app updated.
+
 ### Setup
 Just install it as a regular Android application: no root access is needed.
 
