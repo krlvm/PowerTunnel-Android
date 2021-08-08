@@ -1,6 +1,6 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/krlvm/PowerTunnel/master/images/logo.png" height="192px" width="192px" />
-<br><h1>PowerTunnel for Android</h1><br>
+<img src="https://raw.githubusercontent.com/krlvm/PowerTunnel/master/.github/images/logo.png" height="192px" width="192px" />
+<br><h1>PowerTunnel for Android</h1>
 Simple, scalable, cross-platform and effective solution against government censorship for Android
 <!-- That does not mean the battle is finished -->
 <!--<h3><b>Please, read <a href="https://gist.github.com/krlvm/76595f2fec7e23cf5e20f8ccfa43997a">important announcement</a></b></h3>-->
