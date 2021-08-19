@@ -86,7 +86,7 @@ Localization contributors:
 - Polish: [Atrate](https://github.com/Atrate)
 
 ## Dependencies
-* [TunProxy](https://github.com/raise-isayan/TunProxy) - VPN server and traffic interceptor
+* [NetGuard](https://github.com/M66B/NetGuard) / [TunProxy](https://github.com/raise-isayan/TunProxy) - VPN server and traffic interceptor
 * [LittleProxy](https://github.com/adamfisk/LittleProxy) - proxy server
 * [LittleProxy-MITM](https://github.com/ganskef/LittleProxy-mitm) - LittleProxy SSL extension
 * [dnsjava](https://github.com/dnsjava/dnsjava) - DNS library, DoH realization
