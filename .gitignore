@@ -1,0 +1,14 @@
+# Idea Files
+/.idea/
+/PowerTunnel-Android.iml
+
+# Gradle Files
+/.gradle/
+
+# Build Files
+/build/
+.externalNativeBuild
+.cxx/
+
+# Android Files
+/local.properties

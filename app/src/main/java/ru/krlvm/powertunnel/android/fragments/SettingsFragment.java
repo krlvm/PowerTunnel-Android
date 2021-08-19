@@ -1,4 +1,24 @@
+/*
+ * This file is part of PowerTunnel-Android.
+ *
+ * PowerTunnel-Android is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PowerTunnel-Android is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package ru.krlvm.powertunnel.android.fragments;
+
+import static android.preference.Preference.OnPreferenceChangeListener;
+import static android.preference.Preference.OnPreferenceClickListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,9 +43,6 @@ import ru.krlvm.powertunnel.android.managers.PTManager;
 import ru.krlvm.powertunnel.android.managers.PTManager.VPNMode;
 import tun.proxy.preferences.fragments.PackageListPreferenceFragment;
 import tun.proxy.preferences.preference.EditTextSummaryPreference;
-
-import static android.preference.Preference.OnPreferenceChangeListener;
-import static android.preference.Preference.OnPreferenceClickListener;
 
 public class SettingsFragment extends PreferenceFragment
         implements OnPreferenceClickListener, OnPreferenceChangeListener {

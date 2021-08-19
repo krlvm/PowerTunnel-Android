@@ -1,3 +1,20 @@
+/*
+ * This file is part of PowerTunnel-Android.
+ *
+ * PowerTunnel-Android is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PowerTunnel-Android is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package tun.proxy.preferences.fragments;
 
 import android.content.Context;
@@ -181,7 +198,7 @@ public class PackageListPreferenceFragment extends PreferenceFragment
         for (final PackageInfo pkgInfo : installedPackages) {
             if(pkgInfo.packageName == null) continue;
             Boolean b = mAllPackageInfoMap.get(pkgInfo.packageName);
-            boolean checked = b == null ? false : b;
+            boolean checked = b != null && b;
             installedPackageMap.put(pkgInfo.packageName, checked);
         }
         this.mAllPackageInfoMap.clear();
@@ -206,7 +223,7 @@ public class PackageListPreferenceFragment extends PreferenceFragment
         prefCheck.setSummary(pkgInfo.packageName);
 
         Boolean b = mAllPackageInfoMap.get(pkgInfo.packageName);
-        boolean checked = b == null ? false : b;
+        boolean checked = b != null && b;
         prefCheck.setChecked(checked);
         Preference.OnPreferenceClickListener click = preference -> {
             mAllPackageInfoMap.put(prefCheck.getSummary().toString(), prefCheck.isChecked());

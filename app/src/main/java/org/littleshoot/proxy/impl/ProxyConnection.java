@@ -1,3 +1,20 @@
+/*
+ * This file is part of PowerTunnel-Android.
+ *
+ * PowerTunnel-Android is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PowerTunnel-Android is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 /******************************************************************************
                                  Apache License
                            Version 2.0, January 2004
@@ -203,6 +220,12 @@
 ******************************************************************************/
 package org.littleshoot.proxy.impl;
 
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CHUNK;
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_INITIAL;
+import static org.littleshoot.proxy.impl.ConnectionState.DISCONNECTED;
+import static org.littleshoot.proxy.impl.ConnectionState.HANDSHAKING;
+import static org.littleshoot.proxy.impl.ConnectionState.NEGOTIATING_CONNECT;
+
 import android.util.Log;
 
 import org.littleshoot.proxy.HttpFilters;
@@ -234,12 +257,6 @@ import io.netty.util.concurrent.GenericFutureListener;
 import io.netty.util.concurrent.Promise;
 import ru.krlvm.powertunnel.PowerTunnel;
 import ru.krlvm.powertunnel.utilities.PacketUtility;
-
-import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CHUNK;
-import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_INITIAL;
-import static org.littleshoot.proxy.impl.ConnectionState.DISCONNECTED;
-import static org.littleshoot.proxy.impl.ConnectionState.HANDSHAKING;
-import static org.littleshoot.proxy.impl.ConnectionState.NEGOTIATING_CONNECT;
 
 /**
  * <p>

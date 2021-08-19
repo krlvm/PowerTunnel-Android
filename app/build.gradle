@@ -1,3 +1,20 @@
+/*
+ * This file is part of PowerTunnel-Android.
+ *
+ * PowerTunnel-Android is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PowerTunnel-Android is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 apply plugin: 'com.android.application'
 
 android {
@@ -5,21 +22,21 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "ru.krlvm.powertunnel.android"
+        applicationId "io.github.krlvm.powertunnel.android"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 21
-        versionName "1.9.1-dns"
+        versionCode 90
+        versionName "2.0-alpha"
         multiDexEnabled true
 
         externalNativeBuild {
             cmake {
-                cppFlags "-std=c++11 -fvisibility=hidden "
+                cppFlags '-std=c++11 -fvisibility=hidden'
                 abiFilters 'arm64-v8a'
                 abiFilters 'armeabi-v7a'
                 abiFilters 'x86'
                 abiFilters 'x86_64'
-                arguments "-DCMAKE_VERBOSE_MAKEFILE=1 -DANDROID_FUNCTION_LEVEL_LINKING=ON"
+                arguments '-DCMAKE_VERBOSE_MAKEFILE=1 -DANDROID_FUNCTION_LEVEL_LINKING=ON'
             }
         }
 
@@ -28,11 +45,11 @@ android {
 
     externalNativeBuild {
         cmake {
-            path "CMakeLists.txt"
+            path 'CMakeLists.txt'
         }
     }
 
-    ndkVersion "22.1.7171670"
+    ndkVersion '22.1.7171670'
 
     buildTypes {
         release {
@@ -48,8 +65,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.preference:preference:1.1.1'
     implementation('dnsjava:dnsjava:3.4.1') {
@@ -60,7 +75,7 @@ dependencies {
         exclude group: 'dnsjava', module: 'dnsjava'
     }
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.65' // LittleProxy-MITM dependency
-    //implementation 'org.littleshoot:littleproxy:1.1.2'
+    implementation 'org.littleshoot:littleproxy:1.1.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
