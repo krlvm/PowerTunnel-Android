@@ -124,7 +124,7 @@ public class QuickTileService extends TileService {
     private void checkUpdates() {
         Updater.checkUpdates((info) -> {
             if(info == null || !info.isReady()) return;
-            PendingIntent intent = PendingIntent.getActivity(this, 0, Updater.getDownloadIntent(this, info), 0);
+            PendingIntent intent = PendingIntent.getActivity(this, 0, Updater.getDownloadIntent(info), 0);
             NotificationHelper.prepareNotificationChannel(this, Updater.NOTIFICATION_CHANNEL);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Updater.NOTIFICATION_CHANNEL)
                     .setDefaults(Notification.DEFAULT_ALL)

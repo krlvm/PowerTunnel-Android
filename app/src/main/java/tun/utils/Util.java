@@ -24,6 +24,7 @@ import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.os.Build;
+import android.text.TextUtils;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -34,27 +35,29 @@ public class Util {
     private static native String jni_getprop(String name);
 
     public static List<String> getDefaultDNS(Context context) {
-        List<String> defaultServers = new ArrayList<>();
+        final List<String> servers = new ArrayList<>();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            if(cm != null) {
-                Network an = cm.getActiveNetwork();
-                if (an != null) {
-                    LinkProperties lp = cm.getLinkProperties(an);
-                    if (lp != null) {
-                        List<InetAddress> dns = lp.getDnsServers();
-                        for (InetAddress address : dns) {
-                            defaultServers.add(address.getHostAddress());
-                        }
+            final ConnectivityManager cm =
+                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            final Network network = cm.getActiveNetwork();
+            if (network != null) {
+                LinkProperties properties = cm.getLinkProperties(network);
+                if (properties != null) {
+                    final List<InetAddress> addresses = properties.getDnsServers();
+                    for (InetAddress address : addresses) {
+                        final String host = address.getHostAddress();
+                        if (TextUtils.isEmpty(host)) continue;
+                        servers.add(host);
                     }
                 }
             }
         } else {
-            defaultServers.add(jni_getprop("net.dns1"));
-            defaultServers.add(jni_getprop("net.dns2"));
-            defaultServers.add(jni_getprop("net.dns3"));
-            defaultServers.add(jni_getprop("net.dns4"));
+            String dns = jni_getprop("net.dns1");
+            if(!TextUtils.isEmpty(dns)) servers.add(dns);
+            dns = jni_getprop("net.dns1");
+            if(!TextUtils.isEmpty(dns)) servers.add(dns);
         }
-        return defaultServers;
+
+        return servers;
     }
 }

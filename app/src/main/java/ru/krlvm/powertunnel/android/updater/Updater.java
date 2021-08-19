@@ -40,12 +40,11 @@ public class Updater {
                 }).show();
     }
     public static void initiateDownload(Context context, UpdateInfo info) {
-        context.startActivity(getDownloadIntent(context, info));
+        context.startActivity(getDownloadIntent(info));
     }
-    public static Intent getDownloadIntent(Context context, UpdateInfo info) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Updater.getDownloadUrl(info)));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        return intent;
+    public static Intent getDownloadIntent(UpdateInfo info) {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(Updater.getDownloadUrl(info)))
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     public static String getDownloadUrl(UpdateInfo info) {

@@ -7,7 +7,9 @@ public enum SNITrick {
     FAKE;
 
     public static SNITrick fromID(int id) {
-        assert id-1 > 0 && id <= values().length;
+        if(id-1 > 0 && id <= values().length) {
+            throw new IllegalArgumentException("Invalid SNITrick ID");
+        }
         return values()[id-1];
     }
 
