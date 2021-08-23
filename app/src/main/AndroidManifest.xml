@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ This file is part of PowerTunnel-Android.
-  ~
-  ~ PowerTunnel-Android is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ PowerTunnel-Android is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.krlvm.powertunnel.android">
+    package="io.github.krlvm.powertunnel.android">
 
     <uses-feature
         android:name="android.software.leanback"
@@ -26,23 +9,27 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
 
     <application
         android:allowBackup="false"
+        android:banner="@mipmap/tv_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:banner="@mipmap/tv_banner">
+        android:theme="@style/Theme.AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTop" >
+            android:name=".activities.SplashActivity"
+            android:theme="@style/Theme.SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
@@ -51,47 +38,55 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".activities.AboutActivity"
-            android:label="@string/title_activity_about"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-
+            android:exported="true"
+            android:label="@string/about" />
         <activity
-            android:name="tun.proxy.preferences.SimplePreferenceActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+            android:name=".activities.AppListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PluginsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_plugins" />
+        <activity
+            android:name=".activities.PluginSettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_plugins" />
 
+        <service android:name=".services.ProxyService" />
         <service
-            android:name="tun.proxy.service.Tun2HttpVpnService"
+            android:name=".services.TunnelingVpnService"
+            android:exported="false"
             android:permission="android.permission.BIND_VPN_SERVICE">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
-
-        <service android:name="ru.krlvm.powertunnel.android.services.ProxyModeService" />
-
         <service
             android:name=".services.QuickTileService"
+            android:exported="true"
             android:icon="@drawable/ic_notification"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
 
+        <receiver android:name=".receivers.ActionReceiver" />
         <receiver
-            android:name=".receiver.BootReceiver"
+            android:name=".receivers.BootReceiver"
+            android:exported="true"
             android:label="@string/app_name">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -101,8 +96,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".receiver.ActionReceiver" />
     </application>
 
 </manifest>

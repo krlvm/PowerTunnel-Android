@@ -474,36 +474,27 @@ void check_tcp_socket(const struct arguments *args,
 //#define DNS_LOOKUPS 1
 //#define USELESS_DNS_LOOKUPS 1
 static void lookup_hostname(struct sockaddr_in *addr, char *hostname, int hostlen, int needed) {
-    //__android_log_print(ANDROID_LOG_VERBOSE, "Tun2Http", "Looking up for %s", hostname);
-    JNIEnv *jni_env;
-    if (pt_enable_doh) {
-        /*get_jni_env(&jni_env);
-        jstring pt_response = (jstring) (*jni_env)->CallStaticObjectMethod(jni_env, doh_util,
-                (*jni_env)->GetStaticMethodID(jni_env, doh_util, "resolve","(Ljava/lang/String;)Ljava/lang/String;"),
-                (*jni_env)->NewStringUTF(jni_env, hostname));
-        strncpy(hostname, (char *) (*jni_env)->GetStringUTFChars(jni_env, pt_response, 0), hostlen);
-        hostname[hostlen - 1] = '\0';*/
-    } else {
-        #ifdef DNS_LOOKUPS
-            struct hostent	*host;
+    if(!pt_resolve_hosts) return;
+    #ifdef DNS_LOOKUPS
+        struct hostent	*host;
 
-            if (needed)
+        if (needed)
+        {
+            if ((host = gethostbyaddr((char *)&addr->sin_addr,
+                                      sizeof(addr->sin_addr), AF_INET)) != NULL)
             {
-                if ((host = gethostbyaddr((char *)&addr->sin_addr,
-                                          sizeof(addr->sin_addr), AF_INET)) != NULL)
-                {
-                    strncpy(hostname, host->h_name, hostlen);
-                    hostname[hostlen - 1] = '\0';
-                }
-                else
-                {
-                    strncpy(hostname, inet_ntoa(addr->sin_addr), hostlen);
-                    hostname[hostlen - 1] = '\0';
-                }
+                strncpy(hostname, host->h_name, hostlen);
+                hostname[hostlen - 1] = '\0';
             }
             else
             {
-    # ifdef USELESS_DNS_LOOKUPS
+                strncpy(hostname, inet_ntoa(addr->sin_addr), hostlen);
+                hostname[hostlen - 1] = '\0';
+            }
+        }
+        else
+        {
+            # ifdef USELESS_DNS_LOOKUPS
                 if ((host = gethostbyaddr((char *)&addr->sin_addr,
                                           sizeof(addr->sin_addr), AF_INET)) != NULL)
                 {
@@ -515,16 +506,15 @@ static void lookup_hostname(struct sockaddr_in *addr, char *hostname, int hostle
                     strncpy(hostname, inet_ntoa(addr->sin_addr), hostlen);
                     hostname[hostlen - 1] = '\0';
                 }
-    # else
+            # else
                 strncpy(hostname, inet_ntoa(addr->sin_addr), hostlen);
                 hostname[hostlen - 1] = '\0';
-    # endif
-            }
-        #else
-            strncpy(hostname, inet_ntoa(addr->sin_addr), hostlen);
-            hostname[hostlen - 1] = '\0';
-        #endif
-    }
+            # endif
+        }
+    #else
+        strncpy(hostname, inet_ntoa(addr->sin_addr), hostlen);
+        hostname[hostlen - 1] = '\0';
+    #endif
 }
 
 jboolean handle_tcp(const struct arguments *args,
