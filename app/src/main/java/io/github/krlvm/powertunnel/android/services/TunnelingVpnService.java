@@ -43,6 +43,7 @@ import java.util.List;
 import io.github.krlvm.powertunnel.android.MainActivity;
 import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.managers.ProxyManager;
+import io.github.krlvm.powertunnel.android.receivers.BootReceiver;
 import io.github.krlvm.powertunnel.android.types.GlobalStatus;
 import io.github.krlvm.powertunnel.android.types.TunnelMode;
 import io.github.krlvm.powertunnel.android.utility.NotificationHelper;
@@ -168,6 +169,7 @@ public class TunnelingVpnService extends VpnService {
 
         PowerTunnelService.STATUS = GlobalStatus.VPN;
         sendBroadcast(new Intent(PowerTunnelService.BROADCAST_STARTED));
+        BootReceiver.rememberState(this, true);
     }
 
     private void disconnect() {
@@ -207,6 +209,7 @@ public class TunnelingVpnService extends VpnService {
         PowerTunnelService.STATUS = GlobalStatus.NOT_RUNNING;
         sendBroadcast(disconnectBroadcast);
         disconnectBroadcast = null;
+        BootReceiver.rememberState(this, false);
     }
 
     private Builder getBuilder() {

@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 
 import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.managers.ProxyManager;
+import io.github.krlvm.powertunnel.android.receivers.BootReceiver;
 import io.github.krlvm.powertunnel.android.types.GlobalStatus;
 import io.github.krlvm.powertunnel.android.types.TunnelMode;
 import io.github.krlvm.powertunnel.android.utility.NotificationHelper;
@@ -65,6 +66,7 @@ public class ProxyService extends Service {
                         ));
                         PowerTunnelService.STATUS = GlobalStatus.PROXY;
                         sendBroadcast(new Intent(PowerTunnelService.BROADCAST_STARTED));
+                        BootReceiver.rememberState(this, true);
                     } else if (status == ProxyStatus.NOT_RUNNING) {
                         stopSelf();
                     }
@@ -93,6 +95,7 @@ public class ProxyService extends Service {
 
         PowerTunnelService.STATUS = GlobalStatus.NOT_RUNNING;
         sendBroadcast(new Intent(PowerTunnelService.BROADCAST_STOPPED));
+        BootReceiver.rememberState(this, false);
     }
 
     @Nullable

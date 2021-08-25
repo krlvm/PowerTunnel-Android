@@ -41,8 +41,7 @@ public class BootReceiver extends BroadcastReceiver {
                 !"android.intent.action.QUICKBOOT_POWERON".equals(action)) return;
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (
-                !prefs.getBoolean("autostart", false)
+        if (!prefs.getBoolean("autostart", false)
                         && !prefs.getBoolean("was_running", false)
         ) return;
 
@@ -53,5 +52,11 @@ public class BootReceiver extends BroadcastReceiver {
             return;
 
         PowerTunnelService.startTunnel(context);
+    }
+
+    public static void rememberState(Context context, boolean isRunning) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean("was_running", isRunning)
+                .apply();
     }
 }

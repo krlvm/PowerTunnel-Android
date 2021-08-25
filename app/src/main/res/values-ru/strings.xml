@@ -83,8 +83,10 @@
     <string name="dialog_plugin_uninstall_title">Подтверждение</string>
     <string name="dialog_plugin_uninstall_message">Вы действительно хотите удалить плагин?</string>
     <string name="title_activity_settings">Настройки</string>
-    <string name="settings_category_appearance">Внешний вид</string>
+    <string name="settings_category_application">Приложение</string>
     <string name="settings_pref_theme">Тема</string>
+    <string name="settings_pref_autostart">Автозапуск</string>
+    <string name="settings_pref_autostart_description">Автозапуск после перезагрузки если приложение работало до этого</string>
     <string name="settings_category_connection">Соединение</string>
     <string name="settings_pref_mode">Режим соединения</string>
     <string name="settings_pref_proxy_ip">IP-адрес локального прокси-сервера</string>
