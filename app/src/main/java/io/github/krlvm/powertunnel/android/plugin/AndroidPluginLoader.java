@@ -19,13 +19,12 @@ package io.github.krlvm.powertunnel.android.plugin;
 
 import android.content.Context;
 
-import androidx.preference.PreferenceManager;
-
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
 import dalvik.system.DexClassLoader;
+import io.github.krlvm.powertunnel.android.managers.PluginManager;
 import io.github.krlvm.powertunnel.plugin.PluginInjector;
 import io.github.krlvm.powertunnel.plugin.PluginLoader;
 
@@ -61,8 +60,7 @@ public class AndroidPluginLoader implements PluginInjector {
     }
 
     public static File[] enumerateEnabledPlugins(Context context) {
-        final Set<String> disabled = PreferenceManager.getDefaultSharedPreferences(context)
-                .getStringSet("disabled_plugins", new HashSet<>());
+        final Set<String> disabled = PluginManager.getDisabledPlugins(context);
         final Set<File> enabled = new HashSet<>();
         for (File file : PluginLoader.enumeratePlugins(getPluginsDir(context))) {
             if(!disabled.contains(file.getName())) enabled.add(file);

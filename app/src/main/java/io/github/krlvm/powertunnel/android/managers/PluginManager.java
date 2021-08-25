@@ -28,13 +28,21 @@ import androidx.preference.PreferenceManager;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import io.github.krlvm.powertunnel.android.BuildConfig;
 import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.plugin.AndroidPluginLoader;
 import io.github.krlvm.powertunnel.android.utility.FileUtility;
 
-public class AssetPluginsManager {
+public class PluginManager {
+
+    public static Set<String> getDisabledPlugins(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getStringSet("disabled_plugins", new HashSet<>(Collections.singletonList("adblock")));
+    }
 
     public static void extract(Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

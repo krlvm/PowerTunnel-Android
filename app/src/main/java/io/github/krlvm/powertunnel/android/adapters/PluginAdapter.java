@@ -22,6 +22,7 @@ import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.activities.PluginSettingsActivity;
 import io.github.krlvm.powertunnel.android.activities.PluginsActivity;
 import io.github.krlvm.powertunnel.android.databinding.PluginItemBinding;
+import io.github.krlvm.powertunnel.android.managers.PluginManager;
 import io.github.krlvm.powertunnel.android.plugin.AndroidPluginLoader;
 import io.github.krlvm.powertunnel.android.preferences.AndroidPluginPreferenceParser;
 import io.github.krlvm.powertunnel.android.services.PowerTunnelService;
@@ -41,8 +42,7 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.ViewHolder
         this.inflater = LayoutInflater.from(context);
         this.plugins = plugins;
 
-        disabledSources = PreferenceManager.getDefaultSharedPreferences(context)
-                .getStringSet("disabled_plugins", new HashSet<>());
+        disabledSources = PluginManager.getDisabledPlugins(context);
     }
 
     @Override

@@ -25,7 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import io.github.krlvm.powertunnel.android.MainActivity;
 import io.github.krlvm.powertunnel.android.R;
-import io.github.krlvm.powertunnel.android.managers.AssetPluginsManager;
+import io.github.krlvm.powertunnel.android.managers.PluginManager;
 import io.github.krlvm.powertunnel.android.utility.Utility;
 
 public class SplashActivity extends AppCompatActivity {
@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.splash_activity);
 
         Utility.applyTheme(this);
-        AssetPluginsManager.extract(this);
+        PluginManager.extract(this);
 
         new Handler().postDelayed(() -> {
             startActivity(new Intent(this, MainActivity.class));
