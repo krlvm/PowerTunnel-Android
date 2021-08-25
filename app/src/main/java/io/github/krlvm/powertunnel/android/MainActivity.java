@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.statusButton.setOnClickListener(v -> {
             if(PowerTunnelService.isRunning()) {
+                configureWithRestart = false;
                 doStop();
             } else {
                 if(!ConfigurationManager.checkStorageAccess(this)) {
