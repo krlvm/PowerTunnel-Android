@@ -68,7 +68,7 @@
 
         <SwitchPreferenceCompat
             app:key="upstream_proxy_auth_enabled"
-            app:title="@string/settings_pref_upstream_proxy"
+            app:title="@string/settings_pref_upstream_proxy_auth"
             app:dependency="upstream_proxy_enabled"
             app:summary="@string/settings_pref_upstream_proxy_description"
             app:defaultValue="false" />

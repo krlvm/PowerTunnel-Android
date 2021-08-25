@@ -37,7 +37,7 @@
     <string name="action_stop">Stop</string>
     <string name="action_stopping">Stopping…</string>
 
-    <string name="action_connecting" translatable="false">Connecting…</string>
+    <string name="action_connecting">Connecting…</string>
     <string name="action_connect">Connect</string>
     <string name="action_disconnect">Disconnect</string>
     <string name="action_disconnecting">Disconnecting…</string>
@@ -133,6 +133,8 @@
     <string name="settings_pref_upstream_proxy_description">Use upstream proxy to connect to the Internet</string>
     <string name="settings_pref_upstream_proxy_ip">Upstream proxy IP address</string>
     <string name="settings_pref_upstream_proxy_port">Upstream proxy port</string>
+    <string name="settings_pref_upstream_proxy_auth">Upstream proxy authorization</string>
+    <string name="settings_pref_upstream_proxy_auth_description">Authenticate on upstream proxy server</string>
     <string name="settings_pref_upstream_proxy_auth_username">Upstream proxy username</string>
     <string name="settings_pref_upstream_proxy_auth_password">Upstream proxy password</string>
 
