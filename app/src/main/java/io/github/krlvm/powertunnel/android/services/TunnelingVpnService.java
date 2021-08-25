@@ -26,12 +26,16 @@ import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.VpnService;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import java.io.IOException;
@@ -81,6 +85,7 @@ public class TunnelingVpnService extends VpnService {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d("TVS", "onDestroy");
         disconnect();
         jni_done();
     }
@@ -121,7 +126,16 @@ public class TunnelingVpnService extends VpnService {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return new Binder() {
+            @Override
+            public boolean onTransact(int code, @NonNull Parcel data, Parcel reply, int flags) throws RemoteException {
+                if (code == IBinder.LAST_CALL_TRANSACTION) {
+                    onRevoke();
+                    return true;
+                }
+                return super.onTransact(code, data, reply, flags);
+            }
+        };
     }
 
     private void connect() {
