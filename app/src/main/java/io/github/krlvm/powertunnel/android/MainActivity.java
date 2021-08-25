@@ -293,6 +293,10 @@ public class MainActivity extends AppCompatActivity {
         setStatus(PowerTunnelService.getStatus(), animate);
     }
 
+    private final Runnable onAnimationEnd = () -> {
+        setProgressVisibility(false);
+        setStatus(PowerTunnelService.getStatus(), false);
+    };
     private void setStatus(GlobalStatus status) {
         setStatus(status, true);
     }
@@ -314,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
                     AnimationHelper.animate(
                             binding.logo,
                             new int[]{R.drawable.ic_logo_disabled, R.drawable.ic_logo},
-                            () -> setProgressVisibility(false)
+                            onAnimationEnd
                     );
                 } else {
                     binding.logo.setImageResource(R.drawable.ic_logo);
@@ -336,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
                     AnimationHelper.animate(
                             binding.logo,
                             new int[]{R.drawable.ic_logo, R.drawable.ic_logo_disabled},
-                            () -> setProgressVisibility(false)
+                            onAnimationEnd
                     );
                 } else {
                     binding.logo.setImageResource(R.drawable.ic_logo_disabled);
