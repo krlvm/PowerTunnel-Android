@@ -91,6 +91,7 @@ public class QuickTileService extends TileService {
         super.onClick();
         if(isPending()) return;
 
+        setState(Tile.STATE_ACTIVE);
         setState(Tile.STATE_UNAVAILABLE);
 
         try {
