@@ -28,6 +28,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
         android:gravity="center_horizontal">
 
         <ImageView
@@ -64,7 +65,6 @@
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
                 android:layout_marginVertical="32dp"
                 android:background="@drawable/button_outline"
                 android:textColor="@color/accent"
