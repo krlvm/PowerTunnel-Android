@@ -2,12 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.krlvm.powertunnel.android">
 
-    <uses-feature
-        android:name="android.software.leanback"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.touchscreen"
-        android:required="false" />
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,13 +14,13 @@
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
 
     <application
-        android:allowBackup="false"
-        android:banner="@mipmap/tv_banner"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:requestLegacyExternalStorage="true"
+        android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:banner="@mipmap/tv_banner"
+        android:allowBackup="false"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.AppTheme">
         <activity
             android:name=".activities.SplashActivity"
@@ -83,11 +79,10 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".receivers.ActionReceiver" />
+        <receiver android:name=".receivers.ActionReceiver" android:exported="false" />
         <receiver
             android:name=".receivers.BootReceiver"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:exported="false">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
