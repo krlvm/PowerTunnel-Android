@@ -63,6 +63,7 @@
     <string name="toast_failed_to_install_plugin">Failed to install plugin</string>
     <string name="toast_failed_to_uninstall_plugin">Failed to uninstall plugin</string>
     <string name="toast_plugin_uninstalled">Plugin \"%1$s\" uninstalled</string>
+    <string name="toast_plugin_stop_server_to_act">Please, stop the server to do this action</string>
 
     <!-- Quick Settings Tile -->
     <string name="qs_starting">Starting PowerTunnel…</string>

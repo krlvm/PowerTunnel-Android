@@ -42,6 +42,7 @@ import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.adapters.PluginAdapter;
 import io.github.krlvm.powertunnel.android.databinding.ListActivityBinding;
 import io.github.krlvm.powertunnel.android.plugin.AndroidPluginLoader;
+import io.github.krlvm.powertunnel.android.services.PowerTunnelService;
 import io.github.krlvm.powertunnel.android.utility.FileUtility;
 import io.github.krlvm.powertunnel.android.utility.Utility;
 import io.github.krlvm.powertunnel.plugin.PluginLoader;
@@ -91,8 +92,12 @@ public class PluginsActivity extends AppCompatActivity {
         if(id == android.R.id.home) {
             super.onBackPressed();
         } else if(id == R.id.action_install) {
-            startActivityForResult(new Intent(Intent.ACTION_GET_CONTENT)
-                    .setType("application/java-archive"), REQUEST_CODE_UPLOAD);
+            if(PowerTunnelService.isRunning()) {
+                Toast.makeText(this, R.string.toast_plugin_stop_server_to_act, Toast.LENGTH_SHORT).show();
+            } else {
+                startActivityForResult(new Intent(Intent.ACTION_GET_CONTENT)
+                        .setType("application/java-archive"), REQUEST_CODE_UPLOAD);
+            }
         } else if(id == R.id.action_registry) {
             Utility.launchUri(this, "https://github.com/krlvm/PowerTunnel-Plugins/blob/master/README.md");
         }

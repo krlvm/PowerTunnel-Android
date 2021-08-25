@@ -137,4 +137,5 @@
     <string name="app_version">Версия %1$s</string>
     <string name="settings_pref_upstream_proxy_auth">Авторизация на внешнем прокси-сервере</string>
     <string name="settings_pref_upstream_proxy_auth_description">Авторизовываться на внешнем прокси-сервере</string>
+    <string name="toast_plugin_stop_server_to_act">Пожалуйста, остановите сервер для выполнения данного действия</string>
 </resources>

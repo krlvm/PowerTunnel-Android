@@ -24,6 +24,7 @@ import io.github.krlvm.powertunnel.android.activities.PluginsActivity;
 import io.github.krlvm.powertunnel.android.databinding.PluginItemBinding;
 import io.github.krlvm.powertunnel.android.plugin.AndroidPluginLoader;
 import io.github.krlvm.powertunnel.android.preferences.AndroidPluginPreferenceParser;
+import io.github.krlvm.powertunnel.android.services.PowerTunnelService;
 import io.github.krlvm.powertunnel.android.utility.Utility;
 import io.github.krlvm.powertunnel.sdk.plugin.PluginInfo;
 
@@ -85,6 +86,10 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.ViewHolder
         });
 
         holder.binding.pluginUninstall.setOnClickListener(v -> {
+            if(PowerTunnelService.isRunning()) {
+                Toast.makeText(context, R.string.toast_plugin_stop_server_to_act, Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (new File(AndroidPluginLoader.getPluginsDir(context), plugin.getSource()).delete()) {
                 new AlertDialog.Builder(context)
                         .setTitle(R.string.dialog_plugin_uninstall_title)
