@@ -18,6 +18,7 @@
 package io.github.krlvm.powertunnel.android.managers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
@@ -183,6 +184,10 @@ public class ProxyManager implements ServerListener {
             }
 
             proxy.setAllowRequestsToOriginServer(prefs.getBoolean("allow_requests_to_origin_server", true));
+        } else if(status == ProxyStatus.RUNNING) {
+            if(server.getProxyServer().isMITMEnabled()) {
+                context.sendBroadcast(new Intent(PowerTunnelService.BROADCAST_CERT));
+            }
         }
     }
 
