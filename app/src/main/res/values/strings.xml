@@ -154,6 +154,7 @@
     <string name="settings_pref_proxy_auth_username">Authorization username</string>
     <string name="settings_pref_proxy_auth_password">Authorization password</string>
     <string name="settings_pref_transparent_mode">Transparent mode</string>
+    <string name="settings_pref_strict_dns">Strict DNS Mode</string>
     <string name="settings_pref_allow_requests_to_origin_server">Allow requests to origin server</string>
 
     <string name="settings_category_data_storage">Data storage</string>

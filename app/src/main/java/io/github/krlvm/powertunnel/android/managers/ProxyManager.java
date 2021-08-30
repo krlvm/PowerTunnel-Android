@@ -30,7 +30,6 @@ import org.jetbrains.annotations.NotNull;
 import org.littleshoot.proxy.mitm.CertificateHelper;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.UUID;
 
 import io.github.krlvm.powertunnel.PowerTunnel;
@@ -88,17 +87,17 @@ public class ProxyManager implements ServerListener {
         }
         statusListener.accept(ProxyStatus.STARTING);
 
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.server = new PowerTunnel(
                 address,
                 PowerTunnelPlatform.ANDROID,
                 context.getFilesDir(),
-                PreferenceManager.getDefaultSharedPreferences(context)
-                        .getBoolean("transparent_mode", true),
+                prefs.getBoolean("transparent_mode", true),
+                !prefs.getBoolean("strict_dns", false),
                 MITMAuthority.create(
                         new File(context.getFilesDir(), "cert"),
                         getMitmCertificatePassword().toCharArray()
-                ),
-                Collections.emptyMap()
+                )
         );
 
         new Thread(() -> {

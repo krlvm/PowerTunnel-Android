@@ -134,6 +134,10 @@
             app:title="@string/settings_pref_transparent_mode"
             app:defaultValue="true" />
         <SwitchPreferenceCompat
+            app:key="strict_dns"
+            app:title="@string/settings_pref_strict_dns"
+            app:defaultValue="false" />
+        <SwitchPreferenceCompat
             app:key="allow_requests_to_origin_server"
             app:title="@string/settings_pref_allow_requests_to_origin_server"
             app:defaultValue="true" />
