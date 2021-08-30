@@ -106,8 +106,8 @@
     <string name="settings_category_proxy">Прокси-сервер</string>
     <string name="settings_pref_proxy_auth_enabled">Запрашивать авторизацию на прокси-сервере</string>
     <string name="settings_pref_proxy_auth_enabled_description">Прокси-сервер будет запрашивать базовую HTTP авторизацию</string>
-    <string name="settings_pref_proxy_auth_username">Имя пользователя внешнего прокси-сервера</string>
-    <string name="settings_pref_proxy_auth_password">Пароль внешнего прокси-сервера</string>
+    <string name="settings_pref_proxy_auth_username">Имя пользователя прокси-сервера</string>
+    <string name="settings_pref_proxy_auth_password">Пароль прокси-сервера</string>
     <string name="settings_pref_transparent_mode">Прозрачный режим</string>
     <string name="settings_pref_allow_requests_to_origin_server">Разрешить запросы к исходному серверу</string>
     <string name="settings_category_data_storage">Хранение данных</string>
