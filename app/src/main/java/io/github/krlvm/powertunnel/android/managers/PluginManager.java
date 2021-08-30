@@ -41,7 +41,7 @@ public class PluginManager {
 
     public static Set<String> getDisabledPlugins(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getStringSet("disabled_plugins", new HashSet<>(Collections.singletonList("adblock")));
+                .getStringSet("disabled_plugins", new HashSet<>(Collections.singletonList("AdBlock-Android.jar")));
     }
 
     public static void extract(Context context) {
