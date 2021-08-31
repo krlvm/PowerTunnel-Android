@@ -145,7 +145,7 @@ public class QuickTileService extends TileService {
     }
 
     private void checkUpdates() {
-        Updater.checkUpdates((info) -> {
+        Updater.checkUpdates(this, (info) -> {
             if (info == null || !info.isReady()) return;
             NotificationHelper.registerChannel(this, Updater.NOTIFICATION_CHANNEL_ID,
                     R.string.notification_channel_updater, R.string.notification_channel_updater_description);
