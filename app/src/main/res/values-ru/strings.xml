@@ -145,4 +145,14 @@
     <string name="crash_heading">Непредвиденная ошибка</string>
     <string name="crash_submit_issue">Сообщить о проблеме</string>
     <string name="crash_submit_issue_note">Пожалуйста, сообщите о проблеме, если ошибка повторяется.\nНе забудьте прикрепить скопированный текст ошибки.</string>
+    <string name="settings_pref_collect_logs">Собирать логи</string>
+    <string name="settings_pref_collect_logs_description">Добавляет опцию \"Просмотр логов\" в меню трех точек</string>
+    <string name="view_logs">Просмотр логов</string>
+    <string name="action_refresh">Обновить</string>
+    <string name="action_save">Сохранить</string>
+    <string name="toast_logs_error">Ошибка при чтении логов</string>
+    <string name="title_activity_logs">Просмотр логов</string>
+    <string name="toast_logs_saved">Файл с логами успешно сохранен</string>
+    <string name="toast_logs_save_failed">Ошибка при сохранении логов</string>
+    <string name="toast_logs_save_os_unsupported">Сохранение логов не поддерживается вашей версией Android</string>
 </resources>

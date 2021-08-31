@@ -44,6 +44,7 @@
 
     <!-- Main menu -->
     <string name="settings">Settings</string>
+    <string name="view_logs">View logs</string>
     <string name="about">About</string>
 
     <!-- Status -->
@@ -158,6 +159,8 @@
     <string name="settings_pref_allow_requests_to_origin_server">Allow requests to origin server</string>
 
     <string name="settings_category_data_storage">Data storage</string>
+    <string name="settings_pref_collect_logs">Collect logs</string>
+    <string name="settings_pref_collect_logs_description">Adds Log Viewer to three-dot menu</string>
     <string name="settings_pref_external_configs">Store configurations in Documents</string>
     <string name="settings_pref_external_configs_off">Configurations are stored in the secured app storage</string>
     <string name="settings_pref_external_configs_on">Configurations are stored in Documents folder</string>
@@ -176,6 +179,15 @@
     <string name="plugin_settings_failed_to_save">Failed to save configuration</string>
     <string name="action_plugin_settings_reset">Reset configuration</string>
     <string name="toast_permission_for_external_configs">Please, grant the permission to save configurations to Documents folder</string>
+
+    <!-- Logs Activity -->
+    <string name="title_activity_logs">Log Viewer</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_save">Save</string>
+    <string name="toast_logs_error">Failed to read logs</string>
+    <string name="toast_logs_saved">Log file saved successfully</string>
+    <string name="toast_logs_save_failed">Failed to save log file</string>
+    <string name="toast_logs_save_os_unsupported">Logs saving is not supported on your Android version</string>
 
     <!-- Crash Activity -->
     <string name="title_activity_crash">Crash Report</string>

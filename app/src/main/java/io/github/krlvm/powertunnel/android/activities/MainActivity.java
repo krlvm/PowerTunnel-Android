@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver receiver;
 
     private boolean configureWithRestart = false;
+    private MenuItem menuViewLogs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateStatus(false);
+        checkLogsVisibility();
 
         final TunnelMode mode = PowerTunnelService.getTunnelMode(this);
 
@@ -232,6 +234,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        menuViewLogs = menu.findItem(R.id.action_logs);
+        checkLogsVisibility();
+
         return true;
     }
 
@@ -239,16 +245,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         final int id = item.getItemId();
         if(id == R.id.action_plugins || id == R.id.action_settings) {
-            if(PowerTunnelService.isRunning() && !configureWithRestart) {
+            if (PowerTunnelService.isRunning() && !configureWithRestart) {
                 Toast.makeText(this, R.string.toast_configure_while_running, Toast.LENGTH_SHORT).show();
                 configureWithRestart = true;
                 return true;
             }
-            if(id == R.id.action_plugins) {
+            if (id == R.id.action_plugins) {
                 startActivity(new Intent(this, PluginsActivity.class));
             } else {
                 startActivity(new Intent(this, SettingsActivity.class));
             }
+        } else if(id == R.id.action_logs) {
+            startActivity(new Intent(this, LogActivity.class));
         } else if(id == R.id.action_about) {
             startActivity(new Intent(this, AboutActivity.class));
         }
@@ -283,6 +291,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // region User Interface
+
+    private void checkLogsVisibility() {
+        if(menuViewLogs == null) return;
+        menuViewLogs.setVisible(PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("collect_logs", false));
+    }
 
     private void updateStatus() {
         setStatus(PowerTunnelService.getStatus(), true);

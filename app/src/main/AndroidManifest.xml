@@ -62,6 +62,10 @@
             android:name=".activities.PluginSettingsActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.LogActivity"
+            android:exported="true"
+            android:label="@string/title_activity_logs" />
+        <activity
             android:name=".activities.CrashActivity"
             android:exported="false"
             android:label="@string/title_activity_crash" />
