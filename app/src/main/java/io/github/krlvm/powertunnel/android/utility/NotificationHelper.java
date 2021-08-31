@@ -28,8 +28,8 @@ import android.content.Intent;
 import androidx.annotation.StringRes;
 import androidx.core.app.NotificationCompat;
 
-import io.github.krlvm.powertunnel.android.MainActivity;
 import io.github.krlvm.powertunnel.android.R;
+import io.github.krlvm.powertunnel.android.activities.MainActivity;
 import io.github.krlvm.powertunnel.android.receivers.ActionReceiver;
 import io.github.krlvm.powertunnel.android.services.PowerTunnelService;
 

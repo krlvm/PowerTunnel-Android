@@ -15,7 +15,7 @@
  * along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.krlvm.powertunnel.android;
+package io.github.krlvm.powertunnel.android.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -41,9 +41,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import io.github.krlvm.powertunnel.android.activities.AboutActivity;
-import io.github.krlvm.powertunnel.android.activities.PluginsActivity;
-import io.github.krlvm.powertunnel.android.activities.SettingsActivity;
+import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.databinding.MainActivityBinding;
 import io.github.krlvm.powertunnel.android.managers.CertificateManager;
 import io.github.krlvm.powertunnel.android.managers.ConfigurationManager;

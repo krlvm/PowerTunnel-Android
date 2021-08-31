@@ -34,8 +34,8 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import io.github.krlvm.powertunnel.android.MainActivity;
 import io.github.krlvm.powertunnel.android.R;
+import io.github.krlvm.powertunnel.android.activities.MainActivity;
 import io.github.krlvm.powertunnel.android.managers.ConfigurationManager;
 import io.github.krlvm.powertunnel.android.types.TunnelMode;
 import io.github.krlvm.powertunnel.android.updater.Updater;

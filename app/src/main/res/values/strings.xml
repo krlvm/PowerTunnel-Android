@@ -177,6 +177,12 @@
     <string name="action_plugin_settings_reset">Reset configuration</string>
     <string name="toast_permission_for_external_configs">Please, grant the permission to save configurations to Documents folder</string>
 
+    <!-- Crash Activity -->
+    <string name="title_activity_crash">Crash Report</string>
+    <string name="crash_heading">Unexpected crash</string>
+    <string name="crash_submit_issue_note">Please report a problem if the error persists.\nDon\'t forget to attach the copied error text.</string>
+    <string name="crash_submit_issue">Submit an issue</string>
+
     <!-- Update Notifier -->
     <string name="check_for_updates">Check for updates</string>
     <string name="dialog_update_available_title">An update is available</string>

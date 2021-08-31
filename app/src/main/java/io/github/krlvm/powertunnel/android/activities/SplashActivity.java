@@ -22,8 +22,8 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
-import io.github.krlvm.powertunnel.android.MainActivity;
 import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.managers.PluginManager;
 import io.github.krlvm.powertunnel.android.utility.Utility;
@@ -39,8 +39,13 @@ public class SplashActivity extends AppCompatActivity {
         PluginManager.extract(this);
 
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, getTargetActivity()));
             finish();
         }, 1000);
+    }
+
+    private Class<?> getTargetActivity() {
+        return PreferenceManager.getDefaultSharedPreferences(this).contains("crash_message") ?
+                CrashActivity.class : MainActivity.class;
     }
 }

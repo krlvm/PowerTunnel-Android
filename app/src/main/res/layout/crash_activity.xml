@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ This file is part of PowerTunnel-Android.
+  ~
+  ~ PowerTunnel-Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ PowerTunnel-Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".activities.CrashActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginVertical="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="@string/crash_heading" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:stretchColumns="*">
+
+            <TableRow>
+                <TextView android:text="App Version     " />
+                <TextView
+                    android:id="@+id/crash_app_version"
+                    tools:text="2.0 (100)" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Core Version" />
+                <TextView
+                    android:id="@+id/crash_core_version"
+                    tools:text="v2.0 (100)" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="OS Version" />
+                <TextView
+                    android:id="@+id/crash_os"
+                    tools:text="10 (API 30)" />
+            </TableRow>
+
+            <TableRow>
+                <TextView android:text="Cause" />
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true">
+                    <TextView
+                        android:id="@+id/crash_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        tools:text="Crash MessageCrash MessageCrash MessageCrash MessageCrash MessageCrash MessageCrash MessageCrash MessageCrash Message" />
+                </HorizontalScrollView>
+            </TableRow>
+
+        </TableLayout>
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:fillViewport="true">
+            <TextView
+                android:id="@+id/crash_stacktrace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:typeface="monospace"
+                android:textIsSelectable="true"
+                tools:text="Crash Stacktrace" />
+        </HorizontalScrollView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/crash_submit_issue_note"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <Button
+            android:id="@+id/report_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="12dp"
+            android:background="@drawable/button_outline"
+            android:textColor="@color/accent"
+            android:textSize="16sp"
+            android:text="@string/crash_submit_issue" />
+
+    </LinearLayout>
+
+</ScrollView>

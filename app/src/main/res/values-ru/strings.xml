@@ -141,4 +141,8 @@
     <string name="settings_pref_upstream_proxy_auth_description">Авторизовываться на внешнем прокси-сервере</string>
     <string name="toast_plugin_stop_server_to_act">Пожалуйста, остановите сервер для выполнения данного действия</string>
     <string name="settings_pref_strict_dns">Строгий режим DNS</string>
+    <string name="title_activity_crash">Сообщение об ошибке</string>
+    <string name="crash_heading">Непредвиденная ошибка</string>
+    <string name="crash_submit_issue">Сообщить о проблеме</string>
+    <string name="crash_submit_issue_note">Пожалуйста, сообщите о проблеме, если ошибка повторяется.\nНе забудьте прикрепить скопированный текст ошибки.</string>
 </resources>

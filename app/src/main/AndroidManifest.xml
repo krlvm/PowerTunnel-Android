@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.krlvm.powertunnel.android">
 
-    <uses-feature android:name="android.software.leanback" android:required="false" />
-    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,18 +18,19 @@
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
 
     <application
-        android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:banner="@mipmap/tv_banner"
+        android:name=".PowerTunnelApplication"
         android:allowBackup="false"
-        android:supportsRtl="true"
+        android:banner="@mipmap/tv_banner"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme">
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/Theme.SplashTheme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
@@ -35,10 +40,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activities.SettingsActivity"
             android:exported="false"
@@ -56,8 +60,11 @@
             android:label="@string/title_activity_plugins" />
         <activity
             android:name=".activities.PluginSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CrashActivity"
             android:exported="false"
-            android:label="@string/title_activity_plugins" />
+            android:label="@string/title_activity_crash" />
 
         <service android:name=".services.ProxyService" />
         <service
@@ -79,7 +86,9 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".receivers.ActionReceiver" android:exported="false" />
+        <receiver
+            android:name=".receivers.ActionReceiver"
+            android:exported="false" />
         <receiver
             android:name=".receivers.BootReceiver"
             android:exported="false">
