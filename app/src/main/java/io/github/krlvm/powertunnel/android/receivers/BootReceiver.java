@@ -41,9 +41,8 @@ public class BootReceiver extends BroadcastReceiver {
                 !"android.intent.action.QUICKBOOT_POWERON".equals(action)) return;
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (!prefs.getBoolean("autostart", false)
-                        && !prefs.getBoolean("was_running", false)
-        ) return;
+        if (!prefs.getBoolean("autostart", false)) return;
+        if (!prefs.getBoolean("was_running", false)) return;
 
         Log.i(LOG_TAG, "Starting PowerTunnel...");
 
