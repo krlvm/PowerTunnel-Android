@@ -47,7 +47,12 @@ public class AboutActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        binding.version.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME, BuildConstants.VERSION, BuildConstants.VERSION_CODE));
+        binding.version.setText(getString(R.string.app_version,
+                BuildConfig.VERSION_NAME,
+                BuildConstants.VERSION,
+                BuildConstants.VERSION_CODE,
+                BuildConstants.SDK
+        ));
 
         NoUnderlineSpan.stripUnderlines(binding.credits);
         binding.credits.setMovementMethod(LinkMovementMethod.getInstance());
