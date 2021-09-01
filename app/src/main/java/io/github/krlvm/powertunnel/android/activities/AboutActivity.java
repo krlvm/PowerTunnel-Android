@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import io.github.krlvm.powertunnel.BuildConstants;
 import io.github.krlvm.powertunnel.android.BuildConfig;
 import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.databinding.AboutActivityBinding;
@@ -46,7 +47,7 @@ public class AboutActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        binding.version.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
+        binding.version.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME, BuildConstants.VERSION, BuildConstants.VERSION_CODE));
 
         NoUnderlineSpan.stripUnderlines(binding.credits);
         binding.credits.setMovementMethod(LinkMovementMethod.getInstance());

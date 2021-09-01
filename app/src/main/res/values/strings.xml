@@ -23,7 +23,7 @@
     <string name="app_license" translatable="false"><a href="https://github.com/krlvm/PowerTunnel-Android">GitHub Repository</a>\n<a href="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/LICENSE">GNU General Public License v3</a></string>
     <string name="app_description">Powerful and extensible proxy server</string>
     <string name="app_credits" translatable="false"><b><a href="https://github.com/krlvm/PowerTunnel-Android">PowerTunnel for Android</a> is made possible by these open-source projects:</b>\n\n<a href="https://github.com/M66B/NetGuard">NetGuard</a> - VPN server and traffic interceptor\n<a href="https://github.com/adamfisk/LittleProxy">LittleProxy</a> - proxy server, <a href="https://github.com/mrog/LittleProxy">forked version</a>\n<a href="https://github.com/ganskef/LittleProxy-mitm">LittleProxy-MITM</a> - LittleProxy SSL extension\n<a href="https://github.com/dnsjava/dnsjava">dnsjava</a> - DNS and DoH library\n<a href="https://github.com/ibauersachs/dnssecjava">dnssecjava</a> - DNSSec implementation for dnsjava</string>
-    <string name="app_version">Version %1$s</string>
+    <string name="app_version">Version %1$s\nCore v%2$s (%3$d)</string>
 
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
