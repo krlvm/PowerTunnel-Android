@@ -28,8 +28,8 @@ android {
         applicationId 'io.github.krlvm.powertunnel.android'
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 98
-        versionName "2.0-rc3"
+        versionCode 99
+        versionName "2.0-rc4"
         multiDexEnabled true
 
         externalNativeBuild {
