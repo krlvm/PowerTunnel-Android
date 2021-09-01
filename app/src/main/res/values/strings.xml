@@ -192,7 +192,7 @@
     <!-- Crash Activity -->
     <string name="title_activity_crash">Crash Report</string>
     <string name="crash_heading">Unexpected crash</string>
-    <string name="crash_submit_issue_note">Please report a problem if the error persists.\nDon\'t forget to attach the copied error text.</string>
+    <string name="crash_submit_issue_note">Please report a problem if the error persists.\nDon\'t forget to attach the error text.</string>
     <string name="crash_submit_issue">Submit an issue</string>
 
     <!-- Update Notifier -->
