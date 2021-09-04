@@ -193,6 +193,10 @@ public class ProxyManager implements ServerListener {
     @Override
     public void onProxyStatusChanged(@NotNull ProxyStatus status) {}
 
+    public ProxyAddress getAddress() {
+        return server.getProxyServer().getAddress();
+    }
+
     private String getMitmCertificatePassword() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if(!prefs.contains("cert_password")) {

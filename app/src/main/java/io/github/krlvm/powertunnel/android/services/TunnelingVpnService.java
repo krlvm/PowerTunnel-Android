@@ -51,6 +51,7 @@ import io.github.krlvm.powertunnel.android.receivers.BootReceiver;
 import io.github.krlvm.powertunnel.android.types.GlobalStatus;
 import io.github.krlvm.powertunnel.android.types.TunnelMode;
 import io.github.krlvm.powertunnel.android.utility.NotificationHelper;
+import io.github.krlvm.powertunnel.sdk.proxy.ProxyAddress;
 import io.github.krlvm.powertunnel.sdk.proxy.ProxyStatus;
 
 /**
@@ -169,9 +170,10 @@ public class TunnelingVpnService extends VpnService {
             return;
         }
 
-        // TODO: IP/Port
+        final ProxyAddress address = proxy.getAddress();
+
         Log.i(LOG_TAG, "Starting native VPN Interceptor...");
-        jni_start(vpn.getFd(), false, 3, "127.0.0.1", 8085, false);
+        jni_start(vpn.getFd(), false, 3, address.getHost(), address.getPort(), false);
         Log.i(LOG_TAG, "Native VPN Interceptor has been started");
 
         startForeground(FOREGROUND_ID, NotificationHelper.createConnectionNotification(
