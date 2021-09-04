@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
@@ -36,7 +37,6 @@ import io.github.krlvm.powertunnel.preferences.PreferenceGroup;
 import io.github.krlvm.powertunnel.preferences.PreferenceParser;
 import io.github.krlvm.powertunnel.sdk.plugin.PluginInfo;
 import io.github.krlvm.powertunnel.sdk.utiities.Consumer;
-import io.github.krlvm.powertunnel.sdk.utiities.PTCharsets;
 import io.github.krlvm.powertunnel.sdk.utiities.TextReader;
 import io.github.krlvm.powertunnel.utilities.JarLoader;
 
@@ -56,7 +56,7 @@ public class AndroidPluginPreferenceParser {
                     final PropertyResourceBundle bundle;
                     if(_in != null) {
                         try {
-                            bundle = new PropertyResourceBundle(new InputStreamReader(_in, PTCharsets.UTF_8));
+                            bundle = new PropertyResourceBundle(new InputStreamReader(_in, StandardCharsets.UTF_8));
                         } catch (IOException ex) {
                             Log.e(LOG_TAG, String.format("Failed to read '%s' locale: %s", pluginInfo.getId(), ex.getMessage()), ex);
                             return;

@@ -40,13 +40,13 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.android.adapters.LogLineAdapter;
 import io.github.krlvm.powertunnel.android.utility.FileUtility;
-import io.github.krlvm.powertunnel.sdk.utiities.PTCharsets;
 
 public class LogActivity extends AppCompatActivity {
 
@@ -106,7 +106,7 @@ public class LogActivity extends AppCompatActivity {
             }
             int toastStringRes;
             try {
-                final InputStream in = new ByteArrayInputStream(TextUtils.join("\n", lines).getBytes(PTCharsets.UTF_8));
+                final InputStream in = new ByteArrayInputStream(TextUtils.join("\n", lines).getBytes(StandardCharsets.UTF_8));
                 FileUtility.copy(in, getContentResolver().openOutputStream(data.getData()));
                 toastStringRes = R.string.toast_logs_saved;
             } catch (IOException ex) {
