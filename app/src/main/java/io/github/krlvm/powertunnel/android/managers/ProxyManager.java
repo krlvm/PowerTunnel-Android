@@ -134,9 +134,9 @@ public class ProxyManager implements ServerListener {
         }
 
         new Thread(() -> {
-            Log.d(LOG_TAG, "Stopping server...");
+            Log.i(LOG_TAG, "Stopping server...");
             this.server.stop(graceful);
-            Log.d(LOG_TAG, "Server has been stopped");
+            Log.i(LOG_TAG, "Server has been stopped");
         }, "Proxy Shutdown").start();
     }
 
