@@ -18,12 +18,12 @@
 package io.github.krlvm.powertunnel.android;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.util.Log;
 
+import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
-public class PowerTunnelApplication extends Application {
+public class PowerTunnelApplication extends MultiDexApplication {
 
     private static final String LOG_TAG = "Application";
 
