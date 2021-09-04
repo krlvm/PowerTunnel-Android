@@ -85,7 +85,7 @@ public class TunnelingVpnService extends VpnService {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("TVS", "onDestroy");
+        Log.d(LOG_TAG, "onDestroy");
         disconnect();
         jni_done();
     }
@@ -245,15 +245,15 @@ public class TunnelingVpnService extends VpnService {
         /* ------------------------ */
 
         final List<String> defaultDns = getDefaultDNS(this);
-        if(!defaultDns.isEmpty()) {
+        if(false && !defaultDns.isEmpty()) {
             for (String dns : getDefaultDNS(this)) {
                 builder.addDnsServer(dns);
             }
         } else {
-            builder.addDnsServer("1.1.1.1");
-            builder.addDnsServer("1.0.0.1");
             builder.addDnsServer("8.8.8.8");
             builder.addDnsServer("8.8.4.4");
+            builder.addDnsServer("1.1.1.1");
+            builder.addDnsServer("1.0.0.1");
         }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
