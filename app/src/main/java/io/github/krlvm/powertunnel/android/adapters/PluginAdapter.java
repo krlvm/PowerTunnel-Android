@@ -86,26 +86,27 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.ViewHolder
         });
 
         holder.binding.pluginUninstall.setOnClickListener(v -> {
-            if(PowerTunnelService.isRunning()) {
+            if (PowerTunnelService.isRunning()) {
                 Toast.makeText(context, R.string.toast_plugin_stop_server_to_act, Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (new File(AndroidPluginLoader.getPluginsDir(context), plugin.getSource()).delete()) {
-                new AlertDialog.Builder(context)
-                        .setTitle(R.string.dialog_plugin_uninstall_title)
-                        .setMessage(R.string.dialog_plugin_uninstall_message)
-                        .setPositiveButton(R.string.yes, (dialog, which) -> {
-                            dialog.dismiss();
+            new AlertDialog.Builder(context)
+                    .setTitle(R.string.dialog_plugin_uninstall_title)
+                    .setMessage(R.string.dialog_plugin_uninstall_message)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        dialog.dismiss();
+
+                        if (new File(AndroidPluginLoader.getPluginsDir(context), plugin.getSource()).delete()) {
                             AndroidPluginLoader.deleteOatCache(context);
                             plugins.remove(plugin);
                             notifyDataSetChanged();
                             Toast.makeText(context, context.getString(R.string.toast_plugin_uninstalled, plugin.getName()), Toast.LENGTH_LONG).show();
-                        })
-                        .setNegativeButton(R.string.cancel, ((dialog, which) -> dialog.dismiss()))
-                        .show();
-            } else {
-                Toast.makeText(context, R.string.toast_failed_to_uninstall_plugin, Toast.LENGTH_LONG).show();
-            }
+                        } else {
+                            Toast.makeText(context, R.string.toast_failed_to_uninstall_plugin, Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, ((dialog, which) -> dialog.dismiss()))
+                    .show();
         });
 
         TooltipCompat.setTooltipText(holder.binding.pluginInfo, holder.binding.pluginInfo.getContentDescription());
