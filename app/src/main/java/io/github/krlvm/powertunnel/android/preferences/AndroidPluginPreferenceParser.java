@@ -28,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
+import java.util.function.Consumer;
 
 import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.exceptions.PreferenceParseException;
@@ -36,7 +37,6 @@ import io.github.krlvm.powertunnel.plugin.PluginLoader;
 import io.github.krlvm.powertunnel.preferences.PreferenceGroup;
 import io.github.krlvm.powertunnel.preferences.PreferenceParser;
 import io.github.krlvm.powertunnel.sdk.plugin.PluginInfo;
-import io.github.krlvm.powertunnel.sdk.utiities.Consumer;
 import io.github.krlvm.powertunnel.sdk.utiities.TextReader;
 import io.github.krlvm.powertunnel.utilities.JarLoader;
 
