@@ -88,12 +88,14 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                         if (preference.getType() == PreferenceType.NUMBER) {
                             SettingsActivity.makeNumeric(((EditTextPreference) pref));
                         }
+                        ((EditTextPreference) pref).setDialogTitle(preference.getTitle());
                         pref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
                         break;
                     }
                     case SELECT: {
                         pref = new ListPreference(getActivity());
                         pref.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
+                        ((ListPreference) pref).setDialogTitle(preference.getTitle());
                         ((ListPreference) pref).setEntries(preference.getItems().values().toArray(new String[0]));
                         ((ListPreference) pref).setEntryValues(preference.getItems().keySet().toArray(new String[0]));
                         break;
