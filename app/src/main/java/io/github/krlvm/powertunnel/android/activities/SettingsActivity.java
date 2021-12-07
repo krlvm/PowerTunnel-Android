@@ -21,6 +21,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MenuItem;
@@ -91,6 +92,11 @@ public class SettingsActivity extends AppCompatActivity {
                 Utility.applyTheme(((String) newValue));
                 return true;
             });
+
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                findPreference("mode").setEnabled(false);
+                findPreference("category_vpn").setEnabled(false);
+            }
 
             makeNumeric(findPreference("proxy_port"));
             makeNumeric(findPreference("upstream_proxy_port"));

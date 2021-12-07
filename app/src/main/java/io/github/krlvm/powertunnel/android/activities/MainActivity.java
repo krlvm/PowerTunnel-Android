@@ -27,6 +27,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.VpnService;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -158,6 +159,13 @@ public class MainActivity extends AppCompatActivity {
 
         NoUnderlineSpan.stripUnderlines(binding.links);
         binding.links.setMovementMethod(LinkMovementMethod.getInstance());
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            // VPN Exclusion is not available on Android < 5,
+            // therefore, VPN doesn't work correctly on Android KitKat
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putString("mode", "proxy").commit();
+        }
     }
 
     @Override
