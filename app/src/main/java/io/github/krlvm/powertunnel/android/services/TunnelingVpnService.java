@@ -220,9 +220,9 @@ public class TunnelingVpnService extends VpnService {
             vpn = null;
         }
 
+        PowerTunnelService.STATUS = GlobalStatus.NOT_RUNNING;
         stopForeground(true);
 
-        PowerTunnelService.STATUS = GlobalStatus.NOT_RUNNING;
         sendBroadcast(disconnectBroadcast);
         disconnectBroadcast = null;
         BootReceiver.rememberState(this, false);
