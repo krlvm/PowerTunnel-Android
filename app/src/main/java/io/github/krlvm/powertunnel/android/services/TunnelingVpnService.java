@@ -69,8 +69,6 @@ public class TunnelingVpnService extends VpnService {
     private ProxyManager proxy;
     private ParcelFileDescriptor vpn = null;
 
-    private Intent disconnectBroadcast = null;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -195,8 +193,7 @@ public class TunnelingVpnService extends VpnService {
     private void disconnect(Intent broadcast) {
         Log.i(LOG_TAG, "Stopping...");
 
-        if(disconnectBroadcast == null && proxy != null) {
-            disconnectBroadcast = broadcast;
+        if(proxy != null) {
             if(proxy.isRunning()) {
                 proxy.stop();
                 proxy = null;
@@ -223,8 +220,7 @@ public class TunnelingVpnService extends VpnService {
         PowerTunnelService.STATUS = GlobalStatus.NOT_RUNNING;
         stopForeground(true);
 
-        sendBroadcast(disconnectBroadcast);
-        disconnectBroadcast = null;
+        sendBroadcast(broadcast);
         BootReceiver.rememberState(this, false);
     }
 
