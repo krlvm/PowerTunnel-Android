@@ -146,13 +146,13 @@
 
     <PreferenceCategory app:key="category_data" app:title="@string/settings_category_data_storage">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             app:key="collect_logs"
             app:title="@string/settings_pref_collect_logs"
             app:summary="@string/settings_pref_collect_logs_description"
             app:defaultValue="false" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             app:key="external_configs"
             app:title="@string/settings_pref_external_configs"
             app:summaryOff="@string/settings_pref_external_configs_off"
