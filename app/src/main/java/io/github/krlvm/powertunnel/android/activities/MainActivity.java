@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
     private MainActivityBinding binding;
     private BroadcastReceiver receiver;
 
-    private boolean configureWithRestart = false;
+    private boolean restartServerOnResume = false;
+    private boolean unlockConfigurationWhenRunning = false;
+
     private MenuItem menuViewLogs;
 
     @Override
@@ -89,9 +91,10 @@ public class MainActivity extends AppCompatActivity {
                     case PowerTunnelService.BROADCAST_STARTED:
                     case PowerTunnelService.BROADCAST_STOPPED: {
                         updateStatus();
-                        if(configureWithRestart) {
+                        if(restartServerOnResume) {
                             doStart();
-                            configureWithRestart = false;
+                            restartServerOnResume = false;
+                            unlockConfigurationWhenRunning = false;
                         }
                         break;
                     }
@@ -145,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.statusButton.setOnClickListener(v -> {
             if(PowerTunnelService.isRunning()) {
-                configureWithRestart = false;
+                unlockConfigurationWhenRunning = false;
                 doStop();
             } else {
                 if(!ConfigurationManager.checkStorageAccess(this)) {
@@ -181,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         binding.proxyAddress.setVisibility(mode == TunnelMode.PROXY ? View.VISIBLE : View.GONE);
         binding.proxyAddress.setText(PowerTunnelService.getAddress(PreferenceManager.getDefaultSharedPreferences(this)).toString());
 
-        if(configureWithRestart) {
+        if(restartServerOnResume) {
             Toast.makeText(this, R.string.toast_configure_while_running_restart, Toast.LENGTH_LONG).show();
             doStop();
         }
@@ -253,10 +256,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         final int id = item.getItemId();
         if(id == R.id.action_plugins || id == R.id.action_settings) {
-            if (PowerTunnelService.isRunning() && !configureWithRestart) {
-                Toast.makeText(this, R.string.toast_configure_while_running, Toast.LENGTH_SHORT).show();
-                configureWithRestart = true;
-                return true;
+            if (PowerTunnelService.isRunning()) {
+                if (!unlockConfigurationWhenRunning) {
+                    Toast.makeText(this, R.string.toast_configure_while_running, Toast.LENGTH_SHORT).show();
+                    unlockConfigurationWhenRunning = true;
+                    return true;
+                }
+                restartServerOnResume = true;
             }
             if (id == R.id.action_plugins) {
                 startActivity(new Intent(this, PluginsActivity.class));
