@@ -41,7 +41,8 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             startActivity(new Intent(this, getTargetActivity()));
             finish();
-        }, 500);
+            overridePendingTransition(0, R.anim.fade_out);
+        }, 300);
     }
 
     private Class<?> getTargetActivity() {
