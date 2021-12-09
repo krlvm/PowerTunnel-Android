@@ -49,6 +49,7 @@ import io.github.krlvm.powertunnel.android.managers.ConfigurationManager;
 import io.github.krlvm.powertunnel.android.services.PowerTunnelService;
 import io.github.krlvm.powertunnel.android.types.GlobalStatus;
 import io.github.krlvm.powertunnel.android.types.TunnelMode;
+import io.github.krlvm.powertunnel.android.updater.Updater;
 import io.github.krlvm.powertunnel.android.utility.AnimationHelper;
 import io.github.krlvm.powertunnel.android.utility.NoUnderlineSpan;
 import io.github.krlvm.powertunnel.android.utility.Utility;
@@ -169,6 +170,12 @@ public class MainActivity extends AppCompatActivity {
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putString("mode", "proxy").commit();
         }
+
+        Updater.checkUpdatesIfNecessary(this, info -> {
+            if(info != null && info.isReady()) {
+                Updater.showUpdateDialog(this, info);
+            }
+        });
     }
 
     @Override

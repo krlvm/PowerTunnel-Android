@@ -28,12 +28,16 @@ public class Updater {
     private static final String CHANGELOG_URL = "https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/fastlane/metadata/android/en-US/changelogs/%s.txt";
     private static final String DOWNLOAD_URL = "https://github.com/krlvm/PowerTunnel-Android/releases/download/v%s/PowerTunnel.apk";
 
-    public static void checkUpdates(Context context, Consumer<UpdateInfo> handler) {
+    public static void checkUpdatesIfNecessary(Context context, Consumer<UpdateInfo> handler) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         if(System.currentTimeMillis() - prefs.getLong("last_update_check", 0) < 24 * 60 * 60 * 1000) return;
         prefs.edit().putLong("last_update_check", System.currentTimeMillis()).apply();
 
+        checkUpdates(handler);
+    }
+
+    public static void checkUpdates(Consumer<UpdateInfo> handler) {
         new UpdateTask().execute(handler);
     }
 

@@ -66,7 +66,7 @@ public class AboutActivity extends AppCompatActivity {
             progress.setMessage(getString(R.string.dialog_update_checking_message, BuildConfig.VERSION_NAME));
             progress.show();
 
-            Updater.checkUpdates(this, (info) -> {
+            Updater.checkUpdatesIfNecessary(this, (info) -> {
                 progress.dismiss();
                 if(info != null && info.isReady()) {
                     Updater.showUpdateDialog(this, info);
