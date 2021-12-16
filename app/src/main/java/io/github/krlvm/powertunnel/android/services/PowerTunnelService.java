@@ -63,7 +63,7 @@ public abstract class PowerTunnelService {
             Log.w(LOG_TAG, "Attempted to stop service when it is not running");
             return;
         }
-        PowerTunnelService.disconnect(context, getTunnelMode(context).getServiceClass());
+        PowerTunnelService.disconnect(context, mode.getServiceClass());
     }
 
     public static TunnelMode getTunnelMode(Context context) {
