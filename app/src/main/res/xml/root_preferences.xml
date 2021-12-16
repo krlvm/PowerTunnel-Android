@@ -141,6 +141,10 @@
             app:key="allow_requests_to_origin_server"
             app:title="@string/settings_pref_allow_requests_to_origin_server"
             app:defaultValue="true" />
+        <SwitchPreferenceCompat
+            app:key="cert_refuse"
+            app:title="@string/settings_pref_cert_refuse"
+            app:defaultValue="false" />
 
     </PreferenceCategory>
 

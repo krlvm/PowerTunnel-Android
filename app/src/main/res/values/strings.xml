@@ -157,6 +157,7 @@
     <string name="settings_pref_transparent_mode">Transparent mode</string>
     <string name="settings_pref_strict_dns">Strict DNS Mode</string>
     <string name="settings_pref_allow_requests_to_origin_server">Allow requests to origin server</string>
+    <string name="settings_pref_cert_refuse">Don\'t propose certificate installation</string>
 
     <string name="settings_category_data_storage">Data storage</string>
     <string name="settings_pref_collect_logs">Collect logs</string>

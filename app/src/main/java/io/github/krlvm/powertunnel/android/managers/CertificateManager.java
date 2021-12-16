@@ -20,6 +20,7 @@ package io.github.krlvm.powertunnel.android.managers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.security.KeyChain;
@@ -45,6 +46,9 @@ public class CertificateManager {
     private static final String LOG_TAG = "CertMgr";
 
     public static void checkCertificate(Activity activity, int requestCodeInstall, int requestCodeExtract) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        if(prefs.getBoolean("cert_refuse", false)) return;
+
         boolean installed = false;
         try {
             final KeyStore ks = KeyStore.getInstance("AndroidCAStore");
@@ -62,9 +66,10 @@ public class CertificateManager {
             }
         } catch (Exception ignore) {}
 
-        installed = installed && PreferenceManager.getDefaultSharedPreferences(activity)
-                .getBoolean("cert_installed", false);
-        if (!installed) installCertificate(activity, requestCodeInstall, requestCodeExtract);
+        installed = installed && prefs.getBoolean("cert_installed", false);
+        if (!installed) {
+            installCertificate(activity, requestCodeInstall, requestCodeExtract);
+        }
     }
 
     public static void installCertificate(Activity activity, int requestCodeInstall, int requestCodeExtract) {
