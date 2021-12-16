@@ -32,7 +32,7 @@
     <string name="action_disconnecting">Отключение…</string>
     <string name="settings">Настройки</string>
     <string name="about">О приложении</string>
-    <string name="status_running_proxy">Прокси-сервер работает</string>
+    <string name="status_running_proxy">Прокси-сервер запущен</string>
     <string name="status_running_vpn">VPN подключен</string>
     <string name="status_not_running_proxy">Прокси-сервер не работает</string>
     <string name="status_not_running_vpn">VPN не подключен</string>
@@ -68,7 +68,7 @@
     <string name="notification_channel_vpn">VPN</string>
     <string name="notification_channel_vpn_description">Состояние соединения VPN</string>
     <string name="notification_title_proxy">PowerTunnel Proxy</string>
-    <string name="notification_message_proxy">Прокси-сервер работает</string>
+    <string name="notification_message_proxy">Прокси-сервер запущен</string>
     <string name="notification_title_vpn">PowerTunnel VPN</string>
     <string name="notification_message_vpn">VPN подключен</string>
     <string name="title_activity_plugins">Плагины</string>
