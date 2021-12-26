@@ -38,6 +38,7 @@
     <string name="status_not_running_vpn">VPN не подключен</string>
     <string name="main_description_proxy">Приложение работает в режиме прокси, вам нужно вручную настроить каждое приложение для работы с прокси-сервером</string>
     <string name="main_description_vpn">Приложение работает в режиме VPN, трафик всех приложений проходит через PowerTunnel</string>
+    <string name="main_description_proxy_loopback"><![CDATA[<b>%1$s</b><small><br><br></small>Для локальных соединений:<small><br></small><b>%2$s</b><small><br><br></small>|Для соединений в локальной сети:<small><br></small><b>%3$s</b>]]></string>
     <string name="toast_allow_vpn">Пожалуйста, разрешите подключиться к VPN</string>
     <string name="toast_configure_while_running">Нажмите еще раз для изменения настроек, PowerTunnel будет перезапущен для их применения</string>
     <string name="toast_configure_while_running_restart">PowerTunnel перезапускается для применения настроек</string>

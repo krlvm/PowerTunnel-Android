@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
@@ -51,8 +52,10 @@ import io.github.krlvm.powertunnel.android.types.GlobalStatus;
 import io.github.krlvm.powertunnel.android.types.TunnelMode;
 import io.github.krlvm.powertunnel.android.updater.Updater;
 import io.github.krlvm.powertunnel.android.utility.AnimationHelper;
+import io.github.krlvm.powertunnel.android.utility.NetworkHelper;
 import io.github.krlvm.powertunnel.android.utility.NoUnderlineSpan;
 import io.github.krlvm.powertunnel.android.utility.Utility;
+import io.github.krlvm.powertunnel.sdk.proxy.ProxyAddress;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -189,7 +192,20 @@ public class MainActivity extends AppCompatActivity {
         binding.modeDescription.setText(mode == TunnelMode.PROXY ? R.string.main_description_proxy : R.string.main_description_vpn);
 
         binding.proxyAddress.setVisibility(mode == TunnelMode.PROXY ? View.VISIBLE : View.GONE);
-        binding.proxyAddress.setText(PowerTunnelService.getAddress(PreferenceManager.getDefaultSharedPreferences(this)).toString());
+        final ProxyAddress address = PowerTunnelService.getAddress(PreferenceManager.getDefaultSharedPreferences(this));
+        if (address.getHost().equals("0.0.0.0")) {
+            final String privateAddress = NetworkHelper.getWiFiPrivateAddress(this);
+            String text = getString(R.string.main_description_proxy_loopback,
+                    address.toString(), "127.0.0.1:" + address.getPort(), privateAddress == null ? "" : privateAddress + ":" + address.getPort());
+            if (privateAddress == null) {
+                text = text.substring(0, text.indexOf("|"));
+            } else {
+                text = text.replace("|", "");
+            }
+            binding.proxyAddress.setText(Html.fromHtml(text));
+        } else {
+            binding.proxyAddress.setText(address.getHost().equals("0.0.0.0") ? "127.0.0.1:" + address.getPort() : address.toString());
+        }
 
         if(restartServerOnResume) {
             Toast.makeText(this, R.string.toast_configure_while_running_restart, Toast.LENGTH_LONG).show();

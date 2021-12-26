@@ -111,7 +111,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
-                    android:textStyle="bold"
                     tools:text="127.0.0.1:8085" />
 
             </LinearLayout>
@@ -127,7 +126,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="12dp">
+            android:paddingBottom="12dp">
 
             <TextView
                 android:id="@+id/links"

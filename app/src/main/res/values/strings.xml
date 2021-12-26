@@ -55,6 +55,7 @@
 
     <string name="main_description_proxy">Application works in proxy mode, you need to manually configure each app to route the traffic through the proxy server</string>
     <string name="main_description_vpn">Application works in VPN mode, the traffic of all applications goes through PowerTunnel</string>
+    <string name="main_description_proxy_loopback"><![CDATA[<b>%1$s</b><small><br><br></small>Local connections:<small><br></small><b>%2$s</b><small><br><br></small>|Local network connections:<small><br></small><b>%3$s</b>]]></string>
 
     <string name="toast_allow_vpn">Please, allow app to connect to the VPN</string>
     <string name="toast_configure_while_running">Tap again if you want to modify settings, PowerTunnel will be restarted to apply changes</string>
