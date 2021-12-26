@@ -3,6 +3,7 @@ package io.github.krlvm.powertunnel.android.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -61,7 +62,6 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.ViewHolder
         holder.binding.pluginVersion.setText("Version " + plugin.getVersion());
         holder.binding.pluginAuthor.setText("by " + plugin.getAuthor());
         holder.binding.stateCheckbox.setChecked(!disabledSources.contains(plugin.getSource()));
-
 
         holder.binding.stateCheckbox.setOnClickListener(v -> {
             if (disabledSources.contains(plugin.getSource())) {
@@ -125,6 +125,12 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.ViewHolder
             }
             builder.show();
         });
+
+        if (hasDuplicates(plugin)) {
+            holder.binding.getRoot().setBackgroundColor(Color.argb(128, 255, 0, 0));
+        } else {
+            holder.binding.getRoot().setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
@@ -139,5 +145,18 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.ViewHolder
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    private boolean hasDuplicates(PluginInfo plugin) {
+        return countPluginsById(plugin.getId()) > 1;
+    }
+    private int countPluginsById(String id) {
+        int i = 0;
+        for (PluginInfo plugin : this.plugins) {
+            if (plugin.getId().equals(id)) {
+                i++;
+            }
+        }
+        return i;
     }
 }
