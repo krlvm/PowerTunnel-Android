@@ -52,6 +52,8 @@ If you don't trust the prebuilt APK, you can build PowerTunnel from source with 
 
 If you want to use PowerTunnel only with a single app, you can change mode from VPN to Proxy in PowerTunnel settings and configure the app manually to make it route its traffic via the proxy server.
 
+VPN mode is supported on Android 5 Lollipop and higher.
+
 ### Configuring DPI circumvention
 
 DPI circumvention can be configured in LibertyTunnel settings - open plugins page and tap to the gear opposite to LibertyTunnel plugin.
@@ -61,6 +63,8 @@ DPI circumvention can be configured in LibertyTunnel settings - open plugins pag
 To configure DNS, open plugins page and tap to the gear opposite to DNS plugin.
 
 You are able to choose between pre-installed Google and Cloudflare DNS (DoH) providers or add yours.
+
+DNS customization is not supported on Android versions below Android 8 Oreo.
 
 ### Enabling AdBlock
 
