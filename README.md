@@ -46,7 +46,7 @@ Please, note that PowerTunnel does not change your IP address.
 
 PowerTunnel binary can be downloaded from the [Releases](https://github.com/krlvm/PowerTunnel-Android/releases) page.
 
-If you don't trust the prebuilt APK, you can build PowerTunnel from source with Android Studio.
+If you don't trust the prebuilt APK, you can build PowerTunnel from source with Android Studio. It is also available in [F-Droid](https://f-droid.org) via [IzzyOnDroid repo](https://apt.izzysoft.de/fdroid/) ([details](https://apt.izzysoft.de/fdroid/index/apk/ru.krlvm.powertunnel.android)).
 
 ### Using proxy instead of VPN
 
