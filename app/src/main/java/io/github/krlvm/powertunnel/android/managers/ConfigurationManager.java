@@ -40,7 +40,7 @@ public class ConfigurationManager {
         if(!file.exists()) file.mkdir();
         return file;
     }
-    private static File getExternalConfigsDirectory(Context context) {
+    public static File getExternalConfigsDirectory(Context context) {
         final File file = new File(Environment.getExternalStoragePublicDirectory(
                 android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT ?
                         Environment.DIRECTORY_DOCUMENTS : "Documents"), "PowerTunnel");

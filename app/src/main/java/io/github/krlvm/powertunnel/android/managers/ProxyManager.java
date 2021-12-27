@@ -97,7 +97,9 @@ public class ProxyManager implements ServerListener {
                 MITMAuthority.create(
                         new File(context.getFilesDir(), "cert"),
                         getMitmCertificatePassword().toCharArray()
-                )
+                ),
+                ConfigurationManager.isUseExternalConfigs(context)
+                        ? ConfigurationManager.getExternalConfigsDirectory(context) : null
         );
 
         new Thread(() -> {
