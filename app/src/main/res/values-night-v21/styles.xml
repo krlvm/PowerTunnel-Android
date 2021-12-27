@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
-    </style>
-
-</resources>

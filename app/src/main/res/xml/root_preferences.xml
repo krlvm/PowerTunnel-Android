@@ -1,0 +1,168 @@
+<!--
+  ~ This file is part of PowerTunnel-Android.
+  ~
+  ~ PowerTunnel-Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ PowerTunnel-Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:key="category_general" app:title="@string/settings_category_application">
+
+        <ListPreference
+            app:key="theme"
+            app:defaultValue="auto"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:title="@string/settings_pref_theme"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="autostart"
+            app:title="@string/settings_pref_autostart"
+            app:summary="@string/settings_pref_autostart_description"
+            app:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:key="category_connection" app:title="@string/settings_category_connection">
+
+        <ListPreference
+            app:key="mode"
+            app:defaultValue="vpn"
+            app:entries="@array/mode_entries"
+            app:entryValues="@array/mode_values"
+            app:title="@string/settings_pref_mode"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="proxy_ip"
+            app:defaultValue="127.0.0.1"
+            app:title="@string/settings_pref_proxy_ip"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="proxy_port"
+            app:defaultValue="8085"
+            app:title="@string/settings_pref_proxy_port"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="upstream_proxy_enabled"
+            app:title="@string/settings_pref_upstream_proxy"
+            app:summary="@string/settings_pref_upstream_proxy_description"
+            app:defaultValue="false" />
+        <EditTextPreference
+            app:key="upstream_proxy_ip"
+            app:dependency="upstream_proxy_enabled"
+            app:title="@string/settings_pref_upstream_proxy_ip"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="upstream_proxy_port"
+            app:dependency="upstream_proxy_enabled"
+            app:title="@string/settings_pref_upstream_proxy_port"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="upstream_proxy_auth_enabled"
+            app:title="@string/settings_pref_upstream_proxy_auth"
+            app:dependency="upstream_proxy_enabled"
+            app:summary="@string/settings_pref_upstream_proxy_description"
+            app:defaultValue="false" />
+        <EditTextPreference
+            app:key="upstream_proxy_auth_username"
+            app:dependency="upstream_proxy_auth_enabled"
+            app:title="@string/settings_pref_upstream_proxy_auth_username"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="upstream_proxy_auth_password"
+            app:dependency="upstream_proxy_auth_enabled"
+            app:title="@string/settings_pref_upstream_proxy_auth_password"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:key="category_vpn" app:title="@string/settings_category_vpn">
+
+        <ListPreference
+            app:key="vpn_apps_mode"
+            app:defaultValue="exclude"
+            app:entries="@array/vpn_apps_entries"
+            app:entryValues="@array/vpn_apps_values"
+            app:title="@string/settings_pref_vpn_apps_mode"
+            app:useSimpleSummaryProvider="true" />
+        <Preference
+            app:key="vpn_apps_excluded"
+            app:title="@string/settings_pref_vpn_apps_excluded"
+            app:summary="@string/settings_pref_vpn_apps_excluded_description" />
+        <Preference
+            app:key="vpn_apps_allowed"
+            app:title="@string/settings_pref_vpn_apps_allowed"
+            app:summary="@string/settings_pref_vpn_apps_allowed_description" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:key="category_proxy" app:title="@string/settings_category_proxy">
+
+        <SwitchPreferenceCompat
+            app:key="proxy_auth_enabled"
+            app:title="@string/settings_pref_proxy_auth_enabled"
+            app:summary="@string/settings_pref_proxy_auth_enabled_description"
+            app:defaultValue="false" />
+        <EditTextPreference
+            app:key="proxy_auth_username"
+            app:dependency="proxy_auth_enabled"
+            app:title="@string/settings_pref_proxy_auth_username"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="proxy_auth_password"
+            app:dependency="proxy_auth_enabled"
+            app:title="@string/settings_pref_proxy_auth_password"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="transparent_mode"
+            app:title="@string/settings_pref_transparent_mode"
+            app:defaultValue="true" />
+        <SwitchPreferenceCompat
+            app:key="strict_dns"
+            app:title="@string/settings_pref_strict_dns"
+            app:defaultValue="false" />
+        <SwitchPreferenceCompat
+            app:key="allow_requests_to_origin_server"
+            app:title="@string/settings_pref_allow_requests_to_origin_server"
+            app:defaultValue="true" />
+        <SwitchPreferenceCompat
+            app:key="cert_refuse"
+            app:title="@string/settings_pref_cert_refuse"
+            app:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:key="category_data" app:title="@string/settings_category_data_storage">
+
+        <SwitchPreferenceCompat
+            app:key="collect_logs"
+            app:title="@string/settings_pref_collect_logs"
+            app:summary="@string/settings_pref_collect_logs_description"
+            app:defaultValue="false" />
+
+        <SwitchPreferenceCompat
+            app:key="external_configs"
+            app:title="@string/settings_pref_external_configs"
+            app:summaryOff="@string/settings_pref_external_configs_off"
+            app:summaryOn="@string/settings_pref_external_configs_on"
+            app:defaultValue="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

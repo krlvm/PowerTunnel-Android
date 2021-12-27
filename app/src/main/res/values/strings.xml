@@ -1,190 +1,213 @@
+<!--
+  ~ This file is part of PowerTunnel-Android.
+  ~
+  ~ PowerTunnel-Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ PowerTunnel-Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <resources>
+
     <string name="app_name" translatable="false">PowerTunnel</string>
+    <string name="alt_logo">PowerTunnel Logo</string>
+    <string name="app_links" translatable="false"><a href="https://t.me/powertunnel_dpi">Telegram channel</a>\n<a href="https://github.com/krlvm/PowerTunnel">PowerTunnel Desktop</a></string>
+    <string name="app_license" translatable="false"><a href="https://github.com/krlvm/PowerTunnel-Android">GitHub Repository</a>\n<a href="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/LICENSE">GNU General Public License v3</a></string>
+    <string name="app_description">Powerful and extensible proxy server</string>
+    <string name="app_credits" translatable="false"><b><a href="https://github.com/krlvm/PowerTunnel-Android">PowerTunnel for Android</a> is made possible by these open-source projects:</b>\n\n<a href="https://github.com/M66B/NetGuard">NetGuard</a> - VPN server and traffic interceptor\n<a href="https://github.com/adamfisk/LittleProxy">LittleProxy</a> - proxy server, <a href="https://github.com/mrog/LittleProxy">forked version</a>\n<a href="https://github.com/ganskef/LittleProxy-mitm">LittleProxy-MITM</a> - LittleProxy SSL extension\n<a href="https://github.com/dnsjava/dnsjava">dnsjava</a> - DNS and DoH library\n<a href="https://github.com/ibauersachs/dnssecjava">dnssecjava</a> - DNSSec implementation for dnsjava</string>
+    <string name="app_version">Version %1$s\nCore v%2$s (%3$d), SDK %4$d</string>
 
     <string name="ok">OK</string>
+    <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="learn_more">Learn more</string>
+    <string name="download">Download</string>
 
-    <!-- Status messages -->
-    <string name="server_not_running">Not running</string>
-    <string name="server_running">Is running</string>
+    <!-- Action buttons -->
+    <string name="action_starting">Starting…</string>
+    <string name="action_start">Start</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_stopping">Stopping…</string>
 
-    <!-- Start/stop button -->
-    <string name="server_start">Start</string>
-    <string name="server_stop">Stop</string>
-
-    <!-- Progress messages -->
-    <string name="starting_server">Starting</string>
-    <string name="stopping_server">Stopping</string>
-    <string name="status_please_wait">Please, wait…</string>
-    <string name="startup_failed_vpn">Failed to start VPN service: %s</string>
+    <string name="action_connecting">Connecting…</string>
+    <string name="action_connect">Connect</string>
+    <string name="action_disconnect">Disconnect</string>
+    <string name="action_disconnecting">Disconnecting…</string>
 
     <!-- Main menu -->
+    <string name="settings">Settings</string>
+    <string name="view_logs">View logs</string>
+    <string name="about">About</string>
+
+    <!-- Status -->
+    <string name="status_running_proxy">Proxy is running</string>
+    <string name="status_running_vpn">VPN is connected</string>
+    <string name="status_not_running_proxy">Proxy is not running</string>
+    <string name="status_not_running_vpn">VPN is not connected</string>
+
+    <string name="main_description_proxy">Application works in proxy mode, you need to manually configure each app to route the traffic through the proxy server</string>
+    <string name="main_description_vpn">Application works in VPN mode, the traffic of all applications goes through PowerTunnel</string>
+    <string name="main_description_proxy_loopback"><![CDATA[<b>%1$s</b><small><br><br></small>Local connections:<small><br></small><b>%2$s</b><small><br><br></small>|Local network connections:<small><br></small><b>%3$s</b>]]></string>
+
+    <string name="toast_allow_vpn">Please, allow app to connect to the VPN</string>
+    <string name="toast_configure_while_running">Tap again if you want to modify settings, PowerTunnel will be restarted to apply changes</string>
+    <string name="toast_configure_while_running_restart">PowerTunnel is restarted for the changes to take effect</string>
+
+    <string name="toast_failed_to_extract_plugins">Failed to install built-in plugins</string>
+    <string name="toast_failed_to_install_plugin">Failed to install plugin</string>
+    <string name="toast_failed_to_uninstall_plugin">Failed to uninstall plugin</string>
+    <string name="toast_plugin_uninstalled">Plugin \"%1$s\" uninstalled</string>
+    <string name="toast_plugin_stop_server_to_act">Please, stop the server to do this action</string>
+
+    <!-- Quick Settings Tile -->
+    <string name="qs_starting">Starting PowerTunnel…</string>
+    <string name="qs_stopping">Stopping PowerTunnel…</string>
+    <string name="qs_startup_failed">Failed to start PowerTunnel</string>
+
+    <!-- Error popups -->
+    <string name="dialog_error_failed_to_start_title">Failed to start</string>
+    <string name="dialog_error_failed_to_start_message_proxy">An error occurred when starting proxy server: %1$s</string>
+    <string name="dialog_error_failed_to_start_message_vpn">An error occurred when starting VPN Interceptor: %1$s</string>
+    <string name="dialog_error_failed_to_start_message_vpn_fw">In August 2020 Security Patches Samsung introduced a firmware bug that prevents local VPN Interceptor from start. Visit the repository to learn how to fix it.</string>
+
+    <!-- Certificate -->
+    <string name="toast_cert_install">Please, install Root CA to use enabled features</string>
+    <string name="toast_cert_install_a11">Please, install saved Root CA to use enabled features</string>
+    <string name="toast_cert_install_error">Failed to install Root CA, some features may be unavailable</string>
+    <string name="toast_cert_installed">Certificate installed successfully</string>
+    <string name="toast_cert_extract_os_unsupported">Certificate extraction is not supported on your Android version</string>
+    <string name="toast_cert_extracted">Certificate saved successfully</string>
+    <string name="toast_cert_extraction_failed">Failed to save certificate</string>
+
+    <string name="dialog_cert_extract_title">Certificate installer</string>
+    <string name="dialog_cert_extract_message">Do you want to save certificate for installing it manually?</string>
+
+    <!-- Notification Channels -->
+    <string name="notification_group_connection">Connection</string>
+    <string name="notification_group_connection_description">Connection status</string>
+
+    <string name="notification_channel_proxy">Proxy Server</string>
+    <string name="notification_channel_proxy_description">Proxy Server status</string>
+
+    <string name="notification_channel_vpn">VPN</string>
+    <string name="notification_channel_vpn_description">VPN Connection status</string>
+
+    <!-- Notifications -->
+    <string name="notification_title_proxy">PowerTunnel Proxy</string>
+    <string name="notification_message_proxy">Proxy Server is running</string>
+
+    <string name="notification_title_vpn">PowerTunnel VPN</string>
+    <string name="notification_message_vpn">VPN is connected</string>
+
+
+    <!-- Plugins Activity -->
+    <string name="title_activity_plugins">Plugins</string>
+    <string name="alt_plugin_settings">Settings</string>
+    <string name="alt_plugin_uninstall">Uninstall</string>
+    <string name="alt_plugin_about">About</string>
+    <string name="visit_homepage">Homepage</string>
+    <string name="action_plugin_install">Install a plugin</string>
+    <string name="action_plugin_registry">Plugin Registry</string>
+    <string name="toast_plugin_not_configurable">Plugin is not configurable</string>
+    <string name="toast_plugin_installed">Plugin installed successfully, uninstall old version if present</string>
+    <string name="dialog_plugin_uninstall_title">Confirmation</string>
+    <string name="dialog_plugin_uninstall_message">Are you sure you want to uninstall the plugin?</string>
+
+
+    <!-- Settings Activity -->
     <string name="title_activity_settings">Settings</string>
-    <string name="title_show_about">About</string>
 
-    <!-- Settings -->
-    <string name="pref_category_connection">Connection settings</string>
-    <string name="pref_category_dpi">DPI circumvention settings</string>
+    <string name="settings_category_application">Application</string>
+    <string name="settings_pref_theme">Theme</string>
+    <string name="settings_pref_autostart">Autostart</string>
+    <string name="settings_pref_autostart_description">App will be automatically started after reboot if it was running before</string>
 
-    <string name="pref_vpn_connection_mode">Connection mode</string>
-    <string name="pref_header_allowed_application_list">Allowed applications</string>
-    <string name="pref_header_disallowed_application_list">Disallowed applications</string>
+    <string name="settings_category_connection">Connection</string>
+    <string name="settings_pref_mode">Connection mode</string>
+    <string name="settings_pref_proxy_ip">Local proxy server IP address</string>
+    <string name="settings_pref_proxy_port">Local proxy server port</string>
+    <string name="settings_pref_upstream_proxy">Connect via upstream proxy</string>
+    <string name="settings_pref_upstream_proxy_description">Use upstream proxy to connect to the Internet</string>
+    <string name="settings_pref_upstream_proxy_ip">Upstream proxy IP address</string>
+    <string name="settings_pref_upstream_proxy_port">Upstream proxy port</string>
+    <string name="settings_pref_upstream_proxy_auth">Upstream proxy authorization</string>
+    <string name="settings_pref_upstream_proxy_auth_description">Authenticate on upstream proxy server</string>
+    <string name="settings_pref_upstream_proxy_auth_username">Upstream proxy username</string>
+    <string name="settings_pref_upstream_proxy_auth_password">Upstream proxy password</string>
 
-    <string name="pref_clear_all">Clear application lists</string>
-    <string name="pref_dialog_clear_all">Are you sure you want to reset the lists of selected applications?</string>
+    <string name="settings_category_vpn">VPN</string>
+    <string name="settings_pref_vpn_apps_mode">Apps filtration mode</string>
+    <string name="settings_pref_vpn_apps_excluded">Excluded apps</string>
+    <string name="settings_pref_vpn_apps_excluded_description">List of apps that bypass VPN</string>
+    <string name="settings_pref_vpn_apps_allowed">Allowed apps</string>
+    <string name="settings_pref_vpn_apps_allowed_description">List of apps that allowed to use VPN</string>
 
-    <string name="search">Search</string>
-    <string name="sort_by_app_name">Sort by app name</string>
-    <string name="sort_by_package">Sort by package name</string>
+    <string name="settings_category_proxy">Proxy</string>
+    <string name="settings_pref_proxy_auth_enabled">Require proxy authorization</string>
+    <string name="settings_pref_proxy_auth_enabled_description">Require authorization on local proxy</string>
+    <string name="settings_pref_proxy_auth_username">Authorization username</string>
+    <string name="settings_pref_proxy_auth_password">Authorization password</string>
+    <string name="settings_pref_transparent_mode">Transparent mode</string>
+    <string name="settings_pref_strict_dns">Strict DNS Mode</string>
+    <string name="settings_pref_allow_requests_to_origin_server">Allow requests to origin server</string>
+    <string name="settings_pref_cert_refuse">Don\'t propose certificate installation</string>
 
-    <string-array name="pref_vpn_connection_name">
-        <item>Exclude specified applications</item>
-        <item>Only allowed applications</item>
-    </string-array>
-    <string-array name="pref_vpn_connection_value" translatable="false">
-        <item>DISALLOW</item>
-        <item>ALLOW</item>
-    </string-array>
+    <string name="settings_category_data_storage">Data storage</string>
+    <string name="settings_pref_collect_logs">Collect logs</string>
+    <string name="settings_pref_collect_logs_description">Adds Log Viewer to three-dot menu</string>
+    <string name="settings_pref_external_configs">Store configurations in Documents</string>
+    <string name="settings_pref_external_configs_off">Configurations are stored in the secured app storage</string>
+    <string name="settings_pref_external_configs_on">Configurations are stored in Documents folder</string>
 
-    <string-array name="pref_dns_provider_name" translatable="false">
-        <item>Google</item>
-        <item>Google (DoH)</item>
-        <item>Cloudflare</item>
-        <item>Cloudflare (DoH)</item>
-        <item>AdGuard</item>
-        <item>AdGuard (DoH)</item>
-        <item>@string/specified_dns_provider</item>
-    </string-array>
-    <string-array name="pref_dns_provider_value" translatable="false">
-        <item>GOOGLE</item>
-        <item>GOOGLE_DOH</item>
-        <item>CLOUDFLARE</item>
-        <item>CLOUDFLARE_DOH</item>
-        <item>ADGUARD</item>
-        <item>ADGUARD_DOH</item>
-        <item>SPECIFIED</item>
-    </string-array>
+    <string name="dialog_external_configs_title">Confirmation</string>
+    <string name="dialog_external_configs_message">Plugins configuration will be reset after moving it to Documents folder, continue?</string>
 
-    <string-array name="pref_theme">
-        <item>Auto</item>
-        <item>Enabled</item>
-        <item>Disabled</item>
-        <item>In Battery Saver mode</item>
-    </string-array>
-    <string-array name="pref_theme_values" translatable="false">
-        <item>AUTO</item>
-        <item>DARK</item>
-        <item>LIGHT</item>
-        <item>BATTERY</item>
-    </string-array>
+    <!-- App List Preference Fragment -->
+    <string name="app_list_search">Search</string>
+    <string name="app_list_show_checked">Show checked apps</string>
+    <string name="app_list_refresh">Refresh</string>
 
-    <string-array name="pref_sni">
-        <item>Disabled</item>
-        <item>Spoil SNI</item>
-        <item>Fake SNI</item>
-        <item>Erase SNI</item>
-    </string-array>
-    <string-array name="pref_sni_values" translatable="false">
-        <item>DISABLED</item>
-        <item>SPOIL</item>
-        <item>FAKE</item>
-        <item>ERASE</item>
-    </string-array>
+    <!-- Plugin Settings Activity -->
+    <string name="plugin_settings_failed_to_create">Failed to create configuration</string>
+    <string name="plugin_settings_failed_to_read">Failed to read configuration</string>
+    <string name="plugin_settings_failed_to_save">Failed to save configuration</string>
+    <string name="action_plugin_settings_reset">Reset configuration</string>
+    <string name="toast_permission_for_external_configs">Please, grant the permission to save configurations to Documents folder</string>
 
-    <string name="pref_allowed_application_list">Allowed applications</string>
+    <!-- Logs Activity -->
+    <string name="title_activity_logs">Log Viewer</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_save">Save</string>
+    <string name="toast_logs_error">Failed to read logs</string>
+    <string name="toast_logs_saved">Log file saved successfully</string>
+    <string name="toast_logs_save_failed">Failed to save log file</string>
+    <string name="toast_logs_save_os_unsupported">Logs saving is not supported on your Android version</string>
 
-    <string-array name="pref_allowed_application_name" />
-    <string-array name="pref_allowed_application_value" />
+    <!-- Crash Activity -->
+    <string name="title_activity_crash">Crash Report</string>
+    <string name="crash_heading">Unexpected crash</string>
+    <string name="crash_submit_issue_note">Please report a problem if the error persists.\nDon\'t forget to attach the error text.</string>
+    <string name="crash_submit_issue">Submit an issue</string>
 
-    <string name="pref_disallowed_application_list">Excluded applications</string>
-    <string name="description">Simple, scalable, cross-platform and effective solution against government censorship</string>
-    <string name="stop_server_to_edit_settings">PowerTunnel is already running, click again to edit settings, after saving the settings PowerTunnel will be restarted</string>
+    <!-- Update Notifier -->
+    <string name="check_for_updates">Check for updates</string>
+    <string name="dialog_update_available_title">An update is available</string>
+    <string name="dialog_update_available_message">Version %1$s is ready to install</string>
+    <string name="dialog_update_error_title">Failed to check for updates</string>
+    <string name="dialog_update_error_message">An error occurred while checking for updates, check the network connection</string>
+    <string name="dialog_update_checking_title">Checking for updates…</string>
+    <string name="dialog_update_checking_message">Installed version: %s</string>
+    <string name="dialog_update_no_updates_title">No updates are available</string>
+    <string name="dialog_update_no_updates_message">You\'re running the latest version of PowerTunnel</string>
+    <string name="notification_channel_updater">Update Notifier</string>
+    <string name="notification_channel_updater_description">Notifications about updates</string>
 
-    <string-array name="pref_disallowed_application_name" />
-    <string-array name="pref_disallowed_application_value" />
-    <string name="pref_override_dns">Override DNS servers</string>
-    <string name="pref_dns_provider">DNS Provider</string>
-    <string name="pref_category_dns">Domain name resolving</string>
-    <string name="pref_use_dns_sec">Use DNSSec (experimental)</string>
-    <string name="pref_full_chunking">Full chunking mode</string>
-    <string name="pref_mix_host_case">Mix host case</string>
-    <string name="pref_send_payload">Send additional 21KB payload</string>
-    <string name="startup_failed_proxy">Failed to start proxy server</string>
-    <string name="failed_to_start_powertunnel">Failed to start PowerTunnel</string>
-    <string name="pref_chunk_size">Default chunk size</string>
-    <string name="clear_selection">Clear selection</string>
-    <string name="about_version">Version %1$s&lt;br></string>
-    <string name="btn_check_for_updates">Check for updates</string>
-    <string name="about_powertunnel" translatable="false"><b><a href="https://github.com/krlvm/PowerTunnel-Android">PowerTunnel for Android</a> is made possible by these open-source projects:</b>\n\n<a href="https://github.com/krlvm/PowerTunnel/tree/libertytunnel">LibertyTunnel</a> - base <a href="https://github.com/krlvm/PowerTunnel">PowerTunnel</a> proxy\n<a href="https://github.com/raise-isayan/TunProxy">TunProxy</a> - VPN server and traffic interceptor\n<a href="https://github.com/adamfisk/LittleProxy">LittleProxy</a> - proxy server\n<a href="https://github.com/ganskef/LittleProxy-mitm">LittleProxy-MITM</a> - LittleProxy SSL extension\n<a href="https://github.com/dnsjava/dnsjava">dnsjava</a> - DNS library, DoH realization\n<a href="https://github.com/ibauersachs/dnssecjava">dnssecjava</a> - DNSSec realization for dnsjava\n<a href="https://github.com/adamfisk/DNSSEC4J">DNSSEC4J</a> - DNSSec realization for LittleProxy</string>
-    <string name="main_copyright" translatable="false"><b><a href="https://t.me/powertunnel_dpi">Telegram channel</a>\n<a href="https://github.com/krlvm/PowerTunnel">PowerTunnel for PC</a></b>\n\n(c) krlvm, 2019-2021</string>
-    <string name="title_activity_about">About</string>
-    <string name="no_updates">You\'re running the latest version of PowerTunnel</string>
-    <string name="no_updates_title">No updates available</string>
-    <string name="update_error">An error occurred while checking for updates, check the Internet connection</string>
-    <string name="update_error_title">Error</string>
-    <string name="update_available_title">An update is available</string>
-    <string name="update_available">Version %s is ready to install</string>
-    <string name="update_checking_title">Checking for updates…</string>
-    <string name="update_checking">Installed version: %s</string>
-    <string name="help">PowerTunnel works only while you are connected to the VPN\n\Open the settings if you need to adjust the list of applications that can use PowerTunnel.</string>
-    <string name="dns_fetch_error">Failed to fetch the DNS servers list</string>
-    <string name="error">Error</string>
-    <string name="download">Download</string>
-    <string name="specify_dns_provider">Custom DNS provider</string>
-    <string name="specified_dns_provider">Custom DNS provider</string>
-    <string name="pref_theme_title">Dark theme</string>
-    <string name="pref_category_appearance">Appearance</string>
-    <string name="secdns_discounted">SecureDNS DNS provider has been discounted since April 30, 2020. Your DNS provider was automatically changed to CloudFlare DoH to avoid connectivity issues.</string>
-    <string name="notification">Notification</string>
-    <string name="pref_proxy_mode">Proxy mode</string>
-    <string name="pref_proxy_mode_desc">Run proxy without VPN</string>
-    <string name="help_proxy">PowerTunnel works in proxy mode.\nYou are have to manually configure proxy settings in applications.\n\nProxy address:\n%s</string>
-    <string name="notification_proxy_background">PowerTunnel Proxy is running</string>
-    <string name="proxy_mode_warning">Now you have to set applications proxy manually. If you have problems, switch back to VPN mode disabling proxy mode.</string>
-    <string name="notification_channel_proxy">PowerTunnel Proxy</string>
-    <string name="pref_category_vpn">VPN settings</string>
-    <string name="pref_proxy_ip">Local proxy server IP address</string>
-    <string name="pref_proxy_port">Local proxy server port</string>
-    <string name="reset_connection_settings">Reset proxy settings</string>
-    <string name="reset_connection_settings_summary">Return to default address and port</string>
-    <string name="startup_failed_proxy_message">Unable to start proxy server, try to reset proxy configuration in settings: %1$s</string>
-    <string name="pref_fix_conn_issues">Fix connectivity issues</string>
-    <string name="pref_dns_port">DNS port</string>
-    <string name="pref_apply_http_https">Apply HTTP tricks to HTTPS</string>
-    <string name="space_after_get">Space after GET</string>
-    <string name="pref_break_get">Break before GET</string>
-    <string name="pref_dot_after_host">Add a dot after host</string>
-    <string name="pref_mix_host_header_case">Mix host header case</string>
-    <string name="pref_sni">Spoil SNI (experimental)</string>
-    <string name="cert_installed">Certificate has been successfully installed</string>
-    <string name="cert_not_installed">Certificate is not installed, SNI tricks will not work</string>
-    <string name="please_install_cert">You need to install PowerTunnel Root CA to use SNI tricks</string>
-    <string name="pref_chunking">Enable chunking</string>
-    <string name="pref_complete_mix_host_case">Complete host case mixing</string>
-    <string name="sni_warning">Disable chunking for a better effect</string>
-    <string name="notification_vpn_background">PowerTunnel VPN is running</string>
-    <string name="stopping_powertunnel">Stopping PowerTunnel…</string>
-    <string name="qs_startup_failed">Failed to start PowerTunnel. Please launch PowerTunnel from the app if this is your first time using Quick Tile: %s</string>
-    <string name="samsung_firmware_bug">Samsung introduced a bug in August 2020 software update that preventing us from starting VPN service, you have can solve this problem manually.</string>
-    <string name="read_more">Read more</string>
-    <string name="restarting_proxy">Restarting proxy server…</string>
-    <string name="pref_upstream_proxy">Connect via upstream proxy</string>
-    <string name="pref_upstream_proxy_desc">Use upstream proxy to connect to the Internet</string>
-    <string name="pref_upstream_ip">Upstream proxy IP address</string>
-    <string name="pref_upstream_port">Upstream proxy port</string>
-    <string name="pref_upstream_title">Upstream proxy server</string>
-    <string name="pref_upstream_cache">Cache upstream proxy address</string>
-    <string name="pref_upstream_cache_desc">Don\'t resolves upstream proxy address on each request, improves performance</string>
-    <string name="pref_upstream_proxy_auth">Authorize on upstream proxy server</string>
-    <string name="pref_upstream_username">Upstream proxy server username</string>
-    <string name="pref_upstream_password">Upstream proxy server password</string>
-    <string name="pref_allow_insecure_doh">Allow insecure DoH request</string>
-    <string name="pref_allow_insecure_doh_desc">Allow DoH request made over plain HTTP</string>
-    <string name="pref_sni_trick">SNI Trick</string>
-    <string name="pref_sni_fake_host">Fake SNI Host</string>
-    <string name="cert_extracted">Certificate has been extracted</string>
-    <string name="cert_manual_install_11">You need to manually install the certificate on Android 11 and higher</string>
-    <string name="extract_certificate_q">Extract certificate?</string>
-    <string name="cert_you_can_install_manually">You can install the certificate manually</string>
-    <string name="cert_extract_btn">Extract</string>
 </resources>

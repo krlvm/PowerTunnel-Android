@@ -78,8 +78,7 @@
 
 #define MTU 10000
 
-extern bool pt_enable_doh;
-extern jobject doh_util;
+extern bool pt_resolve_hosts;
 bool get_jni_env(JNIEnv **env);
 
 struct arguments {

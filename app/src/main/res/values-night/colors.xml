@@ -1,9 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ This file is part of PowerTunnel-Android.
+  ~
+  ~ PowerTunnel-Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ PowerTunnel-Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <resources>
-    <color name="colorPrimary">#33691E</color>
-    <color name="colorPrimaryDark">#1B5E20</color>
-    <color name="colorAccent">#558B2F</color>
-    <!-- <color name="background">@android:color/background_dark</color>-->
-    <color name="background">#424242</color>
-    <color name="textColor">@android:color/white</color>
+    <color name="primary">#212121</color>
+    <color name="primaryDark">#000000</color>
 </resources>

@@ -61,7 +61,10 @@ int sdk_int(JNIEnv *env) {
 }
 
 void log_android(int prio, const char *fmt, ...) {
-    
+    //va_list ap;
+    //va_start(ap, fmt);
+    //__android_log_vprint(prio, "tun2http", fmt, ap);
+    //va_end(ap);
 }
 
 uint8_t char2nible(const char c) {

@@ -1,0 +1,31 @@
+<!--
+  ~ This file is part of PowerTunnel-Android.
+  ~
+  ~ PowerTunnel-Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ PowerTunnel-Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="196dp"
+    android:height="196dp"
+    android:viewportWidth="196"
+    android:viewportHeight="196">
+  <path
+      android:pathData="M2,98a96,96 0,1 0,192 0a96,96 0,1 0,-192 0z"
+      android:strokeWidth="1.5"
+      android:fillColor="#4bae4f"
+      android:strokeColor="#4bae4f"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="m165.476,63.006l-9.551,-9.551l-19.305,21.744c-13.954,-15.715 -33.259,-25.199 -55.071,-25.199c-19.576,0 -37.527,7.858 -51.549,20.321l9.619,9.619c11.515,-10.093 26.079,-16.393 41.93,-16.393c18.56,0 34.479,8.535 45.859,21.947l-19.509,21.947l-27.095,-27.095l-50.804,50.871l10.161,10.161l40.643,-40.711l27.095,27.095l27.434,-30.821c5.08,9.145 8.467,19.644 9.754,30.821l13.615,0c-1.49,-15.58 -6.435,-29.737 -13.819,-41.591l20.592,-23.166z"/>
+</vector>
