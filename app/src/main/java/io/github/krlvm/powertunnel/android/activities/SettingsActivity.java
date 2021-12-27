@@ -34,7 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.preference.SwitchPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import java.io.File;
 
@@ -120,7 +120,7 @@ public class SettingsActivity extends AppCompatActivity {
                             dialog.dismiss();
                             if (ConfigurationManager.checkStorageAccess(getContext(), false)) {
                                 enableExternalConfigs(getActivity());
-                                ((SwitchPreference) preference).setChecked(true);
+                                ((SwitchPreferenceCompat) preference).setChecked(true);
                             } else {
                                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                         PERMISSION_STORAGE_REQUEST_CODE);
@@ -152,7 +152,7 @@ public class SettingsActivity extends AppCompatActivity {
                 case PERMISSION_STORAGE_REQUEST_CODE: {
                     if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                         enableExternalConfigs(getContext());
-                        ((SwitchPreference) findPreference("external_configs")).setChecked(true);
+                        ((SwitchPreferenceCompat) findPreference("external_configs")).setChecked(true);
                     }
                     break;
                 }
