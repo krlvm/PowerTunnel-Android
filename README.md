@@ -2,8 +2,6 @@
 <img src="https://raw.githubusercontent.com/krlvm/PowerTunnel/master/.github/images/logo.png" height="192px" width="192px" />
 <br><h1>PowerTunnel for Android</h1>
 Simple, scalable, cross-platform and effective solution against government censorship for Android
-<!-- That does not mean the battle is finished -->
-<!--<h3><b>Please, read <a href="https://gist.github.com/krlvm/76595f2fec7e23cf5e20f8ccfa43997a">important announcement</a></b></h3>-->
 
 <a href="https://t.me/powertunnel_dpi">Telegram channel</a>
 <br>
@@ -22,15 +20,56 @@ The Android version of PowerTunnel is built on [VPN Server](https://github.com/M
 ***You can't publish the app on the Google Play Store without permission: it is a violation of the license and the DMCA.***
 
 ### What is it
-PowerTunnel is an extensible proxy server built on top of [LittleProxy](https://github.com/adamfisk/LittleProxy).
+PowerTunnel is an extensible proxy server built on top of [LittleProxy](https://github.com/adamfisk/LittleProxy) that does not require root-access to work.
 
 PowerTunnel provides an SDK that allows you to extend its functionality however you like, and even handle encrypted HTTPS traffic (powered by [LittleProxy-MITM](https://github.com/ganskef/LittleProxy-mitm)), which can be especially useful in web development. PowerTunnel has an Android version, so any plugin you write can work on almost all devices.
 
 
 PowerTunnel was originally developed and is best known as a censorship bypass tool. This functionality has been spun off in the [LibertyTunnel](https://github.com/krlvm/LibertyTunnel) plugin, it is installed by default, just like [DNS Resolver](https://github.com/krlvm/PowerTunnel-DNS) with DNS over HTTPS support.
 
-Version 2.0 is currently in Beta, the SDK Documentation is coming soon.
 
+#### Anti-censorship tool
+
+Digital censorship has become widespread in authoritarian and developing countries: governments install DPI - Deep Packet Inspection systems - for Internet Service Providers, which allows analyzing and blocking traffic to websites they don't want you to see, forcing you to use slow and often paid proxies or VPN services with dubious privacy policy.
+
+PowerTunnel is an active DPI circumvention utility - it works only on your PC and do not route your traffic through some third-party webservers. It creates a local proxy server on your device and diverts your HTTP(S) traffic there, where PowerTunnel modifies your traffic in a special way to exploit bugs in DPI systems which makes it possible to bypass the lock - without (significantly) slowing down your Internet connection.
+
+Anti-censorship module can be configured in Plugins window - it is called LibertyTunnel.
+
+In this sense, PowerTunnel is a free cross-platform implementation of [GoodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI) written in Java with support for Android.
+
+Please, note that PowerTunnel does not change your IP address.
+
+## Configuring
+
+### Downloading PowerTunnel
+
+PowerTunnel binary can be downloaded from the [Releases](https://github.com/krlvm/PowerTunnel-Android/releases) page.
+
+If you don't trust the prebuilt APK, you can build PowerTunnel from source with Android Studio.
+
+### Using proxy instead of VPN
+
+If you want to use PowerTunnel only with a single app, you can change mode from VPN to Proxy in PowerTunnel settings and configure the app manually to make it route its traffic via the proxy server.
+
+### Configuring DPI circumvention
+
+DPI circumvention can be configured in LibertyTunnel settings - open plugins page and tap to the gear opposite to LibertyTunnel plugin.
+
+### Configuring DNS
+
+To configure DNS, open plugins page and tap to the gear opposite to DNS plugin.
+
+You are able to choose between pre-installed Google and Cloudflare DNS (DoH) providers or add yours.
+
+### Enabling AdBlock
+
+AdBlock is disabled by default. To enable, open plugins page and check the box next to AdBlock plugin, then restart PowerTunnel.
+
+## Bundled Plugins
+* [LibertyTunnel](https://github.com/krlvm/LibertyTunnel) - anti-censorship plugin for PowerTunnel
+* [DNS Resolver](https://github.com/krlvm/PowerTunnel-DNS) - DNS Resolver with DNS over HTTPS (DoH) support
+* [AdBlock](https://github.com/krlvm/PowerTunnel-AdBlock) - simple, but efficient ads and trackers blocker
 
 ## Dependencies
 * [NetGuard](https://github.com/M66B/NetGuard) - VPN server and traffic interceptor
@@ -39,6 +78,3 @@ Version 2.0 is currently in Beta, the SDK Documentation is coming soon.
 * [dnsjava](https://github.com/dnsjava/dnsjava) - DNS library, DoH realization
 * [dnssecjava](https://github.com/ibauersachs/dnssecjava) - DNSSec realization for dnsjava
 * [DNSSEC4J](https://github.com/adamfisk/DNSSEC4J) - DNSSec realization for LittleProxy
-
-### Credits
-* [blockcheck](https://github.com/ValdikSS/blockcheck)
