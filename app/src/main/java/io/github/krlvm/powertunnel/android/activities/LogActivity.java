@@ -168,6 +168,6 @@ public class LogActivity extends AppCompatActivity {
     }
 
     private static boolean isUseless(String line) {
-        return line.contains("nel.android.de");
+        return line.contains("nel.android.de") || line.contains("ViewPostIme");
     }
 }
