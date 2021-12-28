@@ -1,0 +1,26 @@
+New features:
+- Plugins support with PowerTunnel SDK
+- Android 11 Support
+- Built-in optional AdBlocker
+- Support for blacklist for point bypass of locks
+- Autostart control
+- Support for viewing logs in-app
+
+Improvements:
+- Improved stability
+- Improved performance
+- Significantly reduced memory usage
+- Significantly reduced CPU usage
+- Improved DNS support
+- Improved UI appearance
+- Improved Quick Settings tile reliability and responsiveness
+- Improved VPN app selector performance
+- Improved notifications
+
+Bugfixes:
+- Fixed an issue when PowerTunnel was not starting by clicking QS tile
+- Fixed an issue when Root CA could not be installed
+- Fixed an issue when proxy server was crashing after start
+- Fixed an issue when VPN was started instead of proxy
+- Fixed an issue when VPN app selector was not opening
+- Fixed an issue when VPN app selector was crashed after searching
