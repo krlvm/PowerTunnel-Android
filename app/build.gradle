@@ -76,7 +76,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.guava:guava:30.1-android'
-    implementation('org.slf4j:slf4j-android:1.7.32') {
+    implementation('org.slf4j:slf4j-android:1.7.33') {
         exclude group: 'org.slf4j', module: 'slf4j-api'
     }
 
