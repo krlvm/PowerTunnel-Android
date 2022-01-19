@@ -15,7 +15,7 @@ Simple, scalable, cross-platform and effective solution against government censo
 <img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="PowerTunnel User Interface" height="500px" /> <img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="PowerTunnel User Interface" height="500px" /> <img src="https://raw.githubusercontent.com/krlvm/PowerTunnel-Android/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="PowerTunnel User Interface" height="500px" />
 </div>
 
-The Android version of PowerTunnel is built on [VPN Server](https://github.com/M66B/NetGuard) that intercepts traffic and directs it through the PowerTunnel proxy
+The Android version of PowerTunnel is built on top of incredible [NetGuard](https://github.com/M66B/NetGuard)'s VPN Server that intercepts traffic and directs it through the local PowerTunnel proxy
 
 ***You can't publish the app on the Google Play Store without permission: it is a violation of the license and the DMCA.***
 
