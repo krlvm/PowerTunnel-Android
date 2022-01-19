@@ -100,7 +100,7 @@ public class TunnelingVpnService extends VpnService {
             proxy = new ProxyManager(
                     this,
                     (status) -> {
-                        if (status == ProxyStatus.RUNNING) {
+                       if (status == ProxyStatus.RUNNING) {
                             connect();
                         } else if (status == ProxyStatus.NOT_RUNNING) {
                             disconnect();

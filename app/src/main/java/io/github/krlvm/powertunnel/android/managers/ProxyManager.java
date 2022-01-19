@@ -74,6 +74,8 @@ public class ProxyManager implements ServerListener {
     private final Consumer<ProxyStatus> statusListener;
     private final Consumer<String> failureListener;
 
+    private boolean hostnameAvailability = true;
+
     public ProxyManager(Context context, Consumer<ProxyStatus> statusListener, Consumer<String> failureListener) {
         this.context = context;
         this.address = PowerTunnelService.getAddress(PreferenceManager.getDefaultSharedPreferences(context));
@@ -159,6 +161,10 @@ public class ProxyManager implements ServerListener {
             final ProxyServer proxy = server.getProxyServer();
             assert proxy != null;
 
+            if (proxy instanceof LittleProxyServer) {
+                ((LittleProxyServer) proxy).setHostnamesAvailability(hostnameAvailability);
+            }
+
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
             if (prefs.getBoolean("upstream_proxy_enabled", false)) {
@@ -197,10 +203,7 @@ public class ProxyManager implements ServerListener {
     public void onProxyStatusChanged(@NotNull ProxyStatus status) {}
 
     public void setHostnamesAvailability(boolean availability) {
-        final ProxyServer proxyServer = server.getProxyServer();
-        if (proxyServer instanceof LittleProxyServer) {
-            ((LittleProxyServer) proxyServer).setHostnamesAvailability(availability);
-        }
+        hostnameAvailability = availability;
     }
 
     public ProxyAddress getAddress() {
