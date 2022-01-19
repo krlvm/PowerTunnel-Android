@@ -69,6 +69,8 @@ public class TunnelingVpnService extends VpnService {
     private ProxyManager proxy;
     private ParcelFileDescriptor vpn = null;
 
+    private boolean vpnResolveHosts;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -112,6 +114,9 @@ public class TunnelingVpnService extends VpnService {
                         );
                     }
             );
+            vpnResolveHosts = PreferenceManager.getDefaultSharedPreferences(this)
+                    .getBoolean("vpn_resolve_hosts", false);
+            proxy.setHostnamesAvailability(!vpnResolveHosts);
             proxy.start();
             return START_STICKY;
         }
@@ -173,10 +178,6 @@ public class TunnelingVpnService extends VpnService {
         if ("0.0.0.0".equals(host)) {
             host = "127.0.0.1";
         }
-
-        final boolean vpnResolveHosts = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("vpn_resolve_hosts", false);
-        proxy.setHostnamesAvailability(!vpnResolveHosts);
 
         Log.i(LOG_TAG, "Starting native VPN Interceptor...");
         jni_start(vpn.getFd(), false, 3, host, address.getPort(), vpnResolveHosts);
