@@ -93,6 +93,12 @@
 
     <PreferenceCategory app:key="category_vpn" app:title="@string/settings_category_vpn">
 
+        <SwitchPreferenceCompat
+            app:key="vpn_resolve_hosts"
+            app:title="@string/settings_pref_vpn_resolve_hosts"
+            app:summary="@string/settings_pref_vpn_resolve_hosts_description"
+            app:defaultValue="false" />
+
         <ListPreference
             app:key="vpn_apps_mode"
             app:defaultValue="exclude"

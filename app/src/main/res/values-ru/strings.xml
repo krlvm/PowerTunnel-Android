@@ -157,4 +157,6 @@
     <string name="toast_logs_save_failed">Ошибка при сохранении логов</string>
     <string name="toast_logs_save_os_unsupported">Сохранение логов не поддерживается вашей версией Android</string>
     <string name="settings_pref_cert_refuse">Не предлагать установку сертификата</string>
+    <string name="settings_pref_vpn_resolve_hosts">Разрешать доменные имена</string>
+    <string name="settings_pref_vpn_resolve_hosts_description">Повышает производительность в ущерб функциональности</string>
 </resources>

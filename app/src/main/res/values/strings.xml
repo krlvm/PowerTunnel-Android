@@ -144,6 +144,8 @@
     <string name="settings_pref_upstream_proxy_auth_password">Upstream proxy password</string>
 
     <string name="settings_category_vpn">VPN</string>
+    <string name="settings_pref_vpn_resolve_hosts">Resolve domain names</string>
+    <string name="settings_pref_vpn_resolve_hosts_description">Increases performance but reduces functionality</string>
     <string name="settings_pref_vpn_apps_mode">Apps filtration mode</string>
     <string name="settings_pref_vpn_apps_excluded">Excluded apps</string>
     <string name="settings_pref_vpn_apps_excluded_description">List of apps that bypass VPN</string>

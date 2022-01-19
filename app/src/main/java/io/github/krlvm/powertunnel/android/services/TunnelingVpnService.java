@@ -174,8 +174,12 @@ public class TunnelingVpnService extends VpnService {
             host = "127.0.0.1";
         }
 
+        final boolean vpnResolveHosts = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("vpn_resolve_hosts", false);
+        proxy.setHostnamesAvailability(!vpnResolveHosts);
+
         Log.i(LOG_TAG, "Starting native VPN Interceptor...");
-        jni_start(vpn.getFd(), false, 3, host, address.getPort(), false);
+        jni_start(vpn.getFd(), false, 3, host, address.getPort(), vpnResolveHosts);
         Log.i(LOG_TAG, "Native VPN Interceptor has been started");
 
         startForeground(FOREGROUND_ID, NotificationHelper.createConnectionNotification(

@@ -32,6 +32,7 @@ import org.littleshoot.proxy.mitm.CertificateHelper;
 import java.io.File;
 import java.util.UUID;
 
+import io.github.krlvm.powertunnel.LittleProxyServer;
 import io.github.krlvm.powertunnel.PowerTunnel;
 import io.github.krlvm.powertunnel.android.BuildConfig;
 import io.github.krlvm.powertunnel.android.plugin.AndroidPluginLoader;
@@ -194,6 +195,13 @@ public class ProxyManager implements ServerListener {
 
     @Override
     public void onProxyStatusChanged(@NotNull ProxyStatus status) {}
+
+    public void setHostnamesAvailability(boolean availability) {
+        final ProxyServer proxyServer = server.getProxyServer();
+        if (proxyServer instanceof LittleProxyServer) {
+            ((LittleProxyServer) proxyServer).setHostnamesAvailability(availability);
+        }
+    }
 
     public ProxyAddress getAddress() {
         return server.getProxyServer().getAddress();
