@@ -1,0 +1,12 @@
+New features:
+- Option for enabling hostname resolving on VPN Interceptor level
+It improves performance and fixes connectivity issues on some firmware, but also significantly reduces PowerTunnel functionality, making it impossible to retrieve host name from packet, so it is incompatible with AdBlock plugin, Firewall plugin, and LibertyTunnel blacklists does not have effect when it is enabled
+
+Improvements:
+- PowerTunnel will show more details about the plugin which is crashed during proxy server startup
+
+Bugfixes:
+- Fixed an issue when plugin's settings were not accessible on some OS locales
+
+Notes:
+- This release contains updated bundled plugins, they will be replaced automatically
