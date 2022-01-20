@@ -125,7 +125,9 @@ public class AppListActivity extends AppCompatActivity {
 
     private void setFilter(AppInfo.FilterCallback filter) {
         appFilter = filter;
-        appAdapter.filtrate(appFilter);
+        if(appAdapter != null) {
+            appAdapter.filtrate(appFilter);
+        }
     }
 
     private void resetAdapter() {
