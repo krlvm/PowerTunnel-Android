@@ -28,7 +28,7 @@ int loglevel = ANDROID_LOG_WARN;
 extern int max_tun_msg;
 extern struct ng_session *ng_session;
 
-bool pt_resolve_hosts = false;
+bool pt_resolve_hosts = true;
 
 // JNI
 

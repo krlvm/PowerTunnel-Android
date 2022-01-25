@@ -69,7 +69,7 @@ public class TunnelingVpnService extends VpnService {
     private ProxyManager proxy;
     private ParcelFileDescriptor vpn = null;
 
-    private boolean vpnResolveHosts;
+    private static final boolean vpnResolveHosts = true;
 
     @Override
     public void onCreate() {
@@ -114,10 +114,9 @@ public class TunnelingVpnService extends VpnService {
                         );
                     }
             );
-            vpnResolveHosts = false;
             //vpnResolveHosts = PreferenceManager.getDefaultSharedPreferences(this)
             //        .getBoolean("vpn_resolve_hosts", false);
-            proxy.setHostnamesAvailability(!vpnResolveHosts);
+            //proxy.setHostnamesAvailability(!vpnResolveHosts);
             proxy.start();
             return START_STICKY;
         }
