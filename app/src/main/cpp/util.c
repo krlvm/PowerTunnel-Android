@@ -60,14 +60,16 @@ int sdk_int(JNIEnv *env) {
     return (*env)->GetStaticIntField(env, clsVersion, fid);
 }
 
-void log_android(int prio, const char *fmt, ...) {
-#ifdef TUN2HTTP_LOGGING
-    va_list ap;
-    va_start(ap, fmt);
-    __android_log_vprint(prio, "tun2http", fmt, ap);
-    va_end(ap);
+#ifndef NDEBUG
+    void log_android(int prio, const char *fmt, ...) {
+    #ifdef TUN2HTTP_LOGGING
+        va_list ap;
+        va_start(ap, fmt);
+        __android_log_vprint(prio, "tun2http", fmt, ap);
+        va_end(ap);
+    #endif
+    }
 #endif
-}
 
 uint8_t char2nible(const char c) {
     if (c >= '0' && c <= '9') return (uint8_t) (c - '0');

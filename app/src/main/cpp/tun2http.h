@@ -80,7 +80,7 @@
 
 //#define TUN2HTTP_LOGGING
 #ifdef NDEBUG
-    #define log_android(ignored)
+    #define log_android(prio, fmt, ...)
 #endif
 
 
