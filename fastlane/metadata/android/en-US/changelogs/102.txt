@@ -1,0 +1,7 @@
+Improvements:
+- Improved performance and memory usage
+- Improved reliability
+
+Bugfixes:
+- Fixed an issue when PowerTunnel was slow or did not work on certain Android devices
+The VPN Interceptor bug has been fixed, so the option for enabling hostname resolving on VPN level is deprecated since this release
