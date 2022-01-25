@@ -114,8 +114,9 @@ public class TunnelingVpnService extends VpnService {
                         );
                     }
             );
-            vpnResolveHosts = PreferenceManager.getDefaultSharedPreferences(this)
-                    .getBoolean("vpn_resolve_hosts", false);
+            vpnResolveHosts = false;
+            //vpnResolveHosts = PreferenceManager.getDefaultSharedPreferences(this)
+            //        .getBoolean("vpn_resolve_hosts", false);
             proxy.setHostnamesAvailability(!vpnResolveHosts);
             proxy.start();
             return START_STICKY;

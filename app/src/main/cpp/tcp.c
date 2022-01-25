@@ -749,7 +749,7 @@ jboolean handle_tcp(const struct arguments *args,
                 }
             }
             if (cur->tcp.connect_sent == TCP_CONNECT_NOT_SENT) {
-                if (len > 0) {
+                if (len > 0 && datalen > 0) {
                     char buffer[512];
                     sprintf(buffer, "CONNECT %s:443 HTTP/1.1\r\n\r\n", cur->tcp.hostname);
 
