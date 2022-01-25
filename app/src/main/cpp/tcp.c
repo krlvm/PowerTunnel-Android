@@ -63,9 +63,11 @@ int check_tcp_session(const struct arguments *args, struct ng_session *s,
     }
 
     char session[250];
+#ifdef TUN2HTTP_LOGGING
     sprintf(session, "TCP socket from %s/%u to %s/%u %s socket %d",
             source, ntohs(s->tcp.source), dest, ntohs(s->tcp.dest),
             strstate(s->tcp.state), s->socket);
+#endif
 
     int timeout = get_tcp_timeout(&s->tcp, sessions, maxsessions);
 
@@ -231,11 +233,13 @@ void check_tcp_socket(const struct arguments *args,
         inet_ntop(AF_INET6, &s->tcp.daddr.ip6, dest, sizeof(dest));
     }
     char session[250];
+#ifdef TUN2HTTP_LOGGING
     sprintf(session, "TCP socket from %s/%u to %s/%u %s loc %u rem %u",
             source, ntohs(s->tcp.source), dest, ntohs(s->tcp.dest),
             strstate(s->tcp.state),
             s->tcp.local_seq - s->tcp.local_start,
             s->tcp.remote_seq - s->tcp.remote_start);
+#endif
 
     // Check socket error
     if (ev->events & EPOLLERR) {
@@ -587,6 +591,7 @@ jboolean handle_tcp(const struct arguments *args,
     flags[flen] = 0;
 
     char packet[250];
+#ifdef TUN2HTTP_LOGGING
     sprintf(packet,
             "TCP %s %s/%u > %s/%u seq %u ack %u data %u win %u uid %d",
             flags,
@@ -595,6 +600,7 @@ jboolean handle_tcp(const struct arguments *args,
             ntohl(tcphdr->seq) - (cur == NULL ? 0 : cur->tcp.remote_start),
             tcphdr->ack ? ntohl(tcphdr->ack_seq) - (cur == NULL ? 0 : cur->tcp.local_start) : 0,
             datalen, ntohs(tcphdr->window), uid);
+#endif
     log_android(tcphdr->urg ? ANDROID_LOG_WARN : ANDROID_LOG_DEBUG, packet);
 
 
@@ -610,7 +616,7 @@ jboolean handle_tcp(const struct arguments *args,
             uint16_t mss = get_default_mss(version);
             uint8_t ws = 0;
             int optlen = tcpoptlen;
-            uint8_t *options = tcpoptions;
+            const uint8_t *options = tcpoptions;
             while (optlen > 0) {
                 uint8_t kind = *options;
                 uint8_t len = *(options + 1);
@@ -765,6 +771,7 @@ jboolean handle_tcp(const struct arguments *args,
         }
         if (rport == 443 && cur->tcp.connect_sent != TCP_CONNECT_ESTABLISHED) {
             char session[250];
+#ifdef TUN2HTTP_LOGGING
             sprintf(session,
                     "%s %s loc %u rem %u acked %u",
                     packet,
@@ -772,12 +779,14 @@ jboolean handle_tcp(const struct arguments *args,
                     cur->tcp.local_seq - cur->tcp.local_start,
                     cur->tcp.remote_seq - cur->tcp.remote_start,
                     cur->tcp.acked - cur->tcp.local_start);
+#endif
             queue_tcp(args, tcphdr, session, &cur->tcp, data, datalen);
             goto free;
         }
 
 
         char session[250];
+#ifdef TUN2HTTP_LOGGING
         sprintf(session,
                 "%s %s loc %u rem %u acked %u",
                 packet,
@@ -785,6 +794,7 @@ jboolean handle_tcp(const struct arguments *args,
                 cur->tcp.local_seq - cur->tcp.local_start,
                 cur->tcp.remote_seq - cur->tcp.remote_start,
                 cur->tcp.acked - cur->tcp.local_start);
+#endif
 
         // Session found
         if (cur->tcp.state == TCP_CLOSING || cur->tcp.state == TCP_CLOSE) {

@@ -78,6 +78,12 @@
 
 #define MTU 10000
 
+//#define TUN2HTTP_LOGGING
+#ifdef NDEBUG
+    #define log_android(ignored)
+#endif
+
+
 extern bool pt_resolve_hosts;
 bool get_jni_env(JNIEnv **env);
 

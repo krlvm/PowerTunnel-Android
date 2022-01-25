@@ -23,10 +23,10 @@
 #include <strings.h> /* strncasecmp() */
 #include <ctype.h> /* isblank() */
 
-#include <android/log.h>
+#include "http.h"
+#include "tun2http.h"
 
-#define LOG_TAG "Tun2Http_HTTP"
-#define LOG(v) { /*__android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, v);*/ }
+#define LOG(v) { log_android(ANDROID_LOG_VERBOSE, v); }
 
 
 static const char http_503[] =
@@ -49,8 +49,6 @@ static const char http_503[] =
  *  < -4 - Invalid HTTP request
  *
  */
-
-#include "tun2http.h"
 
 int get_header(const char *header, const char *data, size_t data_len, char *value) {
     int len, header_len;

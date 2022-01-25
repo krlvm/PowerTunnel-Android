@@ -61,10 +61,12 @@ int sdk_int(JNIEnv *env) {
 }
 
 void log_android(int prio, const char *fmt, ...) {
-    //va_list ap;
-    //va_start(ap, fmt);
-    //__android_log_vprint(prio, "tun2http", fmt, ap);
-    //va_end(ap);
+#ifdef TUN2HTTP_LOGGING
+    va_list ap;
+    va_start(ap, fmt);
+    __android_log_vprint(prio, "tun2http", fmt, ap);
+    va_end(ap);
+#endif
 }
 
 uint8_t char2nible(const char c) {
@@ -94,6 +96,7 @@ char *trim(char *str) {
 }
 
 const char *strstate(const int state) {
+#ifdef TUN2HTTP_DEBUG
     switch (state) {
         case TCP_ESTABLISHED:
             return "ESTABLISHED";
@@ -120,6 +123,7 @@ const char *strstate(const int state) {
         default:
             return "UNKNOWN";
     }
+#endif
 }
 
 char *hex(const u_int8_t *data, const size_t len) {
