@@ -298,7 +298,7 @@ public class TunnelingVpnService extends VpnService {
 
     static List<String> getDefaultDNS(Context context) {
         final List<String> servers = new ArrayList<>();
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             final ConnectivityManager cm =
                     (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             final Network network = cm.getActiveNetwork();
