@@ -253,7 +253,7 @@ public class TunnelingVpnService extends VpnService {
 
         final List<String> defaultDns = getDefaultDNS(this);
         if(!defaultDns.isEmpty()) {
-            for (String dns : getDefaultDNS(this)) {
+            for (String dns : defaultDns) {
                 builder.addDnsServer(dns);
             }
         } else {
