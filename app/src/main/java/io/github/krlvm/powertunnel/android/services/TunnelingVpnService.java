@@ -112,7 +112,8 @@ public class TunnelingVpnService extends VpnService {
                                 .putExtra(PowerTunnelService.EXTRAS_MODE, TunnelMode.PROXY)
                                 .putExtra(PowerTunnelService.EXTRAS_ERROR, error)
                         );
-                    }
+                    },
+                    getDefaultDNS(this)
             );
             //vpnResolveHosts = PreferenceManager.getDefaultSharedPreferences(this)
             //        .getBoolean("vpn_resolve_hosts", false);
@@ -295,7 +296,7 @@ public class TunnelingVpnService extends VpnService {
     }
 
 
-    private static List<String> getDefaultDNS(Context context) {
+    static List<String> getDefaultDNS(Context context) {
         final List<String> servers = new ArrayList<>();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
             final ConnectivityManager cm =

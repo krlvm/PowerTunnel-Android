@@ -77,7 +77,8 @@ public class ProxyService extends Service {
                             .putExtra(PowerTunnelService.EXTRAS_MODE, TunnelMode.PROXY)
                             .putExtra(PowerTunnelService.EXTRAS_ERROR, error)
                     );
-                }
+                },
+                TunnelingVpnService.getDefaultDNS(this)
         );
         proxy.start();
 

@@ -30,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.littleshoot.proxy.mitm.CertificateHelper;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import io.github.krlvm.powertunnel.LittleProxyServer;
@@ -37,6 +38,7 @@ import io.github.krlvm.powertunnel.PowerTunnel;
 import io.github.krlvm.powertunnel.android.BuildConfig;
 import io.github.krlvm.powertunnel.android.plugin.AndroidPluginLoader;
 import io.github.krlvm.powertunnel.android.services.PowerTunnelService;
+import io.github.krlvm.powertunnel.android.utility.DNSUtility;
 import io.github.krlvm.powertunnel.mitm.MITMAuthority;
 import io.github.krlvm.powertunnel.plugin.PluginLoader;
 import io.github.krlvm.powertunnel.sdk.ServerAdapter;
@@ -74,13 +76,16 @@ public class ProxyManager implements ServerListener {
     private final Consumer<ProxyStatus> statusListener;
     private final Consumer<String> failureListener;
 
+    private final List<String> dnsServers;
+
     private boolean hostnameAvailability = true;
 
-    public ProxyManager(Context context, Consumer<ProxyStatus> statusListener, Consumer<String> failureListener) {
+    public ProxyManager(Context context, Consumer<ProxyStatus> statusListener, Consumer<String> failureListener, List<String> dnsServers) {
         this.context = context;
         this.address = PowerTunnelService.getAddress(PreferenceManager.getDefaultSharedPreferences(context));
         this.statusListener = statusListener;
         this.failureListener = failureListener;
+        this.dnsServers = dnsServers;
     }
 
     public void start() {
@@ -97,12 +102,15 @@ public class ProxyManager implements ServerListener {
                 context.getFilesDir(),
                 prefs.getBoolean("transparent_mode", true),
                 !prefs.getBoolean("strict_dns", false),
+                dnsServers,
+                DNSUtility.getDNSDomainsSearchPath(context),
                 MITMAuthority.create(
                         new File(context.getFilesDir(), "cert"),
                         getMitmCertificatePassword().toCharArray()
                 ),
                 ConfigurationManager.isUseExternalConfigs(context)
-                        ? ConfigurationManager.getExternalConfigsDirectory(context) : null
+                        ? ConfigurationManager.getExternalConfigsDirectory(context) : null,
+                null
         );
 
         new Thread(() -> {
