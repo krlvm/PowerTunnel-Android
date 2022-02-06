@@ -206,8 +206,6 @@ public class TunnelingVpnService extends VpnService {
         if(proxy != null) {
             if(proxy.isRunning()) {
                 proxy.stop();
-                proxy = null;
-                return;
             }
             proxy = null;
         }
