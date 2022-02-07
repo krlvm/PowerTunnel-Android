@@ -1,0 +1,10 @@
+New features:
+- DNS Plugin allows to ignore system hosts file
+
+Improvements:
+- DNS Support for Android versions older than Android 8 Oreo
+- Improved DNS stack
+
+Bugfixes:
+- Fixed an issue when Strict DNS Mode was not working
+- Fixed minor DNS issues
