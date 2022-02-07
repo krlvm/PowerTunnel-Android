@@ -20,6 +20,7 @@ package io.github.krlvm.powertunnel.android.managers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -59,8 +60,22 @@ public class PluginManager {
     }
 
     private static void extractPlugins(Context context) throws IOException {
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // Replace the non-working DNS Resolver on old devices with its Legacy version
+            final File file = new File(AndroidPluginLoader.getPluginsDir(context), "DNSResolver-Android.jar");
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+
         final AssetManager manager = context.getAssets();
         for (String plugin : manager.list("plugins")) {
+            if (plugin.equals("DNSResolver-Android.jar") && android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                continue;
+            }
+            if (plugin.equals("DNSResolver-Legacy-Android.jar") && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                continue;
+            }
             final File file = new File(AndroidPluginLoader.getPluginsDir(context), plugin);
             try(InputStream in = manager.open("plugins/" + plugin)) {
                 FileUtility.copy(in, file);
