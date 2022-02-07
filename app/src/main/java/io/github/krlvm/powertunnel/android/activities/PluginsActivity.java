@@ -18,6 +18,7 @@
 package io.github.krlvm.powertunnel.android.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -95,8 +96,9 @@ public class PluginsActivity extends AppCompatActivity {
             if(PowerTunnelService.isRunning()) {
                 Toast.makeText(this, R.string.toast_plugin_stop_server_to_act, Toast.LENGTH_SHORT).show();
             } else {
-                startActivityForResult(new Intent(Intent.ACTION_GET_CONTENT)
-                        .setType("application/java-archive"), REQUEST_CODE_UPLOAD);
+                final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? "application/java-archive" : "*/*");
+                startActivityForResult(intent, REQUEST_CODE_UPLOAD);
             }
         } else if(id == R.id.action_registry) {
             Utility.launchUri(this, "https://github.com/krlvm/PowerTunnel-Plugins/blob/master/README.md");
