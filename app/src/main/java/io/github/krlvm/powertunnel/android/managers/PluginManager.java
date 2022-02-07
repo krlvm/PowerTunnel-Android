@@ -60,6 +60,9 @@ public class PluginManager {
     }
 
     private static void extractPlugins(Context context) throws IOException {
+        AndroidPluginLoader.deleteOatCache(context);
+        AndroidPluginLoader.deleteDexCache(context);
+
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             // Replace the non-working DNS Resolver on old devices with its Legacy version
             final File file = new File(AndroidPluginLoader.getPluginsDir(context), "DNSResolver-Android.jar");

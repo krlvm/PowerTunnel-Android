@@ -72,4 +72,9 @@ public class AndroidPluginLoader implements PluginInjector {
         final File dir = new File(AndroidPluginLoader.getPluginsDir(context), "oat");
         if(dir.exists()) dir.delete();
     }
+
+    public static void deleteDexCache(Context context) {
+        final File dir = new File(AndroidPluginLoader.getPluginsDir(context), "dex");
+        if(dir.exists()) dir.delete();
+    }
 }
