@@ -30,6 +30,7 @@ public class Updater {
 
     public static void checkUpdatesIfNecessary(Context context, Consumer<UpdateInfo> handler) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (prefs.getBoolean("disable_update_notifier", false)) return;
 
         if(System.currentTimeMillis() - prefs.getLong("last_update_check", 0) < 24 * 60 * 60 * 1000) return;
         prefs.edit().putLong("last_update_check", System.currentTimeMillis()).apply();

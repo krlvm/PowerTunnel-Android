@@ -19,12 +19,15 @@ package io.github.krlvm.powertunnel.android.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import io.github.krlvm.powertunnel.BuildConstants;
 import io.github.krlvm.powertunnel.android.BuildConfig;
@@ -60,7 +63,7 @@ public class AboutActivity extends AppCompatActivity {
         NoUnderlineSpan.stripUnderlines(binding.license);
         binding.license.setMovementMethod(LinkMovementMethod.getInstance());
 
-        findViewById(R.id.update_button).setOnClickListener(v -> {
+        binding.updateButton.setOnClickListener(v -> {
             final ProgressDialog progress = new ProgressDialog(AboutActivity.this);
             progress.setTitle(R.string.dialog_update_checking_title);
             progress.setMessage(getString(R.string.dialog_update_checking_message, BuildConfig.VERSION_NAME));
@@ -87,6 +90,14 @@ public class AboutActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
                         .show();
             });
+        });
+        binding.updateButton.setLongClickable(true);
+        binding.updateButton.setOnLongClickListener(v -> {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            final boolean wasDisabled = prefs.getBoolean("disable_update_notifier", false);
+            prefs.edit().putBoolean("disable_update_notifier", !wasDisabled).apply();
+            Toast.makeText(this, "Update Notifier has been " + (wasDisabled ? "enabled" : "disabled"), Toast.LENGTH_SHORT).show();
+            return true;
         });
     }
 
