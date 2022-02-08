@@ -20,6 +20,7 @@ package io.github.krlvm.powertunnel.android.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -88,10 +89,38 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
             findPreference("theme").setOnPreferenceChangeListener((preference, newValue) -> {
                 Utility.applyTheme(((String) newValue));
                 return true;
             });
+
+            findPreference("upstream_proxy_protocol").setEnabled(prefs.getBoolean("upstream_proxy_enabled", false));
+            findPreference("upstream_proxy_enabled").setOnPreferenceChangeListener(((preference, newValue) -> {
+                findPreference("upstream_proxy_protocol").setEnabled((boolean) newValue);
+                return true;
+            }));
+
+            findPreference("external_configs").setOnPreferenceChangeListener(((preference, newValue) -> {
+                if (!((boolean) newValue)) return true;
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.dialog_external_configs_title)
+                        .setMessage(R.string.dialog_external_configs_message)
+                        .setPositiveButton(R.string.yes, (dialog, which) -> {
+                            dialog.dismiss();
+                            if (ConfigurationManager.checkStorageAccess(getContext(), false)) {
+                                enableExternalConfigs(getActivity());
+                                ((SwitchPreferenceCompat) preference).setChecked(true);
+                            } else {
+                                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                        PERMISSION_STORAGE_REQUEST_CODE);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, ((dialog, which) -> dialog.dismiss()))
+                        .show();
+                return false;
+            }));
 
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 findPreference("mode").setEnabled(false);
@@ -105,8 +134,7 @@ public class SettingsActivity extends AppCompatActivity {
                 updateVpnAppsDependents(((String) newValue));
                 return true;
             }));
-            updateVpnAppsDependents(PreferenceManager.getDefaultSharedPreferences(getContext())
-                    .getString("vpn_apps_mode", "exclude"));
+            updateVpnAppsDependents(prefs.getString("vpn_apps_mode", "exclude"));
 
             openAppListOnClick("vpn_apps_excluded", R.string.settings_pref_vpn_apps_excluded);
             openAppListOnClick("vpn_apps_allowed", R.string.settings_pref_vpn_apps_allowed);

@@ -51,4 +51,16 @@
         <item>allow</item>
     </string-array>
 
+    <!-- Upstream Proxy Protocol Preference -->
+    <string-array name="upstream_proxy_protocol_entries" translatable="false">
+        <item>HTTP/HTTPS</item>
+        <item>SOCKS4</item>
+        <item>SOCKS5</item>
+    </string-array>
+    <string-array name="upstream_proxy_protocol_values" translatable="false">
+        <item>http</item>
+        <item>socks4</item>
+        <item>socks5</item>
+    </string-array>
+
 </resources>

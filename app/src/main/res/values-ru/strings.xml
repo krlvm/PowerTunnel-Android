@@ -159,4 +159,5 @@
     <string name="settings_pref_cert_refuse">Не предлагать установку сертификата</string>
     <string name="settings_pref_vpn_resolve_hosts">Разрешать доменные имена</string>
     <string name="settings_pref_vpn_resolve_hosts_description">Повышает производительность в ущерб функциональности</string>
+    <string name="settings_pref_upstream_proxy_protocol">Протокол внешнего прокси-сервера</string>
 </resources>

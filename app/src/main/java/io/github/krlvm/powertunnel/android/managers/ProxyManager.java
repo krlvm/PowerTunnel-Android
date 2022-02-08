@@ -51,6 +51,7 @@ import io.github.krlvm.powertunnel.sdk.proxy.ProxyServer;
 import io.github.krlvm.powertunnel.sdk.proxy.ProxyStatus;
 import io.github.krlvm.powertunnel.sdk.proxy.UpstreamProxyServer;
 import io.github.krlvm.powertunnel.sdk.types.PowerTunnelPlatform;
+import io.github.krlvm.powertunnel.sdk.types.UpstreamProxyType;
 
 public class ProxyManager implements ServerListener {
 
@@ -188,7 +189,8 @@ public class ProxyManager implements ServerListener {
                                 prefs.getString("upstream_proxy_host", ""),
                                 Integer.parseInt(prefs.getString("upstream_proxy_port", "80"))
                         ),
-                        credentials
+                        credentials,
+                        UpstreamProxyType.valueOf(prefs.getString("upstream_proxy_protocol", "http").toUpperCase())
                 ));
             }
 

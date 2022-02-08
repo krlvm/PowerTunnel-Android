@@ -138,6 +138,7 @@
     <string name="settings_pref_upstream_proxy_description">Use upstream proxy to connect to the Internet</string>
     <string name="settings_pref_upstream_proxy_ip">Upstream proxy IP address</string>
     <string name="settings_pref_upstream_proxy_port">Upstream proxy port</string>
+    <string name="settings_pref_upstream_proxy_protocol">Upstream proxy protocol</string>
     <string name="settings_pref_upstream_proxy_auth">Upstream proxy authorization</string>
     <string name="settings_pref_upstream_proxy_auth_description">Authenticate on upstream proxy server</string>
     <string name="settings_pref_upstream_proxy_auth_username">Upstream proxy username</string>

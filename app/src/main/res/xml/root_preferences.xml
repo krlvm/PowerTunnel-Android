@@ -71,6 +71,13 @@
             app:dependency="upstream_proxy_enabled"
             app:title="@string/settings_pref_upstream_proxy_port"
             app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            app:key="upstream_proxy_protocol"
+            app:defaultValue="http"
+            app:entries="@array/upstream_proxy_protocol_entries"
+            app:entryValues="@array/upstream_proxy_protocol_values"
+            app:title="@string/settings_pref_upstream_proxy_protocol"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             app:key="upstream_proxy_auth_enabled"
