@@ -62,7 +62,7 @@
             app:summary="@string/settings_pref_upstream_proxy_description"
             app:defaultValue="false" />
         <EditTextPreference
-            app:key="upstream_proxy_ip"
+            app:key="upstream_proxy_host"
             app:dependency="upstream_proxy_enabled"
             app:title="@string/settings_pref_upstream_proxy_ip"
             app:useSimpleSummaryProvider="true" />
