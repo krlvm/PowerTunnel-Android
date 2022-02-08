@@ -1,0 +1,5 @@
+New features:
+- Support for SOCKS4/SOCKS5 upstream proxy servers
+
+Bugfixes:
+- Fixed an issue when upstream proxy server did not connect
