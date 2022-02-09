@@ -64,8 +64,6 @@ To configure DNS, open plugins page and tap to the gear opposite to DNS plugin.
 
 You are able to choose between pre-installed Google and Cloudflare DNS (DoH) providers or add yours.
 
-DNS customization is not supported on Android versions below Android 8 Oreo.
-
 ### Enabling AdBlock
 
 AdBlock is disabled by default. To enable, open plugins page and check the box next to AdBlock plugin, then restart PowerTunnel.
