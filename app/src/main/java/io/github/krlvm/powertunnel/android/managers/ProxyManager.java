@@ -146,6 +146,7 @@ public class ProxyManager implements ServerListener {
             Log.w(LOG_TAG, "Attempted to stop server when it is not running");
             return;
         }
+        if (!this.server.isRunning()) return;
 
         new Thread(() -> {
             Log.i(LOG_TAG, "Stopping server...");
