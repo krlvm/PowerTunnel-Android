@@ -68,6 +68,7 @@ public class TunnelingVpnService extends VpnService {
 
     private ProxyManager proxy;
     private ParcelFileDescriptor vpn = null;
+    private Intent disconnectBroadcast = null;
 
     private static final boolean vpnResolveHosts = true;
 
@@ -100,7 +101,8 @@ public class TunnelingVpnService extends VpnService {
             proxy = new ProxyManager(
                     this,
                     (status) -> {
-                       if (status == ProxyStatus.RUNNING) {
+                        System.out.println(" >>> GOT PROXY STATUS : " + status);
+                        if (status == ProxyStatus.RUNNING) {
                             connect();
                         } else if (status == ProxyStatus.NOT_RUNNING) {
                             disconnect();
@@ -201,14 +203,17 @@ public class TunnelingVpnService extends VpnService {
     }
 
     private void disconnect(Intent broadcast) {
-        Log.i(LOG_TAG, "Stopping...");
-
+        if (disconnectBroadcast == null) {
+            disconnectBroadcast = broadcast;
+        }
         if(proxy != null) {
             if(proxy.isRunning()) {
                 proxy.stop();
             }
             proxy = null;
+            return;
         }
+        // We need to wait until the proxy has stopped
         if (vpn != null) {
             try {
                 jni_stop(vpn.getFd());
@@ -228,7 +233,8 @@ public class TunnelingVpnService extends VpnService {
         PowerTunnelService.STATUS = GlobalStatus.NOT_RUNNING;
         stopForeground(true);
 
-        sendBroadcast(broadcast);
+        sendBroadcast(disconnectBroadcast);
+        disconnectBroadcast = null;
         BootReceiver.rememberState(this, false);
     }
 
