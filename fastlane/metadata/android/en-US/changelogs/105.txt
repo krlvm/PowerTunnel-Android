@@ -1,0 +1,4 @@
+Bugfixes:
+- Fixed an issue when VPN Service was not restarting after configuration change
+- Fixed an issue when upstream proxy authorization did not work on Android versions older than Android 8 Oreo
+- LibertyTunnel no longer conflicts with other plugins which use MITM stack
