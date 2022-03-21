@@ -107,7 +107,7 @@ public class NotificationHelper {
         channel.setDescription(context.getString(description));
         channel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         channel.setImportance(NotificationManager.IMPORTANCE_MIN);
-        channel.enableVibration(true);
+        channel.enableVibration(false);
         channel.enableLights(false);
         channel.setShowBadge(false);
 
