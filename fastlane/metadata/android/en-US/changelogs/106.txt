@@ -1,0 +1,14 @@
+New features:
+- In-app editor for plugin configuration files
+
+Improvements:
+- Disabled Quick Tile on lockscreen
+- Disabled vibration for sticky notifications
+
+Bugfixes:
+- Fixed an issue when LibertyTunnel could not generate PAC file properly
+- Fixed an issue when LibertyTunnel went in global mode after enabling mirror
+
+Release notes:
+- Preinstalled Firewall plugin
+- Preinstalled Hosts plugin

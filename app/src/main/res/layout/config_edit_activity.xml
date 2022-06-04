@@ -40,6 +40,7 @@
         android:selectAllOnFocus="false"
         android:singleLine="false"
         android:textSize="14sp"
+        android:padding="4dp"
         android:typeface="monospace" />
 
 

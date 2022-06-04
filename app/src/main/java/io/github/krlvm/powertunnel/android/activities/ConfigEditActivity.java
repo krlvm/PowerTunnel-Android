@@ -45,6 +45,8 @@ public class ConfigEditActivity extends AppCompatActivity {
     private static final String LOG_TAG = "ConfigEdit";
     private String fileName;
 
+    private long tBackPressed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,16 @@ public class ConfigEditActivity extends AppCompatActivity {
         }
 
         reloadContents();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - tBackPressed > 500L) {
+            tBackPressed = System.currentTimeMillis();
+            Toast.makeText(this, R.string.plugins_activity_toast_back, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override

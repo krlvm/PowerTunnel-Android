@@ -166,4 +166,5 @@
     <string name="toast_config_init_error">Ошибка при инициализации файла конфигурации</string>
     <string name="toast_config_editor_saved_error">Ошибка при сохранении файла конфигурации</string>
     <string name="plugins_activity_tip">Удерживайте значок настроек для редактирования дополнительной конфигурации</string>
+    <string name="plugins_activity_toast_back">Нажмите еще раз, чтобы выйти без сохранения</string>
 </resources>
