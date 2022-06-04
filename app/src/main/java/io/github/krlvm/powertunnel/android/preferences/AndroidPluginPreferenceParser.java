@@ -19,7 +19,6 @@ package io.github.krlvm.powertunnel.android.preferences;
 
 import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +29,6 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.function.Consumer;
 
-import io.github.krlvm.powertunnel.android.R;
 import io.github.krlvm.powertunnel.exceptions.PreferenceParseException;
 import io.github.krlvm.powertunnel.i18n.I18NBundle;
 import io.github.krlvm.powertunnel.plugin.PluginLoader;
@@ -48,8 +46,7 @@ public class AndroidPluginPreferenceParser {
         try(final JarLoader loader = new JarLoader(PluginLoader.getPluginFile(context.getFilesDir(), pluginInfo.getSource()))) {
             loader.open(PreferenceParser.FILE, (in) -> {
                 if(in == null) {
-                    context.runOnUiThread(() ->
-                            Toast.makeText(context, R.string.toast_plugin_not_configurable, Toast.LENGTH_SHORT).show());
+                    consumer.accept(null);
                     return;
                 }
                 getJarLocaleBundleInputStream(loader, (_in) -> {

@@ -6,11 +6,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.TooltipCompat;
+import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
@@ -20,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import io.github.krlvm.powertunnel.android.R;
+import io.github.krlvm.powertunnel.android.activities.ConfigEditActivity;
 import io.github.krlvm.powertunnel.android.activities.PluginSettingsActivity;
 import io.github.krlvm.powertunnel.android.activities.PluginsActivity;
 import io.github.krlvm.powertunnel.android.databinding.PluginItemBinding;
@@ -77,13 +82,23 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.ViewHolder
         TooltipCompat.setTooltipText(holder.binding.pluginSettings, holder.binding.pluginSettings.getContentDescription());
         holder.binding.pluginSettings.setOnClickListener(v -> {
             new Thread(() -> {
-                AndroidPluginPreferenceParser.loadPreferences(((PluginsActivity) context), plugin, preferences ->
-                        context.startActivity(new Intent(context, PluginSettingsActivity.class)
-                                .putExtra("plugin", plugin)
-                                .putExtra("preferences", (Serializable) preferences)
-                        ));
+                AndroidPluginPreferenceParser.loadPreferences(((PluginsActivity) context), plugin, preferences -> {
+                    if (preferences == null) {
+                        ((PluginsActivity) context).runOnUiThread(() -> {
+                            if (!showAdditionalConfigurationMenu(v, plugin)) {
+                                Toast.makeText(context, R.string.toast_plugin_not_configurable, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                    context.startActivity(new Intent(context, PluginSettingsActivity.class)
+                            .putExtra("plugin", plugin)
+                            .putExtra("preferences", (Serializable) preferences)
+                    );
+                });
             }).start();
         });
+        holder.binding.pluginSettings.setOnLongClickListener(v -> showAdditionalConfigurationMenu(v, plugin));
 
         holder.binding.pluginUninstall.setOnClickListener(v -> {
             if (PowerTunnelService.isRunning()) {
@@ -158,5 +173,31 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.ViewHolder
             }
         }
         return i;
+    }
+
+    private boolean showAdditionalConfigurationMenu(View view, PluginInfo plugin) {
+        final String[] files = plugin.getConfigurationFiles();
+        if (files.length == 0) return false;
+
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuCompat.setGroupDividerEnabled(menu.getMenu(), true);
+
+        menu.getMenu().add(0, 0, 0, R.string.menu_plugin_additional_configuration_title)
+                .setEnabled(false);
+
+        final MenuItem.OnMenuItemClickListener listener = item -> {
+            final String fileName = item.getTitle().toString();
+            context.startActivity(new Intent(context, ConfigEditActivity.class)
+                    .putExtra("plugin", plugin.getName())
+                    .putExtra("file", fileName));
+            return true;
+        };
+        for (int i = 0; i < files.length; i++) {
+            String fileName = files[i];
+            menu.getMenu().add(1, i, i, fileName).setOnMenuItemClickListener(listener);
+        }
+
+        menu.show();
+        return true;
     }
 }

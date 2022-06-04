@@ -64,6 +64,7 @@ public class ProxyManager implements ServerListener {
             "Powerful and extensible proxy server",
             "krlvm",
             "https://github.com/krlvm/PowerTunnel-Android",
+            new String[0],
             null,
             io.github.krlvm.powertunnel.BuildConstants.VERSION_CODE,
             null

@@ -160,4 +160,10 @@
     <string name="settings_pref_vpn_resolve_hosts">Разрешать доменные имена</string>
     <string name="settings_pref_vpn_resolve_hosts_description">Повышает производительность в ущерб функциональности</string>
     <string name="settings_pref_upstream_proxy_protocol">Протокол внешнего прокси-сервера</string>
+    <string name="menu_plugin_additional_configuration_title">Дополнительная конфигурация</string>
+    <string name="toast_config_editor_error">Ошибка при чтении файла конфигурации</string>
+    <string name="toast_config_editor_saved">Изменения сохранены</string>
+    <string name="toast_config_init_error">Ошибка при инициализации файла конфигурации</string>
+    <string name="toast_config_editor_saved_error">Ошибка при сохранении файла конфигурации</string>
+    <string name="plugins_activity_tip">Удерживайте значок настроек для редактирования дополнительной конфигурации</string>
 </resources>

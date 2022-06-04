@@ -120,6 +120,7 @@
     <string name="toast_plugin_installed">Plugin installed successfully, uninstall old version if present</string>
     <string name="dialog_plugin_uninstall_title">Confirmation</string>
     <string name="dialog_plugin_uninstall_message">Are you sure you want to uninstall the plugin?</string>
+    <string name="menu_plugin_additional_configuration_title">Additional configuration</string>
 
 
     <!-- Settings Activity -->
@@ -184,6 +185,7 @@
     <string name="plugin_settings_failed_to_save">Failed to save configuration</string>
     <string name="action_plugin_settings_reset">Reset configuration</string>
     <string name="toast_permission_for_external_configs">Please, grant the permission to save configurations to Documents folder</string>
+    <string name="plugins_activity_tip">Hold the gear icon to view additional configuration files</string>
 
     <!-- Logs Activity -->
     <string name="title_activity_logs">Log Viewer</string>
@@ -193,6 +195,12 @@
     <string name="toast_logs_saved">Log file saved successfully</string>
     <string name="toast_logs_save_failed">Failed to save log file</string>
     <string name="toast_logs_save_os_unsupported">Logs saving is not supported on your Android version</string>
+
+    <!-- Config Editor Activity -->
+    <string name="toast_config_editor_error">Failed to load configuration file</string>
+    <string name="toast_config_init_error">Failed to initialize configuration file</string>
+    <string name="toast_config_editor_saved">Changes has been saved</string>
+    <string name="toast_config_editor_saved_error">Failed to save configuration file</string>
 
     <!-- Crash Activity -->
     <string name="title_activity_crash">Crash Report</string>

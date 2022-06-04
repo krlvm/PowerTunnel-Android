@@ -18,6 +18,7 @@
 package io.github.krlvm.powertunnel.android.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,6 +80,12 @@ public class PluginsActivity extends AppCompatActivity {
                 RecyclerView.VERTICAL
         ));
         resetAdapter();
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.getBoolean("plugins_activity_tip", false)) {
+            Toast.makeText(this, R.string.plugins_activity_tip, Toast.LENGTH_LONG).show();
+            prefs.edit().putBoolean("plugins_activity_tip", true).apply();
+        }
     }
 
     @Override
