@@ -1,0 +1,221 @@
+<!--
+  ~ This file is part of PowerTunnel-Android.
+  ~
+  ~ PowerTunnel-Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ PowerTunnel-Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+    <string name="alt_logo">Logo do PowerTunnel</string>
+    <string name="app_description">Poderoso e extensível servidor proxy</string>
+    <string name="app_version">Versão %1$s\nCore v%2$s (%3$d), SDK %4$d</string>
+
+    <string name="ok">OK</string>
+    <string name="yes">Sim</string>
+    <string name="cancel">Cancelar</string>
+    <string name="learn_more">Saiba mais</string>
+    <string name="download">Download</string>
+
+    <!-- Action buttons -->
+    <string name="action_starting">Iniciando…</string>
+    <string name="action_start">Iniciar</string>
+    <string name="action_stop">Parar</string>
+    <string name="action_stopping">Parando…</string>
+
+    <string name="action_connecting">Conectando…</string>
+    <string name="action_connect">Conectar</string>
+    <string name="action_disconnect">Desconectar</string>
+    <string name="action_disconnecting">Desconectando…</string>
+
+    <!-- Main menu -->
+    <string name="settings">Configurações</string>
+    <string name="view_logs">Mostrar logs</string>
+    <string name="about">Sobre</string>
+
+    <!-- Status -->
+    <string name="status_running_proxy">Proxy está funcionando</string>
+    <string name="status_running_vpn">VPN está conectada</string>
+    <string name="status_not_running_proxy">Proxy não está funcionando</string>
+    <string name="status_not_running_vpn">VPN não está conectada</string>
+
+    <string name="main_description_proxy">O app funciona em modo proxy, você precisa configurar manualmente cada aplicativo para encaminhar o tráfego via o servidor proxy</string>
+    <string name="main_description_vpn">O app funciona em modo VPN, o tráfego de todos os aplicativos passa por PowerTunnel</string>
+    <string name="main_description_proxy_loopback"><![CDATA[<b>%1$s</b><small><br><br></small>Conexões locais:<small><br></small><b>%2$s</b><small><br><br></small>|Conexões de rede local:<small><br></small><b>%3$s</b>]]></string>
+
+    <string name="toast_allow_vpn">Por favor, permita que o aplicativo se conecte à VPN</string>
+    <string name="toast_configure_while_running">Toque novamente, se você quiser modificar as configurações, o PowerTunnel será reiniciado para aplicar as alterações</string>
+    <string name="toast_configure_while_running_restart">O PowerTunnel é reiniciado para que as alterações entrem em vigor</string>
+
+    <string name="toast_failed_to_extract_plugins">Falha ao instalar os plugins internos</string>
+    <string name="toast_failed_to_install_plugin">Falha ao instalar o plugin</string>
+    <string name="toast_failed_to_uninstall_plugin">Falha ao desinstalar o plugin</string>
+    <string name="toast_plugin_uninstalled">Plugin \"%1$s\" desinstalado</string>
+    <string name="toast_plugin_stop_server_to_act">Por favor, pare o servidor para fazer esta ação</string>
+
+    <!-- Quick Settings Tile -->
+    <string name="qs_starting">Iniciando PowerTunnel…</string>
+    <string name="qs_stopping">Parando PowerTunnel…</string>
+    <string name="qs_startup_failed">Falha ao iniciar PowerTunnel</string>
+
+    <!-- Error popups -->
+    <string name="dialog_error_failed_to_start_title">Falha ao iniciar</string>
+    <string name="dialog_error_failed_to_start_message_proxy">Ocorreu um erro ao iniciar o servidor proxy: %1$s</string>
+    <string name="dialog_error_failed_to_start_message_vpn">Ocorreu um erro ao iniciar o interceptor da VPN: %1$s</string>
+    <string name="dialog_error_failed_to_start_message_vpn_fw">Em agosto de 2020 a Samsung introduziu um bug no firmware que impede iniciar o interceptor da VPN local. Visite o repositório para ver como consertá-lo.</string>
+
+    <!-- Certificate -->
+    <string name="toast_cert_install">Por favor, instale o Root CA para usar os recursos ativados</string>
+    <string name="toast_cert_install_a11">Por favor, instale o Root CA salvo para usar os recursos ativados</string>
+    <string name="toast_cert_install_error">Falha ao instalar o Root CA, algumas funcionalidades podem não estar disponíveis</string>
+    <string name="toast_cert_installed">Certificado instalado com sucesso</string>
+    <string name="toast_cert_extract_os_unsupported">A extração de certificados não é suportada em sua versão do Android</string>
+    <string name="toast_cert_extracted">Certificado salvo com sucesso</string>
+    <string name="toast_cert_extraction_failed">Falha ao salvar certificado</string>
+
+    <string name="dialog_cert_extract_title">Instalador de certificados</string>
+    <string name="dialog_cert_extract_message">Você quer salvar o certificado para instalá-lo manualmente?</string>
+
+    <!-- Notification Channels -->
+    <string name="notification_group_connection">Conexão</string>
+    <string name="notification_group_connection_description">Status da conexão</string>
+
+    <string name="notification_channel_proxy">Servidor proxy</string>
+    <string name="notification_channel_proxy_description">Status do servidor proxy</string>
+
+    <string name="notification_channel_vpn">VPN</string>
+    <string name="notification_channel_vpn_description">Status da conexão VPN</string>
+
+    <!-- Notifications -->
+    <string name="notification_title_proxy">Proxy do PowerTunnel</string>
+    <string name="notification_message_proxy">O servidor proxy está funcionando</string>
+
+    <string name="notification_title_vpn">PowerTunnel VPN</string>
+    <string name="notification_message_vpn">VPN está conectada</string>
+
+
+    <!-- Plugins Activity -->
+    <string name="title_activity_plugins">Plugins</string>
+    <string name="alt_plugin_settings">Configurações</string>
+    <string name="alt_plugin_uninstall">Desinstalar</string>
+    <string name="alt_plugin_about">Sobre</string>
+    <string name="visit_homepage">Site</string>
+    <string name="action_plugin_install">Instalar o plugin</string>
+    <string name="action_plugin_registry">Registro de plugins</string>
+    <string name="toast_plugin_not_configurable">O plugin não é configurável</string>
+    <string name="toast_plugin_installed">Plugin instalado com sucesso, desinstale a versão antiga, se for o caso</string>
+    <string name="dialog_plugin_uninstall_title">Confirmação</string>
+    <string name="dialog_plugin_uninstall_message">Você tem certeza que quer desinstalar o plugin?</string>
+    <string name="menu_plugin_additional_configuration_title">Configuração adicional</string>
+
+
+    <!-- Settings Activity -->
+    <string name="title_activity_settings">Configurações</string>
+
+    <string name="settings_category_application">Aplicativo</string>
+    <string name="settings_pref_theme">Tema</string>
+    <string name="settings_pref_autostart">Início automático</string>
+    <string name="settings_pref_autostart_description">O app será automaticamente iniciado após o reinício, se estiver funcionando antes</string>
+
+    <string name="settings_category_connection">Conexão</string>
+    <string name="settings_pref_mode">Modo de conexão</string>
+    <string name="settings_pref_proxy_ip">Endereço IP do servidor proxy local</string>
+    <string name="settings_pref_proxy_port">Porta local do servidor proxy</string>
+    <string name="settings_pref_upstream_proxy">Conecta via upstream proxy</string>
+    <string name="settings_pref_upstream_proxy_description">Use upstream proxy para se conectar à internet</string>
+    <string name="settings_pref_upstream_proxy_ip">Endereço IP do upstream proxy</string>
+    <string name="settings_pref_upstream_proxy_port">Porta do upstream proxy</string>
+    <string name="settings_pref_upstream_proxy_protocol">Protocolo do upstream proxy</string>
+    <string name="settings_pref_upstream_proxy_auth">Autorização do upstream proxy</string>
+    <string name="settings_pref_upstream_proxy_auth_description">Autenticação no servidor do upstream proxy</string>
+    <string name="settings_pref_upstream_proxy_auth_username">Nome de usuário no upstream proxy</string>
+    <string name="settings_pref_upstream_proxy_auth_password">Senha do upstream proxy</string>
+
+    <string name="settings_category_vpn">VPN</string>
+    <string name="settings_pref_vpn_resolve_hosts">Resolver nomes de domínio</string>
+    <string name="settings_pref_vpn_resolve_hosts_description">Aumenta o desempenho, mas reduz a funcionalidade</string>
+    <string name="settings_pref_vpn_apps_mode">Modo de filtragem de apps</string>
+    <string name="settings_pref_vpn_apps_excluded">Apps excluídos</string>
+    <string name="settings_pref_vpn_apps_excluded_description">Lista de apps que contornam a VPN</string>
+    <string name="settings_pref_vpn_apps_allowed">Apps permitidos</string>
+    <string name="settings_pref_vpn_apps_allowed_description">Lista de apps que podem usar a VPN</string>
+
+    <string name="settings_category_proxy">Proxy</string>
+    <string name="settings_pref_proxy_auth_enabled">Precisa da autorização de proxy</string>
+    <string name="settings_pref_proxy_auth_enabled_description">Precisa da autorização de proxy local</string>
+    <string name="settings_pref_proxy_auth_username">Nome do usuário para autorização</string>
+    <string name="settings_pref_proxy_auth_password">Senha de autorização</string>
+    <string name="settings_pref_transparent_mode">Modo transparente</string>
+    <string name="settings_pref_strict_dns">Modo de DNS restrito</string>
+    <string name="settings_pref_allow_requests_to_origin_server">Permitir consultas ao servidor de origem</string>
+    <string name="settings_pref_cert_refuse">Não ofereça a instalação de certificados</string>
+
+    <string name="settings_category_data_storage">Armazenamento de dados</string>
+    <string name="settings_pref_collect_logs">Captar logs</string>
+    <string name="settings_pref_collect_logs_description">Adiciona o visualizador de logs ao menu de três pontos</string>
+    <string name="settings_pref_external_configs">Armazenar as configurações em Documentos</string>
+    <string name="settings_pref_external_configs_off">As configurações são salvos no armazenamento seguro do app</string>
+    <string name="settings_pref_external_configs_on">As configurações são armazenadas em pasta de Documentos</string>
+
+    <string name="dialog_external_configs_title">Confirmação</string>
+    <string name="dialog_external_configs_message">A configuração de plugins será resetada depois de movê-la para a pasta de Documentos, continuar?</string>
+
+    <!-- App List Preference Fragment -->
+    <string name="app_list_search">Procurar</string>
+    <string name="app_list_show_checked">Mostrar aplicativos selecionados</string>
+    <string name="app_list_refresh">Atualizar</string>
+
+    <!-- Plugin Settings Activity -->
+    <string name="plugin_settings_failed_to_create">Falha ao criar a configuração</string>
+    <string name="plugin_settings_failed_to_read">Falha ao ler a configuração</string>
+    <string name="plugin_settings_failed_to_save">Falha ao salvar a configuração</string>
+    <string name="action_plugin_settings_reset">Resetar a configuração</string>
+    <string name="toast_permission_for_external_configs">Por favor, conceda a permissão para salvar configurações em pasta de Documentos</string>
+    <string name="plugins_activity_tip">Toque longo no ícone da roda para visualizar arquivos de configuração adicional</string>
+    <string name="plugins_activity_toast_back">Toque novamente para sair sem salvar</string>
+
+    <!-- Logs Activity -->
+    <string name="title_activity_logs">Visualização de logs</string>
+    <string name="action_refresh">Atualizar</string>
+    <string name="action_save">Salvar</string>
+    <string name="toast_logs_error">Falha ao ler os logs</string>
+    <string name="toast_logs_saved">Arquivo com logs salvo com sucesso</string>
+    <string name="toast_logs_save_failed">Falha ao salvar o arquivo com logs</string>
+    <string name="toast_logs_save_os_unsupported">Não é possível salvar logs em sua versão do Android</string>
+
+    <!-- Config Editor Activity -->
+    <string name="toast_config_editor_error">Falha ao carregar o arquivo de configuração</string>
+    <string name="toast_config_init_error">Falha ao inicializar o arquivo de configuração</string>
+    <string name="toast_config_editor_saved">As mudanças foram salvas</string>
+    <string name="toast_config_editor_saved_error">Falha ao salvar o arquivo de configuração</string>
+
+    <!-- Crash Activity -->
+    <string name="title_activity_crash">Relatório de falha</string>
+    <string name="crash_heading">Falha inesperada</string>
+    <string name="crash_submit_issue_note">Por favor, submeta o relatório se o problema persistir.\nNão esqueça de anexar os logs da falha.</string>
+    <string name="crash_submit_issue">Submeter um problema</string>
+
+    <!-- Update Notifier -->
+    <string name="check_for_updates">Procurar por atualizações</string>
+    <string name="dialog_update_available_title">Nova atualização está disponível</string>
+    <string name="dialog_update_available_message">Versão %1$s está pronto para instalar</string>
+    <string name="dialog_update_error_title">Falha ao procurar por atualizações</string>
+    <string name="dialog_update_error_message">Ocorreu um erro durante a verificação por atualizações, verifique a sua conexão de rede</string>
+    <string name="dialog_update_checking_title">Procurando por atualizações…</string>
+    <string name="dialog_update_checking_message">Versão instalada: %s</string>
+    <string name="dialog_update_no_updates_title">Nenhuma atualização está disponível</string>
+    <string name="dialog_update_no_updates_message">Você tem a versão mais recente do PowerTunnel</string>
+    <string name="notification_channel_updater">Notificador de atualizações</string>
+    <string name="notification_channel_updater_description">Notificação sobre atualizações</string>
+
+</resources>
