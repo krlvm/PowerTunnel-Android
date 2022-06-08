@@ -67,7 +67,7 @@ public class ConfigEditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (System.currentTimeMillis() - tBackPressed > 500L) {
+        if (System.currentTimeMillis() - tBackPressed > 1200L) {
             tBackPressed = System.currentTimeMillis();
             Toast.makeText(this, R.string.plugins_activity_toast_back, Toast.LENGTH_SHORT).show();
             return;
@@ -149,6 +149,7 @@ public class ConfigEditActivity extends AppCompatActivity {
             }
             runOnUiThread(() -> {
                 Toast.makeText(this, R.string.toast_config_editor_saved, Toast.LENGTH_LONG).show();
+                finish();
             });
         }, "Configuration Saver").start();
     }
