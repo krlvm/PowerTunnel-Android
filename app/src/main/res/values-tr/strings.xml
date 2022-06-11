@@ -1,0 +1,172 @@
+<!--
+  ~ This file is part of PowerTunnel-Android.
+  ~
+  ~ PowerTunnel-Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ PowerTunnel-Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with PowerTunnel-Android.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+    <string name="alt_logo">PowerTunnel Logosu</string>
+    <string name="app_description">Güçlü ve genişletilebilir vekil sunucu</string>
+    <string name="app_version">Sürüm %1$s\nÇekirdek v%2$s (%3$d), SDK %4$d</string>
+    <string name="ok">TAMAM</string>
+    <string name="yes">Evet</string>
+    <string name="cancel">İptal et</string>
+    <string name="learn_more">Daha fazlasını öğren</string>
+    <string name="download">İndir</string>
+    <string name="action_starting">Başlatılıyor...</string>
+    <string name="action_start">Başlat</string>
+    <string name="action_stop">Durdur</string>
+    <string name="action_stopping">Durduruluyor...</string>
+    <string name="action_connecting">Bağlanıyor...</string>
+    <string name="action_connect">Bağlan</string>
+    <string name="action_disconnect">Bağlantıyı kes</string>
+    <string name="action_disconnecting">Bağlantı kesiliyor...</string>
+    <string name="settings">Ayarlar</string>
+    <string name="view_logs">Günlükleri görüntüle</string>
+    <string name="about">Hakkında</string>
+    <string name="status_running_proxy">Vekil sunucu çalışıyor</string>
+    <string name="status_running_vpn">VPN bağlandı</string>
+    <string name="status_not_running_proxy">Vekil sunucu çalışmıyor</string>
+    <string name="status_not_running_vpn">VPN bağlı değil</string>
+    <string name="main_description_proxy">Uygulama vekil sunucu modunda çalışır, trafiği vekil sunucu üzerinden yönlendirmek için her uygulamayı manuel olarak ayarlamanız gerekir</string>
+    <string name="main_description_vpn">Uygulama VPN modunda çalışır, tüm uygulamaların trafiği PowerTunnel üzerinden geçer</string>
+    <string name="main_description_proxy_loopback"><![CDATA[<b>%1$s</b><small><br><br></small>Yerel bağlantılar:<small><br></small><b>%2$s</b><small><br><br></small>|Yerel ağ bağlantıları:<small><br></small><b>%3$s</b>]]></string>
+    <string name="toast_allow_vpn">Lütfen uygulamanın VPN'e bağlanmasına izin verin</string>
+    <string name="toast_configure_while_running">Ayarları değiştirmek istiyorsanız tekrar dokunun, PowerTunnel değişiklikleri uygulamak için yeniden başlatılacaktır</string>
+    <string name="toast_configure_while_running_restart">Değişikliklerin geçerli olması için PowerTunnel yeniden başlar</string>
+    <string name="toast_failed_to_extract_plugins">Dahili eklentiler yüklenemedi</string>
+    <string name="toast_failed_to_install_plugin">Eklenti yüklenemedi</string>
+    <string name="toast_failed_to_uninstall_plugin">Eklenti kaldırılamadı</string>
+    <string name="toast_plugin_uninstalled">\"%1$s\" eklentisi kaldırıldı</string>
+    <string name="toast_plugin_stop_server_to_act">Lütfen bu işlemi yapmak için sunucuyu durdurun</string>
+    <string name="qs_starting">PowerTunnel başlatılıyor...</string>
+    <string name="qs_stopping">PowerTunnel durduruluyor...</string>
+    <string name="qs_startup_failed">PowerTunnel başlatılamadı</string>
+    <string name="dialog_error_failed_to_start_title">Başlatılamadı</string>
+    <string name="dialog_error_failed_to_start_message_proxy">Vekil sunucu başlatılırken bir hata oluştu: %1$s</string>
+    <string name="dialog_error_failed_to_start_message_vpn">VPN Önleyicisi başlatılırken bir hata oluştu: %1$s</string>
+    <string name="dialog_error_failed_to_start_message_vpn_fw">Ağustos 2020'de Samsung Güvenlik Yamaları, yerel VPN Önleyicisinin başlamasını engelleyen bir aygıt yazılımı hatası oluşturdu. Nasıl düzeltileceğini öğrenmek için depoyu ziyaret edin.</string>
+    <string name="toast_cert_install">Etkinleştirilmiş özellikleri kullanmak için lütfen Kök CA'yı yükleyin</string>
+    <string name="toast_cert_install_a11">Etkinleştirilmiş özellikleri kullanmak için lütfen kayıtlı Kök CA'yı yükleyin</string>
+    <string name="toast_cert_install_error">Kök CA yüklenemedi, bazı özellikler kullanılamayabilir</string>
+    <string name="toast_cert_installed">Sertifika başarıyla yüklendi</string>
+    <string name="toast_cert_extract_os_unsupported">Sertifika çıkarma işlemi Android sürümünüzde desteklenmiyor</string>
+    <string name="toast_cert_extracted">Sertifika başarıyla kaydedildi</string>
+    <string name="toast_cert_extraction_failed">Sertifika kaydedilemedi</string>
+    <string name="dialog_cert_extract_title">Sertifika yükleyici</string>
+    <string name="dialog_cert_extract_message">Manuel olarak yüklemek için sertifikayı kaydetmek istiyor musunuz?</string>
+    <string name="notification_group_connection">Bağlantı</string>
+    <string name="notification_group_connection_description">Bağlantı durumu</string>
+    <string name="notification_channel_proxy">Vekil Sunucu</string>
+    <string name="notification_channel_proxy_description">Vekil Sunucu durumu</string>
+    <string name="notification_channel_vpn">VPN</string>
+    <string name="notification_channel_vpn_description">VPN Bağlantı durumu</string>
+    <string name="notification_title_proxy">PowerTunnel Vekil</string>
+    <string name="notification_message_proxy">Vekil Sunucu çalışıyor</string>
+    <string name="notification_title_vpn">PowerTunnel VPN</string>
+    <string name="notification_message_vpn">VPN bağlandı</string>
+    <string name="title_activity_plugins">Eklentiler</string>
+    <string name="alt_plugin_settings">Ayarlar</string>
+    <string name="alt_plugin_uninstall">Kaldır</string>
+    <string name="alt_plugin_about">Hakkında</string>
+    <string name="visit_homepage">Ana sayfa</string>
+    <string name="action_plugin_install">Bir eklenti yükle</string>
+    <string name="action_plugin_registry">Eklenti Kayıt Defteri</string>
+    <string name="toast_plugin_not_configurable">Eklenti yapılandırılamıyor</string>
+    <string name="toast_plugin_installed">Eklenti başarıyla yüklendi, varsa eski sürümü kaldırın</string>
+    <string name="dialog_plugin_uninstall_title">Onay</string>
+    <string name="dialog_plugin_uninstall_message">Eklentiyi kaldırmak istediğinizden emin misiniz?</string>
+    <string name="menu_plugin_additional_configuration_title">Ek yapılandırma</string>
+    <string name="title_activity_settings">Ayarlar</string>
+    <string name="settings_category_application">Uygulama</string>
+    <string name="settings_pref_theme">Tema</string>
+    <string name="settings_pref_autostart">Otomatik başlatma</string>
+    <string name="settings_pref_autostart_description">Uygulama daha önce çalışıyorsa yeniden başlatıldıktan sonra otomatik olarak başlatılacaktır</string>
+    <string name="settings_category_connection">Bağlantı</string>
+    <string name="settings_pref_mode">Bağlantı modu</string>
+    <string name="settings_pref_proxy_ip">Yerel vekil sunucu IP adresi</string>
+    <string name="settings_pref_proxy_port">Yerel vekil sunucu bağlantı noktası</string>
+    <string name="settings_pref_upstream_proxy">Yukarı akış vekil sunucusu üzerinden bağlanma</string>
+    <string name="settings_pref_upstream_proxy_description">İnternete bağlanmak için yukarı akış vekil sunucusunu kullan</string>
+    <string name="settings_pref_upstream_proxy_ip">Yukarı akış vekil sunucu IP adresi</string>
+    <string name="settings_pref_upstream_proxy_port">Yukarı akış vekil sunucu bağlantı noktası</string>
+    <string name="settings_pref_upstream_proxy_protocol">Yukarı akış vekil sunucu protokolü</string>
+    <string name="settings_pref_upstream_proxy_auth">Yukarı akış vekil sunucu yetkilendirmesi</string>
+    <string name="settings_pref_upstream_proxy_auth_description">Yukarı akış vekil sunucusunda kimlik doğrulama</string>
+    <string name="settings_pref_upstream_proxy_auth_username">Yukarı akış vekil kullanıcı adı</string>
+    <string name="settings_pref_upstream_proxy_auth_password">Yukarı akış vekil sunucu parolası</string>
+    <string name="settings_category_vpn">VPN</string>
+    <string name="settings_pref_vpn_resolve_hosts">Alan adlarını çöz</string>
+    <string name="settings_pref_vpn_resolve_hosts_description">Performansı artırır ancak işlevselliği azaltır</string>
+    <string name="settings_pref_vpn_apps_mode">Uygulama filtreleme modu</string>
+    <string name="settings_pref_vpn_apps_excluded">Hariç tutulan uygulamalar</string>
+    <string name="settings_pref_vpn_apps_excluded_description">VPN'i atlayan uygulamaların listesi</string>
+    <string name="settings_pref_vpn_apps_allowed">İzin verilen uygulamalar</string>
+    <string name="settings_pref_vpn_apps_allowed_description">VPN kullanmasına izin verilen uygulamaların listesi</string>
+    <string name="settings_category_proxy">Vekil</string>
+    <string name="settings_pref_proxy_auth_enabled">Vekil yetkilendirmesi gerektir</string>
+    <string name="settings_pref_proxy_auth_enabled_description">Yerel vekil sunucuda yetkilendirme gerektir</string>
+    <string name="settings_pref_proxy_auth_username">Yetkili kullanıcı adı</string>
+    <string name="settings_pref_proxy_auth_password">Yetkilendirme şifresi</string>
+    <string name="settings_pref_transparent_mode">Şeffaf mod</string>
+    <string name="settings_pref_strict_dns">Katı DNS Modu</string>
+    <string name="settings_pref_allow_requests_to_origin_server">Kaynak sunucuya isteklere izin ver</string>
+    <string name="settings_pref_cert_refuse">Sertifika kurulumu önerme</string>
+    <string name="settings_category_data_storage">Veri depolama</string>
+    <string name="settings_pref_collect_logs">Günlükleri topla</string>
+    <string name="settings_pref_collect_logs_description">Üç noktalı menüye Günlük Görüntüleyici\'yi ekler</string>
+    <string name="settings_pref_external_configs">Yapılandırmaları Belgeler\'de saklayın</string>
+    <string name="settings_pref_external_configs_off">Yapılandırmalar güvenli uygulama depolama alanında saklanır</string>
+    <string name="settings_pref_external_configs_on">Yapılandırmalar Belgeler klasöründe saklanır</string>
+    <string name="dialog_external_configs_title">Onay</string>
+    <string name="dialog_external_configs_message">Eklentiler yapılandırması Belgeler klasörüne taşındıktan sonra sıfırlanacaktır, devamı edilsin mi?</string>
+    <string name="app_list_search">Ara</string>
+    <string name="app_list_show_checked">İşaretli uygulamaları göster</string>
+    <string name="app_list_refresh">Yenile</string>
+    <string name="plugin_settings_failed_to_create">Yapılandırma oluşturulamadı</string>
+    <string name="plugin_settings_failed_to_read">Yapılandırma okunamadı</string>
+    <string name="plugin_settings_failed_to_save">Yapılandırma kaydedilemedi</string>
+    <string name="action_plugin_settings_reset">Yapılandırmayı sıfırla</string>
+    <string name="toast_permission_for_external_configs">Lütfen yapılandırmaları Belgeler klasörüne kaydetmek için izin verin</string>
+    <string name="plugins_activity_tip">Ek yapılandırma dosyalarını görüntülemek için dişli simgesine basılı tutun</string>
+    <string name="plugins_activity_toast_back">Kaydetmeden çıkmak için tekrar dokunun</string>
+    <string name="title_activity_logs">Günlük Görüntüleyici</string>
+    <string name="action_refresh">Yenile</string>
+    <string name="action_save">Kaydet</string>
+    <string name="toast_logs_error">Günlükler okunamadı</string>
+    <string name="toast_logs_saved">Günlük dosyası başarıyla kaydedildi</string>
+    <string name="toast_logs_save_failed">Günlük dosyası kaydedilemedi</string>
+    <string name="toast_logs_save_os_unsupported">Günlüklerin kaydedilmesi Android sürümünüzde desteklenmiyor</string>
+    <string name="toast_config_editor_error">Yapılandırma dosyası yüklenemedi</string>
+    <string name="toast_config_init_error">Yapılandırma dosyası başlatılamadı</string>
+    <string name="toast_config_editor_saved">Değişiklikler kaydedildi</string>
+    <string name="toast_config_editor_saved_error">Yapılandırma dosyası kaydedilemedi</string>
+    <string name="title_activity_crash">Çökme Raporu</string>
+    <string name="crash_heading">Beklenmeyen çökme</string>
+    <string name="crash_submit_issue_note">Hata devam ederse lütfen bir sorun bildirin.\nHata metnini eklemeyi unutmayın.</string>
+    <string name="crash_submit_issue">Bir sorun iletin</string>
+    <string name="check_for_updates">Güncellemeleri denetle</string>
+    <string name="dialog_update_available_title">Bir güncelleme mevcut</string>
+    <string name="dialog_update_available_message">1$s sürümü yüklenmeye hazır</string>
+    <string name="dialog_update_error_title">Güncellemeler denetlenemedi</string>
+    <string name="dialog_update_error_message">Güncellemeleri denetlerken bir hata oluştu, ağ bağlantısını kontrol edin</string>
+    <string name="dialog_update_checking_title">Güncellemeler denetleniyor...</string>
+    <string name="dialog_update_checking_message">Yüklü sürüm: %s</string>
+    <string name="dialog_update_no_updates_title">Güncelleme yok</string>
+    <string name="dialog_update_no_updates_message">PowerTunnel'ın en son sürümünü kullanıyorsunuz</string>
+    <string name="notification_channel_updater">Güncelleme Bildiricisi</string>
+    <string name="notification_channel_updater_description">Güncellemeler hakkında bildirimler</string>
+
+</resources>
