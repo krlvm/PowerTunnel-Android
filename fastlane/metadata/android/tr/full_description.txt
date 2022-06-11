@@ -1,0 +1,1 @@
+PowerTunnel, gizliliğinize saygı duyan ve internet bağlantınızı yavaşlatmayan, yalnızca telefonunuzda çalışan ve trafiğinizi üçüncü taraf sunuculara göndermeyen aktif bir DPI atlatma aracıdır. Telefonunuzda şeffaf bir vekil sunucu kurar ve trafiğinizi DPI atlatma yöntemlerinin uygulandığı yerel vekil sunucuya ileten yerel VPN sunucusunu başlatır.
