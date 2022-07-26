@@ -208,8 +208,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(restartServerOnResume) {
-            Toast.makeText(this, R.string.toast_configure_while_running_restart, Toast.LENGTH_LONG).show();
-            doStop();
+            if (!PowerTunnelService.isRunning()) {
+                restartServerOnResume = false;
+                unlockConfigurationWhenRunning = false;
+            } else {
+                Toast.makeText(this, R.string.toast_configure_while_running_restart, Toast.LENGTH_LONG).show();
+                doStop();
+            }
         }
     }
 
