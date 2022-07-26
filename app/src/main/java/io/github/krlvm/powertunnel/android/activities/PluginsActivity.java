@@ -39,6 +39,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.github.krlvm.powertunnel.android.R;
@@ -158,6 +160,7 @@ public class PluginsActivity extends AppCompatActivity {
                 Log.e(LOG_TAG, String.format("Failed to open plugin '%s' jar file: %s", plugin.getName(), ex.getMessage()), ex);
             }
         }
+        Collections.sort(plugins, Comparator.comparing(PluginInfo::getName));
         new Thread(() -> runOnUiThread(() -> {
             adapter = new PluginAdapter(this, plugins);
             binding.appList.setAdapter(adapter);
