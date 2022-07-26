@@ -35,11 +35,13 @@ public class PowerTunnelApplication extends MultiDexApplication {
         final Thread.UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             Log.d(LOG_TAG, "Caught unhandled exception: " + e.getMessage());
-            PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putString("crash_message", e.getMessage())
-                    .putString("crash_stacktrace", Log.getStackTraceString(e))
-                    .commit();
-            if(handler != null) {
+            if (!(e instanceof RuntimeException)) {
+                PreferenceManager.getDefaultSharedPreferences(this).edit()
+                        .putString("crash_message", e.getMessage())
+                        .putString("crash_stacktrace", Log.getStackTraceString(e))
+                        .commit();
+            }
+            if (handler != null) {
                 handler.uncaughtException(t, e);
             } else {
                 System.exit(1);
