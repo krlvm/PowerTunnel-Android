@@ -1,3 +1,45 @@
+v2.5
+===
+Improvements:
+- Improved in-app configuration editor
+- Under the hood optimization of LibertyTunnel packet chunking trick
+- Under the hood optimization of DNS over HTTPS resolvers performance on devices running Android 7 Nougat and older
+- Alphabetical sort in plugins list activity
+
+Bugfixes:
+- Fixed an issue when LibertyTunnel HTTP tricks interfered with SNI modification and broke websites
+- Fixed several crashes related to proxy server bootstrap
+- Fixed an issue if PowerTunnel restarted after editing configuration even if the server was not running
+- Underlying bugfixes for Firewall and other plugins unable to detect domains with proxy-based filtration
+
+Translations:
+- Added Portuguese Brazil translation
+- Added Turkish translation
+
+Known issues:
+- LibertyTunnel "Remove SNI" trick does not have effect due to underlying issue
+
+v2.4
+===
+New features:
+- In-app editor for plugin configuration files
+Long-press the gear icon in plugin list to access it
+
+Improvements:
+- Disabled Quick Tile on lockscreen
+- Disabled vibration for sticky notifications
+
+Bugfixes:
+- Fixed an issue when LibertyTunnel could not generate PAC file properly
+- Fixed an issue when LibertyTunnel went in global mode after enabling mirror
+
+Release notes:
+- Preinstalled Firewall plugin
+It is disabled by default, but it can be useful if you want to restrict access to a particular website
+- Preinstalled Hosts plugin
+With Hosts plugin, you can simulate system hosts file behaviour without root
+It can also be used as AdBlock if you set some public ad-blocking hosts file as a mirror
+
 v2.3.1
 ===
 Bugfixes:
