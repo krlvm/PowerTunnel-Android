@@ -1,0 +1,5 @@
+Improvements:
+- Under the hood optimization of the MITM module and LibertyTunnel SNI tricks
+
+Bugfixes:
+- Fixed the underlying issue which prevented LibertyTunnel "Remove SNI" trick from being applied
