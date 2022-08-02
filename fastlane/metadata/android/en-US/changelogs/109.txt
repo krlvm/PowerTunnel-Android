@@ -1,0 +1,2 @@
+Bugfixes:
+- Fixed an incompatibility with Android versions older than Android 8 Oreo
