@@ -1,3 +1,8 @@
+v2.6.2
+===
+Improvements:
+- Under the hood LibertyTunnel performance optimizations
+
 v2.6.1
 ===
 Bugfixes:
