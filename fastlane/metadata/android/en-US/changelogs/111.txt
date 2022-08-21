@@ -1,0 +1,2 @@
+Improvements:
+- Optimized LibertyTunnel memory usage
