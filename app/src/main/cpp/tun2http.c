@@ -171,7 +171,7 @@ Java_io_github_krlvm_powertunnel_android_services_TunnelingVpnService_jni_1stop(
         }
 
         clear();
-+       thread_id = 0;
+        thread_id = 0;
 
         log_android(ANDROID_LOG_WARN, "Stopped thread %x", t);
     } else
