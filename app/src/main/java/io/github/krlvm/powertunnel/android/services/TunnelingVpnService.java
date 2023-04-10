@@ -130,18 +130,19 @@ public class TunnelingVpnService extends VpnService {
         disconnect();
     }
 
+    private final IBinder mBinder = new Binder() {
+        @Override
+        public boolean onTransact(int code, @NonNull Parcel data, Parcel reply, int flags) throws RemoteException {
+            if (code == IBinder.LAST_CALL_TRANSACTION) {
+                onRevoke();
+                return true;
+            }
+            return super.onTransact(code, data, reply, flags);
+        }
+    };
     @Override
     public IBinder onBind(Intent intent) {
-        return new Binder() {
-            @Override
-            public boolean onTransact(int code, @NonNull Parcel data, Parcel reply, int flags) throws RemoteException {
-                if (code == IBinder.LAST_CALL_TRANSACTION) {
-                    onRevoke();
-                    return true;
-                }
-                return super.onTransact(code, data, reply, flags);
-            }
-        };
+        return mBinder;
     }
 
     private void connect() {
