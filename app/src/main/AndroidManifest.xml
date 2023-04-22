@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
 
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:name=".PowerTunnelApplication"
         android:allowBackup="false"
         android:banner="@mipmap/tv_banner"
